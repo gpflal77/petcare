@@ -1,4 +1,8 @@
 <p id="notice"><%= notice %></p>
+<p>
+  <strong>Photo_file:</strong>
+  <%= @pet.photo_file %>
+</p>
 
 <p>
   <strong>User:</strong>
@@ -38,26 +42,6 @@
 <p>
   <strong>Weight:</strong>
   <%= @pet.weight %>
-</p>
-
-<p>
-  <strong>Reg date:</strong>
-  <%= @pet.reg_date %>
-</p>
-
-<p>
-  <strong>Reg:</strong>
-  <%= @pet.reg_id %>
-</p>
-
-<p>
-  <strong>Modi date:</strong>
-  <%= @pet.modi_date %>
-</p>
-
-<p>
-  <strong>Modi:</strong>
-  <%= @pet.modi_id %>
 </p>
 
 <%= link_to 'Edit', edit_pet_path(@pet) %> |

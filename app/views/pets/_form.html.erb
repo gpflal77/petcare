@@ -10,7 +10,11 @@
       </ul>
     </div>
   <% end %>
-
+   <div class="field">
+    <%= form.label :photo_file %>
+    <%= form.text_field :photo_file %>
+  </div>
+  
   <div class="field">
     <%= form.label :user_id %>
     <%= form.text_field :user_id %>
@@ -50,26 +54,7 @@
     <%= form.label :weight %>
     <%= form.text_field :weight %>
   </div>
-
-  <div class="field">
-    <%= form.label :reg_date %>
-    <%= form.text_field :reg_date %>
-  </div>
-
-  <div class="field">
-    <%= form.label :reg_id %>
-    <%= form.text_field :reg_id %>
-  </div>
-
-  <div class="field">
-    <%= form.label :modi_date %>
-    <%= form.text_field :modi_date %>
-  </div>
-
-  <div class="field">
-    <%= form.label :modi_id %>
-    <%= form.text_field :modi_id %>
-  </div>
+  
 
   <div class="actions">
     <%= form.submit %>

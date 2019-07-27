@@ -43,8 +43,7 @@
              <%= link_to "반려동물관리", pets_path, class:"collapse-item" %>
              <%= link_to "후기등록",     reviews_path, class:"collapse-item" %>
              <%= link_to "즐겨찾는병원", like_hospitals_list_path, class:"collapse-item" %>
-            <a class="collapse-item" href="cards.html">즐겨찾는병원</a>
-            <a class="collapse-item" href="cards.html">공지사항</a>
+              <a class="collapse-item" href="cards.html">공지사항</a>
           </div>
         </div>
       </li>
@@ -58,8 +57,8 @@
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Searh</h6>
-            <a class="collapse-item" href="utilities-color.html">병원검색</a>
-            <a class="collapse-item" href="utilities-border.html">질병검색</a>
+            <%= link_to "병원검색", hospitals_list_path, class:"collapse-item" %>
+            <%= link_to "질병검색", diseases_list_path, class:"collapse-item" %>
           </div>
         </div>
       </li>
