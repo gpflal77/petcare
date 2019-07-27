@@ -14,7 +14,7 @@
 //= require activestorage
 //= require turbolinks
 //= require_tree .
-//= require jquery/jquery.min.js
+//= require jquery
 //= require bootstrap/js/bootstrap.min.js
 //= require chart.js/Chart.min.js
 //= require chart.js/Chart.js
