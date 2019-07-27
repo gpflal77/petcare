@@ -1,0 +1,111 @@
+<%= form_with(model: review, local: true) do |form| %>
+  <% if review.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(review.errors.count, "error") %> prohibited this review from being saved:</h2>
+
+      <ul>
+      <% review.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= form.label :hospital_id %>
+    <%= form.text_field :hospital_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :user_id %>
+    <%= form.text_field :user_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :pet_id %>
+    <%= form.text_field :pet_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :medic_code %>
+    <%= form.text_field :medic_code %>
+  </div>
+
+  <div class="field">
+    <%= form.label :medic_detail %>
+    <%= form.text_field :medic_detail %>
+  </div>
+
+  <div class="field">
+    <%= form.label :birth_date %>
+    <%= form.text_field :birth_date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :period %>
+    <%= form.text_field :period %>
+  </div>
+
+  <div class="field">
+    <%= form.label :heal_yn %>
+    <%= form.text_field :heal_yn %>
+  </div>
+
+  <div class="field">
+    <%= form.label :cost_id %>
+    <%= form.text_field :cost_id %>
+  </div>
+  
+   <div class="field">
+    <%= form.label :tot_cost %>
+    <%= form.text_field :tot_cost %>
+  </div>
+  
+  <div class="field">
+    <%= form.label :satis1 %>
+    <%= form.text_field :satis1 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :satis2 %>
+    <%= form.text_field :satis2 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :satis3 %>
+    <%= form.text_field :satis3 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :satis4 %>
+    <%= form.text_field :satis4 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :avg_satis %>
+    <%= form.text_field :avg_satis %>
+  </div>
+  
+  <div class="field">
+    <%= form.label :hospital_review %>
+    <%= form.text_field :hospital_review %>
+  </div>
+
+   <div class="field">
+    <%= form.label :heal_review %>
+    <%= form.text_field :heal_review %>
+  </div>
+  
+  <div class="field">
+    <%= form.label :file %>
+    <%= form.text_field :file %>
+  </div>
+  
+ <div class="field">
+    <%= form.label :photo_file %>
+    <%= form.text_field :photo_file %>
+  </div>
+  
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

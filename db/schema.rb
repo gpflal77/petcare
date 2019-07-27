@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_22_142850) do
+ActiveRecord::Schema.define(version: 2019_07_27_120449) do
 
   create_table "comm_code", primary_key: ["code_gubn", "code", "sta_date"], options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "code_gubn", limit: 20, null: false, comment: "코드구분"
@@ -20,18 +20,18 @@ ActiveRecord::Schema.define(version: 2019_07_22_142850) do
     t.string "end_date", limit: 8, null: false, comment: "종료일"
     t.string "del_yn", limit: 2, default: "N", comment: "삭제여부(Y,N)"
     t.date "reg_date"
-    t.string "reg_id", limit: 45, collation: "latin1_swedish_ci"
+    t.string "reg_id", limit: 45
     t.date "modi_date"
-    t.string "modi_id", limit: 45, collation: "latin1_swedish_ci"
+    t.string "modi_id", limit: 45
   end
 
-  create_table "cost", primary_key: ["cost_id", "cost_gubn"], options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
-    t.integer "cost_id", null: false
-    t.string "cost_gubn", limit: 10, null: false
-    t.integer "amt"
+  create_table "cost", primary_key: ["cost_id", "cost_gubn"], options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "cost_id", null: false, comment: "비용ID"
+    t.string "cost_gubn", limit: 10, null: false, comment: "비용구분"
+    t.integer "amt", comment: "금액"
   end
 
-  create_table "hospital", id: :string, limit: 10, comment: "'병원ID'", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", comment: "동물병원DB", force: :cascade do |t|
+  create_table "hospitals", id: :string, limit: 10, comment: "병원ID", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", limit: 100, comment: "병원명"
     t.string "service_id", limit: 10, comment: "개방서비스ID(병원DATA I/F)"
     t.string "sigu_cd", limit: 10, comment: "시군구코드(병원DATA I/F)"
@@ -59,25 +59,23 @@ ActiveRecord::Schema.define(version: 2019_07_22_142850) do
     t.string "del_id", limit: 45, comment: "삭제자"
   end
 
-  create_table "like_hospital", primary_key: ["id", "user_id", "hospital_id"], options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
-    t.integer "id", null: false
-    t.bigint "user_id", null: false
-    t.string "hospital_id", limit: 10, null: false
+  create_table "like_hospitals", id: :integer, default: nil, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "hospital_id", limit: 10
     t.date "reg_date"
     t.string "reg_id", limit: 45
     t.date "modi_date"
     t.string "modi_id", limit: 45
   end
 
-  create_table "pet", primary_key: ["id", "user_id"], options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "id", null: false, comment: "아이디"
-    t.string "user_id", limit: 45, null: false, comment: "사용자아이디"
-    t.string "name", limit: 45, comment: "이름"
+  create_table "pets", id: :integer, comment: "펫아이디", default: nil, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "uesr_id", limit: 45, comment: "사용자아이디"
+    t.string "name", limit: 45, comment: "펫이름"
     t.string "kind", limit: 45, comment: "종류"
     t.string "breed", limit: 45, comment: "품종"
     t.string "gender", limit: 45, comment: "성별"
-    t.string "birth_date", limit: 45
-    t.string "age", limit: 45, comment: "나이"
+    t.string "birth_date", limit: 8, comment: "생년월일"
+    t.integer "age", comment: "나이"
     t.integer "weight", comment: "몸무게"
     t.date "reg_date"
     t.string "reg_id", limit: 45
@@ -85,27 +83,25 @@ ActiveRecord::Schema.define(version: 2019_07_22_142850) do
     t.string "modi_id", limit: 45
   end
 
-  create_table "review", id: :integer, default: nil, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "hospital_id", limit: 10
-    t.bigint "user_id"
-    t.integer "pet_id"
-    t.string "medic_code", limit: 20
-    t.string "medic_detail", limit: 20
-    t.integer "period"
-    t.string "heal_yn", limit: 2
-    t.integer "cost_id"
-    t.integer "tot_cost"
-    t.string "satis1", limit: 45
-    t.string "satis2", limit: 45
-    t.string "satis3", limit: 45
-    t.string "satis4", limit: 45
-    t.string "avg_satis", limit: 45
-    t.string "like", limit: 45
-    t.text "reviewcol"
-    t.string "hospital_review", limit: 45
-    t.text "heal_review"
-    t.string "file", limit: 30
-    t.string "photo_file", limit: 30
+  create_table "reviews", id: :integer, default: nil, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "hospital_id", limit: 10, comment: "병원ID"
+    t.bigint "user_id", comment: "사용자ID"
+    t.integer "pet_id", comment: "반려동물id"
+    t.string "medic_code", limit: 20, comment: "질병코드"
+    t.string "medic_detail", limit: 20, comment: "질병코드상세"
+    t.integer "period", comment: "치료기간"
+    t.string "heal_yn", limit: 2, comment: "완치여부(Y/N)"
+    t.integer "cost_id", comment: "비용ID"
+    t.integer "tot_cost", comment: "전체비용"
+    t.integer "satis1", comment: "만족도(친절도)"
+    t.integer "satis2", comment: "만족도(진료만족도)"
+    t.integer "satis3", comment: "만족도(가격)"
+    t.integer "satis4", comment: "만족도(시설)"
+    t.string "avg_satis", limit: 45, comment: "평균만족도"
+    t.text "hospital_review", comment: "병원후기"
+    t.text "heal_review", comment: "치료후기"
+    t.string "file", limit: 30, comment: "영수증파일ID"
+    t.string "photo_file", limit: 30, comment: "사진파일ID"
     t.date "reg_date"
     t.string "reg_id", limit: 45
     t.date "modi_date"

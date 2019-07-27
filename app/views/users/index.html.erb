@@ -40,8 +40,9 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">My Info</h6>
-            <a class="collapse-item" href="buttons.html">반려동물 관리</a>
-            <a class="collapse-item" href="cards.html">내게시글</a>
+             <%= link_to "반려동물관리", pets_path, class:"collapse-item" %>
+             <%= link_to "후기등록",     reviews_path, class:"collapse-item" %>
+             <%= link_to "즐겨찾는병원", like_hospitals_list_path, class:"collapse-item" %>
             <a class="collapse-item" href="cards.html">즐겨찾는병원</a>
             <a class="collapse-item" href="cards.html">공지사항</a>
           </div>

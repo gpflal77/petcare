@@ -1,0 +1,2 @@
+class LikeHospital < ApplicationRecord
+end
