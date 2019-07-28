@@ -83,6 +83,7 @@ ActiveRecord::Schema.define(version: 2019_07_27_141244) do
     t.bigint "hospital_id", comment: "병원ID"
     t.bigint "user_id", comment: "사용자ID"
     t.bigint "pet_id", comment: "반려동물id"
+    t.string "title", limit: 45, comment: "제목"
     t.string "medic_code", limit: 20, comment: "질병코드"
     t.string "medic_detail", limit: 20, comment: "질병코드상세"
     t.integer "period", comment: "치료기간"

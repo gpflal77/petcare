@@ -4,6 +4,7 @@ class CreateReviews < ActiveRecord::Migration[5.2]
       t.integer :hospital_id
       t.integer :user_id
       t.integer :pet_id
+      t.string :title
       t.string :medic_code
       t.string :medic_detail
       t.integer :period
