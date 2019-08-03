@@ -10,19 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_27_141244) do
+ActiveRecord::Schema.define(version: 2019_08_02_233756) do
 
-  create_table "comm_code", primary_key: ["code_gubn", "code", "sta_date"], options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "comm_codes", primary_key: ["code_gubn", "code", "sta_date"], options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "code_gubn", limit: 10, null: false, comment: "코드구분"
     t.string "code", limit: 20, null: false, comment: "코드"
+    t.string "parent_gubn", limit: 10, comment: "상위코드구분"
     t.string "code_name", limit: 60, comment: "코드명"
     t.string "sta_date", limit: 8, null: false, comment: "시작일"
     t.string "end_date", limit: 8, null: false, comment: "종료일"
     t.string "del_yn", limit: 2, default: "N", comment: "삭제여부(Y,N)"
-    t.date "reg_date"
-    t.string "reg_id", limit: 45
-    t.date "modi_date"
-    t.string "modi_id", limit: 45
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "cost", primary_key: "cost_id", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -49,13 +48,10 @@ ActiveRecord::Schema.define(version: 2019_07_27_141244) do
     t.string "open_time", limit: 10, comment: "오픈시간"
     t.string "close_time", limit: 10, comment: "종료시간"
     t.string "bigo", limit: 45, comment: "비고"
-    t.date "reg_date", comment: "등록일"
-    t.string "reg_id", limit: 30, comment: "등록자"
-    t.date "modi_date", comment: "수정일"
-    t.string "modi_id", limit: 45, comment: "수정자"
     t.string "del_yn", limit: 2, comment: "삭제여부"
-    t.date "del_date", comment: "삭제일"
-    t.string "del_id", limit: 45, comment: "삭제자"
+    t.datetime "del_date", comment: "삭제일"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "like_hospitals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

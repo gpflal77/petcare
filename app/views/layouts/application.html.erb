@@ -19,7 +19,7 @@
   <body>
       <!-- Page Wrapper -->
   <div id="wrapper">
-
+     <% if user_signed_in? %>
     <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
@@ -47,7 +47,6 @@
       <div class="sidebar-heading">
         Interface
       </div>
-
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
@@ -91,6 +90,7 @@
 
     </ul>
     <!-- End of Sidebar -->
+    <% end %>
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -251,7 +251,7 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><%= current_user.email %></span>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small"> <% if user_signed_in? %><%= current_user.email %><%end%></span>
                 <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
               </a>
               <!-- Dropdown - User Information -->

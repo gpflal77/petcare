@@ -19,6 +19,19 @@ pre {
   font-size: 11px;
 }
 
+a.review {
+  color: #000;
+
+  &:visited {
+    color: #666;
+  }
+  
+  &:hover {
+    color:black;
+    background-color:#f8f9fc;
+  }
+}
+
 a {
   color: #000;
 

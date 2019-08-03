@@ -1,44 +1,47 @@
 
 <%= link_to "병원상세가기", hospitals_view_path, class:"collapse-item" %>
- <!-- Page Heading -->
+  <!-- Custom styles for this template-->
+  <link href="/css/petcare.css" rel="stylesheet">
+   
           <h1 class="h3 mb-1 text-gray-800">병원검색</h1>
-          <p class="mb-4" id="test">1231232</p>
+          <p class="mb-4" id="test"></p>
 
           <!-- Content Row -->
           <div class="row">
 
             <!-- Grow In Utility -->
             <div class="col-lg-12">
-
               <div class="card position-relative">
-                <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">Grow In Animation Utilty</h6>
-                </div>
                 <div class="card-body">
-                  <div class="mb-3">
-                    <code>.animated--grow-in</code>
-                  </div>
-                  <div class="small mb-1">Navbar Dropdown Example:</div>
-                  <nav class="navbar navbar-expand navbar-light bg-light mb-4">
-                    <a class="navbar-brand" href="#">Navbar</a>
-                    <ul class="navbar-nav ml-auto">
-                      <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          Dropdown
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right animated--grow-in" aria-labelledby="navbarDropdown">
-                          <a class="dropdown-item" href="#">Action</a>
-                          <a class="dropdown-item" href="#">Another action</a>
-                          <div class="dropdown-divider"></div>
-                          <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                      </li>
-                    </ul>
-                  </nav>
-                  <p class="mb-0 small">Note: This utility animates the CSS transform property, meaning it will override any existing transforms on an element being animated! In this theme, the grow in animation is only being used on dropdowns within the navbar.</p>
-                </div>
+                  <div class="small mb-1"></div>
+                    <nav class="navbar navbar-expand navbar-light bg-light">
+                        
+                            <!--<button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              진료항목
+                            </button>
+                            <div class="dropdown-menu">
+                                <% @medc_code.each do |medic| %>
+                                  <%= link_to " #{medic.code_name}", class:"dropdown-item" %> <br/>
+                                  <div class="dropdown-divider"></div>
+                                 <% end %>
+                            </div>
+                            -->
+                            <div class="small mb-1">진료항목</div>
+                            <select id="medc_gubn" >
+                              <% @medc_code.each do |medic| %>
+                                  <option value="<%=medic.code%>"><%=medic.code_name%></option>
+                              <% end %>
+                            </select>
+                          &nbsp;
+                          세부항목:
+                          <select id="medc_detail">
+                              <% @medc_code.each do |medic| %>
+                                  <option value="<%=medic.code%>"><%=medic.code_name%></option>
+                              <% end %>
+                          </select>
+                    </nav>
+                 </div>
               </div>
-
             </div>
 
             <!-- Fade In Utility -->
@@ -87,3 +90,25 @@
             </div>
 
           </div>
+<script type="text/javascript">
+$(document).ready(function() {
+          
+     $("#medc_code").change(function() {
+        var select_id = $('#medc_code').val();
+        $.ajax({
+            type: "POST",     //또는 GET, 라우터에서 설정한 걸로 하세요.
+            url: '/get_code',     // request url
+            data: {
+                code_gubn : select_id
+            },
+            dataType: "script", // reponse는 script로
+            success: function() {
+               // 로딩창 숨기는거 넣으면 됩니다.
+            },
+            error: function(data) {}
+        });
+
+     });
+     
+});
+</script>
