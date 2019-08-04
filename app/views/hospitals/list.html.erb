@@ -3,7 +3,7 @@
   <!-- Custom styles for this template-->
   <link href="/css/petcare.css" rel="stylesheet">
    
-          <h1 class="h3 mb-1 text-gray-800">병원검색</h1>
+          <h1 class="h4 mb-1 text-gray-800">병원검색</h1>
           <p class="mb-4" id="test"></p>
 
           <!-- Content Row -->
@@ -13,37 +13,64 @@
             <div class="col-lg-12">
               <div class="card position-relative">
                 <div class="card-body">
-                  <div class="small mb-1"></div>
-                    <nav class="navbar navbar-expand navbar-light bg-light">
-                        
-                            <!--<button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              진료항목
-                            </button>
-                            <div class="dropdown-menu">
-                                <% @medc_code.each do |medic| %>
-                                  <%= link_to " #{medic.code_name}", class:"dropdown-item" %> <br/>
-                                  <div class="dropdown-divider"></div>
-                                 <% end %>
-                            </div>
-                            -->
-                            <div class="small mb-1">진료항목</div>
-                            <select id="medc_gubn" >
-                              <% @medc_code.each do |medic| %>
-                                  <option value="<%=medic.code%>"><%=medic.code_name%></option>
-                              <% end %>
-                            </select>
-                          &nbsp;
-                          세부항목:
-                          <select id="medc_detail">
-                              <% @medc_code.each do |medic| %>
-                                  <option value="<%=medic.code%>"><%=medic.code_name%></option>
-                              <% end %>
-                          </select>
-                    </nav>
+                    <h6 class="col-12 m-12 font-weight-bold text-primary">진료항목</h6> 
+                    <div id="medc_code_group"  class="btn-group btn-group-toggle col-lg-12" data-toggle="buttons">
+                          <label class="btn btn-primary">
+                               <input type="radio" name="medc_code" id="medc_code_all" autocomplete="on" value="all">전체
+                          </label>
+                        <% @medc_code.each do |medic| %>
+                           <label class="btn btn-primary">
+                               <input type="radio" name="medc_code" id="medc_code_<%=medic.code%>" autocomplete="on" value="<%=medic.code%>"> <%=medic.code_name%>
+                           </label>
+                        <% end %>
+                    </div>
+                 </div>
+                 <div class="card-body">
+                    <h6 class="col-12 m-12 font-weight-bold text-primary">세부항목</h6> 
+                    <div id="medc_detail_group" class="btn-group btn-group-toggle col-lg-12" data-toggle="buttons">
+                       <label class="btn btn-info">
+                               <input type="radio" name="medc_detail" id="medc_detail_all" autocomplete="on" value="all">전체
+                       </label>
+                    </div>
+                 </div>
+                <div class="card-body">
+                  <h6 class="col-12 m-12 font-weight-bold text-primary">병원비 항목</h6> 
+                    <div id="medc_detail_group" class="btn-group btn-group-toggle col-lg-12" data-toggle="buttons">
+                       <label class="btn btn-success">
+                               <input type="radio" name="medc_detail" id="medc_detail_all" autocomplete="on" value="all">전체
+                       </label>
+                      <% @cost_code.each do |cost| %>
+                           <label class="btn btn-success">
+                               <input type="radio" name="cost_code" id="cost_code_<%=cost.code%>" autocomplete="on" value="<%=cost.code%>"> <%=cost.code_name%>
+                           </label>
+                        <% end %>
+                    </div>
                  </div>
               </div>
             </div>
-
+            <!-- Grow In Utility -->
+           <!-- <div class="col-lg-12">
+              <div class="card position-relative">
+                <div class="card-body">
+                    <nav class="navbar navbar-expand navbar-light bg-light">
+                        <h6 class="col-12 font-weight-bold text-primary">진료항목</h6> 
+                    </nav>
+                     <div class="col-lg-12">
+                              <select id="medc_code" class="form-control form-control">
+                                <% @medc_code.each do |medic| %>
+                                    <option value="<%=medic.code%>"><%=medic.code_name%></option>
+                                <% end %>
+                              </select>
+                          &nbsp;
+                          세부항목:
+                          <select id="medc_detail">
+                              
+                          </select>
+                    </div>
+                 </div>
+              </div>
+            </div> -->
+                  
             <!-- Fade In Utility -->
             <div class="col-lg-12">
 
@@ -72,17 +99,6 @@
                       </li>
                     </ul>
                   </nav>
-                  <div class="small mb-1">Dropdown Button Example:</div>
-                  <div class="dropdown mb-4">
-                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Dropdown
-                    </button>
-                    <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
-                      <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                  </div>
                   <p class="mb-0 small">Note: This utility animates the CSS opacity property, meaning it will override any existing opacity on an element being animated!</p>
                 </div>
               </div>
@@ -90,25 +106,81 @@
             </div>
 
           </div>
+          
+          
 <script type="text/javascript">
 $(document).ready(function() {
-          
+
+     // 병원항목 코드에 따른 세부진료항목 코드 조회 ajax    //select box 예시     
      $("#medc_code").change(function() {
-        var select_id = $('#medc_code').val();
+        var select_id = $('#medc_code').val(); //코드구분
         $.ajax({
-            type: "POST",     //또는 GET, 라우터에서 설정한 걸로 하세요.
-            url: '/get_code',     // request url
-            data: {
-                code_gubn : select_id
+            type: "GET",     
+            url: '/get_code',           // 공통코드 request url --> application_cotroller에 정의
+            data: {                     // 보낼 파라미터
+                code_gubn : select_id,  // 코드구분 
+                redirect_path : "hospitals_list_path"
             },
-            dataType: "script", // reponse는 script로
-            success: function() {
-               // 로딩창 숨기는거 넣으면 됩니다.
+            dataType: "json", 
+            success: function(data) { //데이터 받아옴 
+              
+              $('#medc_detail').empty(); //초기화
+            //  $("#medc_detail").find("option").remove().end().append("<option value=''>전체</option>");
+
+              $.each(data, function(i){
+                $("#medc_detail").append("<option value='"+data[i].code+"'>"+data[i].code_name+"</option>")
+              });    
+
             },
             error: function(data) {}
         });
 
      });
+     
+     
+     // 병원항목 코드에 따른 세부진료항목 코드 조회 ajax    //radio 예시     
+    $('input[name="medc_code"]').change(function() {
+     
+      //전체 선택시 
+      if($(this).val() == "all"){ 
+         // 세부진료항목 초기화
+          var radio_html  = "";
+              radio_html  += "<label class='btn btn-info'>"
+                          + "<input type='radio' name='medc_detail' id='medc_detail_all' autocomplete='on' value='all'>전체"
+                          + "</label>";
+           $("#medc_detail_group").html(radio_html);
+      }else{
+        
+           var select_id = $(this).val();
+       
+            $.ajax({
+                type: "GET",     
+                url: '/get_code',           // 공통코드 request url --> application_cotroller에 정의
+                data: {                     // 보낼 파라미터
+                    code_gubn : select_id,  // 코드구분 
+                    redirect_path : "hospitals_list_path"
+                },
+                dataType: "json", 
+                success: function(data) { //데이터 받아옴 
+                
+                var radio_html  = "";
+                    radio_html  += "<label class='btn btn-info'>"
+                                + "<input type='radio' name='medc_detail' id='medc_detail_all' autocomplete='on' value='all'>전체"
+                                + "</label>";
+                  $.each(data, function(i){
+                    radio_html  +="<label class='btn btn-info'>"
+                                + "<input type='radio' name='medc_detail' id='medc_detail_"+data[i].code+"' autocomplete='on' value='"+data[i].code+"'>"+data[i].code_name
+                                + "</label>";
+                  });    
+                  
+                  $("#medc_detail_group").html(radio_html);
+    
+                },
+                error: function(data) {}
+            });
+      }
+      
+    });
      
 });
 </script>

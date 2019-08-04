@@ -13,5 +13,7 @@ Rails.application.routes.draw do
   get 'hospitals/list'
   get 'diseases/list'
 
+  get 'hospitals/get_code' => 'hospitals#get_code',  defaults: { format: 'js' }
+  get 'get_code' => 'application#get_code',  defaults: { format: 'json' }
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
