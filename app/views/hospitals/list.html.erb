@@ -1,9 +1,8 @@
-
-<%= link_to "병원상세가기", hospitals_view_path, class:"collapse-item" %>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=40349a218f3e9e8476dc64d72271e392"></script>
   <!-- Custom styles for this template-->
   <link href="/css/petcare.css" rel="stylesheet">
    
-          <h1 class="h4 mb-1 text-gray-800">병원검색</h1>
+          <h1 class="h4 mb-1 text-gray-800"></h1>
           <p class="mb-4" id="test"></p>
 
           <!-- Content Row -->
@@ -45,6 +44,19 @@
                            </label>
                         <% end %>
                     </div>
+                </div>
+                <div class="card-body">
+                    <h6 class="col-12 m-12 font-weight-bold text-primary">키워드검색</h6> 
+                     <form class="form-inline mr-auto w-100 navbar-search">
+                      <div class="input-group col-12 m-12">
+                        <input type="text" class="form-control bg-light border-1 small" placeholder= "병원명 검색" aria-label="Search" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                          <button class="btn btn-primary" type="button" id="search_btn">
+                            <i class="fas fa-search fa-sm"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </form>
                  </div>
               </div>
             </div>
@@ -70,42 +82,58 @@
                  </div>
               </div>
             </div> -->
-                  
-            <!-- Fade In Utility -->
-            <div class="col-lg-12">
-
+             <div class="col-lg-12">
               <div class="card position-relative">
-                <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">Fade In Animation Utilty</h6>
-                </div>
                 <div class="card-body">
-                  <div class="mb-3">
-                    <code>.animated--fade-in</code>
-                  </div>
-                  <div class="small mb-1">Navbar Dropdown Example:</div>
-                  <nav class="navbar navbar-expand navbar-light bg-light mb-4">
-                    <a class="navbar-brand" href="#">Navbar</a>
-                    <ul class="navbar-nav ml-auto">
-                      <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          Dropdown
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right animated--fade-in" aria-labelledby="navbarDropdown">
-                          <a class="dropdown-item" href="#">Action</a>
-                          <a class="dropdown-item" href="#">Another action</a>
-                          <div class="dropdown-divider"></div>
-                          <a class="dropdown-item" href="#">Something else here</a>
+                    <h6 class="col-12 m-12 font-weight-bold text-primary">Fade In Animation Utilty</h6> 
+                    <div id="medc_code_group"  class="btn-group btn-group-toggle col-lg-12" data-toggle="buttons">
+                        <div class="card-body">
+                          <div id="map" style="width:100%;height:350px;"></div>
+                          <p class="mb-0 small">Note: This utility animates the CSS opacity property, meaning it will override any existing opacity on an element being animated!</p>
                         </div>
-                      </li>
-                    </ul>
-                  </nav>
-                  <p class="mb-0 small">Note: This utility animates the CSS opacity property, meaning it will override any existing opacity on an element being animated!</p>
+                    </div>
+                 </div>
+              </div>
+            </div>
+             <div class="col-lg-12">
+                <div class="card position-relative">
+                  <div class="card-body">
+                      <h6 class="col-12 m-12 font-weight-bold text-primary">Fade In Animation Utilty</h6> 
+                      <div id="medc_code_group"  class="btn-group btn-group-toggle col-lg-12" data-toggle="buttons">
+                               <div class="media">
+                                	<a class="pull-left" href="#">
+                              		<img class="media-object" src="http://placekitten.com/150/150">
+                            		</a>
+                            		<div class="media-body">
+                              		<h4 class="media-heading">Receta 1</h4>
+                                    <p class="text-right">By Francisco</p>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra varius quam sit amet vulputate. </p>
+                                          <ul class="list-inline list-unstyled">
+                                        			<li><span><i class="glyphicon glyphicon-calendar"></i> 2 days, 8 hours </span></li>
+                                                  <li>|</li>
+                                                  <span><i class="glyphicon glyphicon-comment"></i> 2 comments</span>
+                                                  <li>|</li>
+                                                  <li>
+                                                               <span class="glyphicon glyphicon- color"></span>
+                                                              <span class="glyphicon glyphicon- color"></span>
+                                                              <span class="glyphicon glyphicon- color"></span>
+                                                              <span class="glyphicon glyphicon- color"></span>
+                                                              <span class="glyphicon glyphicon--empty"></span>
+                                                  </li>
+                                                    <div class="rating rising d-flex justify-content-center flex-row-reverse">
+                                                        <input type="radio" id="5" name="rating" value="5" /><label for="5" title="5 D">5</label>
+                                                        <input type="radio" id="4" name="rating" value="4" /><label for="4" title="4 ">4</label>
+                                                        <input type="radio" id="3" name="rating" value="3" /><label for="3" title="3 ">3</label>
+                                                        <input type="radio" id="2" name="rating" value="2" /><label for="2" title="2 ">2</label>
+                                                        <input type="radio" id="1" name="rating" value="1" /><label for="1" title="1 ">1</label>
+                                                    </div>
+                                  			      </ul>
+                             </div>
+                      </div>
+                   </div>
                 </div>
               </div>
-
-            </div>
-
-          </div>
+       </div>
           
           
 <script type="text/javascript">
@@ -181,6 +209,93 @@ $(document).ready(function() {
       }
       
     });
+    
+  $("#search_btn").click(function(){
+       
+           var select_id = $(this).val();
+       
+            $.ajax({
+                type: "GET",     
+                url: '/get_hospitals',           // 공통코드 request url --> application_cotroller에 정의
+                data: {                     // 보낼 파라미터
+                    code_gubn : select_id,  // 코드구분 
+                    redirect_path : "hospitals_list_path"
+                },
+                dataType: "json", 
+                success: function(data) { //데이터 받아옴 
+                
+                var radio_html  = "";
+                    radio_html  += "<label class='btn btn-info'>"
+                                + "<input type='radio' name='medc_detail' id='medc_detail_all' autocomplete='on' value='all'>전체"
+                                + "</label>";
+                  $.each(data, function(i){
+                    radio_html  +="<label class='btn btn-info'>"
+                                + "<input type='radio' name='medc_detail' id='medc_detail_"+data[i].code+"' autocomplete='on' value='"+data[i].code+"'>"+data[i].code_name
+                                + "</label>";
+                  });    
+                  
+                  $("#medc_detail_group").html(radio_html);
+    
+                },
+                error: function(data) {}
+            });
+    }); 
      
 });
 </script>
+
+<script>
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+    mapOption = { 
+        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    };
+
+// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
+var mapTypeControl = new kakao.maps.MapTypeControl();
+
+// 지도 타입 컨트롤을 지도에 표시합니다
+map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+
+function getInfo() {
+    // 지도의 현재 중심좌표를 얻어옵니다 
+    var center = map.getCenter(); 
+    
+    // 지도의 현재 레벨을 얻어옵니다
+    var level = map.getLevel();
+    
+    // 지도타입을 얻어옵니다
+    var mapTypeId = map.getMapTypeId(); 
+    
+    // 지도의 현재 영역을 얻어옵니다 
+    var bounds = map.getBounds();
+    
+    // 영역의 남서쪽 좌표를 얻어옵니다 
+    var swLatLng = bounds.getSouthWest(); 
+    
+    // 영역의 북동쪽 좌표를 얻어옵니다 
+    var neLatLng = bounds.getNorthEast(); 
+    
+    // 영역정보를 문자열로 얻어옵니다. ((남,서), (북,동)) 형식입니다
+    var boundsStr = bounds.toString();
+    
+    
+    var message = '지도 중심좌표는 위도 ' + center.getLat() + ', <br>';
+    message += '경도 ' + center.getLng() + ' 이고 <br>';
+    message += '지도 레벨은 ' + level + ' 입니다 <br> <br>';
+    message += '지도 타입은 ' + mapTypeId + ' 이고 <br> ';
+    message += '지도의 남서쪽 좌표는 ' + swLatLng.getLat() + ', ' + swLatLng.getLng() + ' 이고 <br>';
+    message += '북동쪽 좌표는 ' + neLatLng.getLat() + ', ' + neLatLng.getLng() + ' 입니다';
+    
+    // 개발자도구를 통해 직접 message 내용을 확인해 보세요.
+    // ex) console.log(message);
+    
+    
+    
+}
+
+
+</script>   

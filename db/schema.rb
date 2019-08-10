@@ -31,27 +31,60 @@ ActiveRecord::Schema.define(version: 2019_08_02_233756) do
 
   create_table "hospitals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", limit: 100, comment: "병원명"
-    t.string "service_id", limit: 10, comment: "개방서비스ID(병원DATA I/F)"
     t.string "sigu_cd", limit: 10, comment: "시군구코드(병원DATA I/F)"
     t.string "manage_no", limit: 20, comment: "관리번호(병원DATA I/F)"
     t.string "busi_in_date", limit: 8, comment: "인허가일(병원DATA I/F)"
     t.string "status_cd", limit: 2, comment: "상태코드(병원DATA I/F)"
-    t.string "status_detail_cd", limit: 4, comment: "상태세부코드(병원DATA I/F)"
+    t.string "status_cd_nm", limit: 45
     t.string "busi_end_date", limit: 8, comment: "폐업일(병원DATA I/F)"
     t.string "tel_no", limit: 30, comment: "전화번호(병원DATA I/F)"
     t.string "jibun_addr", limit: 300, comment: "지번주소(병원DATA I/F)"
     t.string "addr", limit: 300, comment: "도로명주소(병원DATA I/F)"
     t.string "zip_code", limit: 10, comment: "우편번호(병원DATA I/F)"
-    t.string "renew_date", limit: 45, comment: "병원DATA I/F 업데이트일"
-    t.string "loca_x", limit: 10, comment: "위치좌표x(병원DATA I/F)"
+    t.string "loca_x", limit: 45, comment: "위치좌표x(병원DATA I/F)"
     t.string "loca_y", limit: 45, comment: "위치좌표y(병원DATA I/F)"
     t.string "open_time", limit: 10, comment: "오픈시간"
     t.string "close_time", limit: 10, comment: "종료시간"
     t.string "bigo", limit: 45, comment: "비고"
-    t.string "del_yn", limit: 2, comment: "삭제여부"
-    t.datetime "del_date", comment: "삭제일"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "hospitals_raw", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "service_name", limit: 100, comment: "병원명"
+    t.string "service_id", limit: 10, comment: "개방서비스ID(병원DATA I/F)"
+    t.string "sigu_cd", limit: 10, comment: "시군구코드(병원DATA I/F)"
+    t.string "manage_no", limit: 20, comment: "관리번호(병원DATA I/F)"
+    t.string "busi_in_date", limit: 8, comment: "인허가일(병원DATA I/F)"
+    t.string "busi_out_date", limit: 8, collation: "latin1_swedish_ci"
+    t.string "status_cd", limit: 2, comment: "상태코드(병원DATA I/F)"
+    t.string "status_cd_nm", limit: 45
+    t.string "status_detail_cd", limit: 4, comment: "상태세부코드(병원DATA I/F)"
+    t.string "status_detail_cd_nm", limit: 45
+    t.string "busi_end_date", limit: 8, comment: "폐업일(병원DATA I/F)"
+    t.string "hu_sta_date", limit: 8
+    t.string "hu_end_date", limit: 8
+    t.string "re_sta_date", limit: 8
+    t.string "tel_no", limit: 30, comment: "전화번호(병원DATA I/F)"
+    t.integer "space"
+    t.string "jibun_zip_code", limit: 10
+    t.string "jibun_addr", limit: 300, comment: "지번주소(병원DATA I/F)"
+    t.string "addr", limit: 300, comment: "도로명주소(병원DATA I/F)"
+    t.string "zip_code", limit: 10, comment: "우편번호(병원DATA I/F)"
+    t.string "name", limit: 45
+    t.string "update_time", limit: 45, collation: "latin1_swedish_ci"
+    t.string "update_gubn", limit: 2, collation: "latin1_swedish_ci"
+    t.string "renew_date", limit: 45, comment: "병원DATA I/F 업데이트일"
+    t.string "type_gubn", limit: 45, collation: "latin1_swedish_ci"
+    t.string "loca_x", limit: 45, comment: "위치좌표x(병원DATA I/F)"
+    t.string "loca_y", limit: 45, comment: "위치좌표y(병원DATA I/F)"
+    t.string "gubn_1", limit: 45, comment: "비고"
+    t.string "gubn_2", limit: 10, comment: "삭제여부"
+    t.string "gubn_3", limit: 45, collation: "latin1_swedish_ci", comment: "삭제일"
+    t.string "gubn_4", limit: 45, collation: "latin1_swedish_ci"
+    t.integer "emp_cnt"
+    t.datetime "updated_at"
+    t.datetime "created_at"
   end
 
   create_table "like_hospitals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

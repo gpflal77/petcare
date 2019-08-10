@@ -1,6 +1,0 @@
-
-$('#test').html("111111111111111111111111111111111s");
-$('#'+<%=@select_id%>).empty();
-  <% @code.each do |medic| %>
-      $('<option value="<%=medic.code%>">' + <%=medic.code_name%> + '</option>').appendTo('#medc_detail');
-  <% end %>
