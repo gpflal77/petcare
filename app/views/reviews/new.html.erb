@@ -31,10 +31,15 @@
                           <a class="review nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             진료항목
                           </a>
-                          <div class="dropdown-menu dropdown-menu-right animated--grow-in" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">1</a>
-                            <a class="dropdown-item" href="#">2</a>
-                            <a class="dropdown-item" href="#">3</a>
+                          <select id="medc_code" class="form-control form-control">
+                                <% @medc_code.each do |medic| %>
+                                    <option value="<%=medic.code%>"><%=medic.code_name%></option>
+                                <% end %>
+                          </select>
+                          
+                            <!--<a class="dropdown-item" href="#">1</a>-->
+                            <!--<a class="dropdown-item" href="#">2</a>-->
+                            <!--<a class="dropdown-item" href="#">3</a>-->
                           <!--<div class="dropdown-divider"></div>-->
                           <!--<a class="dropdown-item" href="#">Something else here</a>-->
                           </div>
@@ -66,13 +71,16 @@
                           <a class="review nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             세부진료항목
                           </a>
-                          <div class="dropdown-menu dropdown-menu-right animated--grow-in" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">1</a>
-                            <a class="dropdown-item" href="#">2</a>
-                            <a class="dropdown-item" href="#">3</a>
+                          <select id="medc_detail" class="form-control form-control">
+                              
+                          </select>
+                          <!--<div class="dropdown-menu dropdown-menu-right animated--grow-in" aria-labelledby="navbarDropdown">-->
+                          <!--  <a class="dropdown-item" href="#">1</a>-->
+                          <!--  <a class="dropdown-item" href="#">2</a>-->
+                          <!--  <a class="dropdown-item" href="#">3</a>-->
                           <!--<div class="dropdown-divider"></div>-->
                           <!--<a class="dropdown-item" href="#">Something else here</a>-->
-                          </div>
+                          <!--</div>-->
                         </li>
                       </ul>
                     </nav>
@@ -123,9 +131,11 @@
                           <a class="review nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             완치여부
                           </a>
-                          <div class="dropdown-menu dropdown-menu-right animated--grow-in" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Y</a>
-                            <a class="dropdown-item" href="#">N</a>
+                          <!--<div class="dropdown-menu dropdown-menu-right animated--grow-in" aria-labelledby="navbarDropdown">-->
+                            <select name="heal_yn">
+                              <option value="y">Y</option>
+                              <option value="n">N</option>
+                            </select>
                             <!--<a class="dropdown-item" href="#">3</a>-->
                           <!--<div class="dropdown-divider"></div>-->
                           <!--<a class="dropdown-item" href="#">Something else here</a>-->
@@ -175,13 +185,18 @@
                             병원비항목
                             
                           </a>
-                          <div class="dropdown-menu dropdown-menu-right animated--grow-in" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">1</a>
-                            <a class="dropdown-item" href="#">2</a>
-                            <a class="dropdown-item" href="#">3</a>
+                          <select id="medc_code" class="form-control form-control">
+                                <% @cost_code.each do |medic| %>
+                                    <option value="<%=medic.code%>"><%=medic.code_name%></option>
+                                <% end %>
+                          </select>
+                          <!--<div class="dropdown-menu dropdown-menu-right animated--grow-in" aria-labelledby="navbarDropdown">-->
+                          <!--  <a class="dropdown-item" href="#">1</a>-->
+                          <!--  <a class="dropdown-item" href="#">2</a>-->
+                          <!--  <a class="dropdown-item" href="#">3</a>-->
                           <!--<div class="dropdown-divider"></div>-->
                           <!--<a class="dropdown-item" href="#">Something else here</a>-->
-                          </div>
+                          <!--</div>-->
                         </li>
                       </ul>
                     </nav>
@@ -371,3 +386,32 @@
 
 <%= link_to 'Back', reviews_path %>
 
+<script type="text/javascript">
+$(document).ready(function() {
+
+  $("#medc_code").change(function() {
+        var select_id = $('#medc_code').val(); //코드구분
+        $.ajax({
+            type: "GET",     
+            url: '/get_code',           // 공통코드 request url --> application_cotroller에 정의
+            data: {                     // 보낼 파라미터
+                code_gubn : select_id,  // 코드구분 
+                redirect_path : "reviews_new_path"
+            },
+            dataType: "json", 
+            success: function(data) { //데이터 받아옴 
+              
+              $('#medc_detail').empty(); //초기화
+            //  $("#medc_detail").find("option").remove().end().append("<option value=''>전체</option>");
+
+              $.each(data, function(i){
+                $("#medc_detail").append("<option value='"+data[i].code+"'>"+data[i].code_name+"</option>")
+              });    
+
+            },
+            error: function(data) {}
+        });
+
+     });
+});
+</script>

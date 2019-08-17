@@ -2,42 +2,279 @@
 
 <h1>Pets</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Photo_file</th>
-      <th>User</th>
-      <th>Name</th>
-      <th>Kind</th>
-      <th>Breed</th>
-      <th>Gender</th>
-      <th>Birth date</th>
-      <th>Age</th>
-      <th>Weight</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<!--만약 등록된 정보가 없으면 추가하기 페이지를 만들고, 등록된 정보가 있으면 기존 등록된 정보를 불러온다-->
 
-  <tbody>
-    <% @pets.each do |pet| %>
-      <tr>
-        <td><%= pet.photo_file %></td>
-        <td><%= pet.user_id %></td>
-        <td><%= pet.name %></td>
-        <td><%= pet.kind %></td>
-        <td><%= pet.breed %></td>
-        <td><%= pet.gender %></td>
-        <td><%= pet.birth_date %></td>
-        <td><%= pet.age %></td>
-        <td><%= pet.weight %></td>
-        <td><%= link_to 'Show', pet %></td>
-        <td><%= link_to 'Edit', edit_pet_path(pet) %></td>
-        <td><%= link_to 'Destroy', pet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<!--다른 폼태그 예제1-->
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
 
-<br>
+<!--
+
+Copy this code in your html file.
+
+-->
+
+
+
+<!--폼태그 해보자-->
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
+
+
+
+    <link rel="icon" href="Favicon.png">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+    <title>반려동물 등록하기</title>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light navbar-laravel">
+
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Register</a>
+            </li>
+        </ul>
+
+    </div>
+    </div>
+</nav>
+
+<main class="my-form">
+    <div class="cotainer">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">
+                        <!--/여기수정함-->
+                        <!--Q.강아지 사진 넣으면 강아지 이미지로 수정하고 싶음-->
+                        <nav class="navbar navbar-expand-lg navbar-light navbar-laravel">
+                          <div class="container">
+                          <p class="h2 text-center">반려동물 등록하기</p>
+                          <!--<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">-->
+                          <!--    <span class="navbar-toggler-icon"></span>-->
+                          <!--</button>-->
+                        </nav>
+                        </div>
+                        <div class="card-body">
+                            <form name="my-form" onsubmit="return validform()" action="success.php" method="">
+                              <p class="h3 text-center">반려동물 정보</p>
+                                <form action="" method="post">
+                                    <div class="preview text-center">
+                                        <img class="preview-img" src="https://c-lj.gnst.jp/public/img/common/noimage.jpg?20190112050042" alt="Preview Image" width="200" height="200"/>
+                                        <div class="browse-button">
+                                            <i class="fa fa-pencil-alt"></i>
+                                            <input class="browse-input" type="file" required name="UploadedFile" id="UploadedFile"/>
+                                        </div>
+                                        <span class="Error"></span> <br>
+                                <div class="form-group row">
+                                    <label for="full_name" class="col-md-4 col-form-label text-md-right">이름</label>
+                                    <div class="col-md-6">
+                                        <input type="text" id="full_name" class="form-control" name="full-name">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="email_address" class="col-md-4 col-form-label text-md-right">생년월일</label>
+                                    <div class="col-md-6">
+                                        
+                                        <input type="text" id="email_address" class="form-control" name="email-address">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="user_name" class="col-md-4 col-form-label text-md-right">성별</label>
+                                    <div class="col-md-6">
+                                        <input type="text" id="user_name" class="form-control" name="username">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="kind" class="col-md-4 col-form-label text-md-right">종류</label>
+                                    <div class="col-md-6">
+                                        
+                                        <tr>
+                                            <td>
+                                                <select class="selectPets" name="kind" onchange="setSelectItem()">
+                                                    <option value="dog">강아지</option>
+                                                    <option value="teacher">고양이</option>
+                                                    <option value="developer">햄스터</option>
+                                                    <option value="publisher">거북이</option>
+                                                    <option value="driver">토끼</option>
+                                                    <option value="architecture">뱀</option>
+                                                    <option value="actor">돼지</option>
+                                                    <option value="actor">소</option>
+                                                    <option value="actor">기타</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="breed" class="col-md-4 col-form-label text-md-right">품종</label>
+                                    <div class="col-md-6">
+                                         <tr>
+                                             <td>
+                                                 <select class="petlist" name="breed" onchange="setSelectItem()">
+                                                    <option value="student">강아지</option>
+                                                    <option value="teacher">고양이</option>
+                                                    <option value="developer">햄스터</option>
+                                                </select>
+                                                         
+                                             </td>
+                                         </tr>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="permanent_address" class="col-md-4 col-form-label text-md-right">몸무게</label>
+                                    <div class="col-md-6">
+                                        <input type="text" id="permanent_address" class="form-control" name="permanent-address">
+                                    </div>
+                                </div>
+
+                                    <div class="col-md-6 offset-md-4">
+                                        <!--Q. 등록하기 버튼을 누르면 다시 화면으로 오고 싶은데요?-->
+                                        <!--Q. 수정하기 버튼도 만들고 싶은데용?-->
+                                        <button type="submit" class="btn btn-primary">
+                                        등록하기
+                                        
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
+<!--  <tbody>-->
+<!--    <% @pets.each do |pet| %>-->
+<!--      <tr>-->
+<!--        <td><%= pet.photo_file %></td>-->
+<!--        <td><%= pet.user_id %></td>-->
+<!--        <td><%= pet.name %></td>-->
+<!--        <td><%= pet.kind %></td>-->
+<!--        <td><%= pet.breed %></td>-->
+<!--        <td><%= pet.gender %></td>-->
+<!--        <td><%= pet.birth_date %></td>-->
+<!--        <td><%= pet.age %></td>-->
+<!--        <td><%= pet.weight %></td>-->
+<!--        <td><%= link_to 'Show', pet %></td>-->
+<!--        <td><%= link_to image_tag('pets01.jpg'), edit_pet_path(pet) %></td>-->
+<!--        <td><%= link_to 'Destroy', pet, method: :delete, data: { confirm: 'Are you sure?' } %></td>-->
+<!--      </tr>-->
+<!--    <% end %>-->
+<!--  </tbody>-->
+<!--</table>-->
+
+<!--<br>-->
 
 <%= link_to 'New Pet', new_pet_path %>
+
+
+<!--회원가입 정보 수정할 떄 사용하면 좋을 템플릿-->
+<!--<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">-->
+<!--<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>-->
+<!--<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+<!------ Include the above in your HEAD tag ---------->
+
+<!--
+
+<!--Copy this code in your html file.-->
+
+<!---->-->
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>PHP Form</title>-->
+<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>-->
+<!--    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"/>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <div class="container">-->
+<!--       <div class="Back">-->
+<!--            <i class="fa fa-arrow-left" onclick="Back()"></i>-->
+<!--        </div>-->
+<!--        <p class="h2 text-center">Form</p>-->
+<!--        <form action="" method="post">-->
+<!--            <div class="preview text-center">-->
+<!--                <img class="preview-img" src="http://simpleicon.com/wp-content/uploads/account.png" alt="Preview Image" width="200" height="200"/>-->
+<!--                <div class="browse-button">-->
+<!--                    <i class="fa fa-pencil-alt"></i>-->
+<!--                    <input class="browse-input" type="file" required name="UploadedFile" id="UploadedFile"/>-->
+<!--                </div>-->
+<!--                <span class="Error"></span>-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--                <label>Full Name:</label>-->
+<!--                <input class="form-control" type="text" name="fullname" required placeholder="Enter Your Full Name"/>-->
+<!--                <span class="Error"></span>-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--                <label>Email:</label>-->
+<!--                <input class="form-control" type="email" name="email" required placeholder="Enter Your Email"/>-->
+<!--                <span class="Error"></span>-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--                <label>Password:</label>-->
+<!--                <input class="form-control" type="password" name="password" required placeholder="Enter Password"/>-->
+<!--                <span class="Error"></span>-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--                <label>Gender:</label><br/>-->
+<!--                <label><input type="radio" name="gender" required value="Male" checked /> Male</label>-->
+<!--                <label><input type="radio" name="gender" required value="Female" /> Female</label>-->
+<!--                <label><input type="radio" name="gender" required value="Other" /> Other</label>-->
+<!--                <span class="Error"></span>-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--                <input class="btn btn-primary btn-block" type="submit" value="Submit"/>-->
+<!--            </div>-->
+<!--        </form>-->
+<!--    </div>-->
+<!--    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>-->
+<!--    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>-->
+<!--</body>-->
+<!--</html>-->
+
+

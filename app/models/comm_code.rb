@@ -1,3 +1,3 @@
 class CommCode < ApplicationRecord
-    belongs_to :hospital
+   # belongs_to :hospital
 end

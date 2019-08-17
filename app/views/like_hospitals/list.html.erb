@@ -1,21 +1,67 @@
-즐겨찾기 리스트
+ <!-- Begin Page Content -->
+        <div class="container-fluid">
 
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Content</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+          <!-- Page Heading -->
+          <h1 class="h3 mb-2 text-gray-800">Favorite Hospitals</h1>
 
-  <tbody>
-    <% @hospital.each do |x| %>
-    <tr>
-        <td><%= x.name %></td>
-        <td><%= x.tel_no %></td>
-        <td><%= x.addr %></td>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">내가 즐겨찾는 병원 정보</h6>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                
+                
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>사진</th>
+                      <th>병원이름</th>
+                      <th>진료시간</th>
+                      <th>추가정보</th>
+                    </tr>
+                  </thead>
+                  
+                  <tbody>
+                    <% @hospital.each do |x| %>
+                    <tr>
+                      <td><%= x.name %></td>
+                      <td><%= x.tel_no %></td>
+                      <td><%= x.addr %></td>
+                      <td><%= x.open_time %></td>
+                    </tr>
+                    <% end %>
+                
+                    <tr>
+                      <td><%= image_tag "smart.JPG", class:"img-fluid px-3 px-sm-4 mt-3 mb-4", style:"width: 15rem;" %></td>
+                      <td>스마트동물병원</td>
+                      <td>24시간</td>
+                      <td>서울특별시 강남구 선릉로 418 <br>
+                      <a href='tel:+82 2-554-7582'>전화하기</a><hr>
+                      <a href="https://map.naver.com" class="btn btn-primary btn-icon-split" target="_blank">
+                        <!--<span class="icon text-white-50">
+                          <i class="fas fa-flag"></i>
+                        </span>-->
+                        <span class="text">지도보기</span>
+                      </a>
+                      </td>
+                    </tr>
+                     <tr>
+                      <td><img src="https://postfiles.pstatic.net/20140530_70/ricenzstar_1401426514381ItbMu_JPEG/IMG_0078.JPG?type=w3"></img></td>
+                      <td>리센츠스타동물병원</td>
+                      <td>매일10:00~19:30<br> 점심시간 12:30~13:30<br> 일요일휴무</td>
+                      <td>서울특별시 송파구 올림픽로 145 리센츠 <br>
+                      <a href='tel:+82 2-419-1010'>전화하기</a><hr>
+                      <a href="https://map.naver.com" class="btn btn-primary btn-icon-split" target="_blank">
+                        <span class="text">후기작성하기</span>
+                      </a>
+                    </tr>
+                  </tbody>
+                </table>
+                </div>
+              </div>
+          </div>
+
+        </div>
+        <!-- /.container-fluid -->

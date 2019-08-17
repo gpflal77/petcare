@@ -18,3 +18,11 @@
 //= require bootstrap/js/bootstrap.min.js
 //= require chart.js/Chart.min.js
 //= require chart.js/Chart.js
+
+
+function setSelectItem (){
+    const dog = ["요크셔테리어", "말티즈", "푸들", "진돗개"]
+    
+    const selectItem = document.getElementsByClassName("selectPets").value;
+    alert(selectItem);
+}

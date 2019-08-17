@@ -16,4 +16,9 @@ class ApplicationController < ActionController::Base
          format.json { render json: @code } #routes.rb 에도 json 설정 
         end
     end
+    
+    def index
+        redirect_to users/index
+    end    
+    
 end
