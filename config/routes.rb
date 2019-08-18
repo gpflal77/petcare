@@ -13,6 +13,8 @@ Rails.application.routes.draw do
   get 'hospitals/view/:hospital_id' => 'hospitals#view',  as: 'hospitals_view'
   get 'hospitals/view/:hospital_id/like' => 'hospitals#like'
   
+ # get 'hospitals/list'
+  
   get 'hospitals/list'
   get 'diseases/list'
 

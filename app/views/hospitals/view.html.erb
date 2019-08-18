@@ -24,22 +24,25 @@
                 <!-- Illustrations -->
                 <div class="card shadow mb-4">
                   <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">상도동 지엔 동물병원</h6>
+                    <h6 class="m-0 font-weight-bold text-primary"><div id="name"><%=@hospital.name%></div></h6>
                   </div>
                   <div class="card-body">
                     <div class="text-center">
                       <%= image_tag "dogs01.jpg", class:"img-fluid px-3 px-sm-4 mt-3 mb-4", style:"width: 25rem;" %>
                   </div>
                   <div class="text-center">
-                    진료시간: 평일  09:00 ~18:00</br>
-                               주말  09:00 ~14:00</br>
+                    <div id="open_time">
+                      오픈시간:<%=@hospital.open_time%></br>
+                    </div>
+                     <div id="open_time">
+                      마감시간:<%=@hospital.close_time%></br>
+                    </div>
+                   
                   
-                  점심시간: 12:00~13:00</br>
+                 <!-- 점심시간: 12:00~13:00</br>
                   휴무일 : 없음</br>
-                  
                   주차가능, 애견호텔, 애견미용</br>
-                  
-                  #스켈링 잘하는</br>
+                  #스켈링 잘하는</br>-->
 
                   </div>
                 </div>
@@ -73,8 +76,8 @@
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">후기작성</div>
-                 <!--     <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>-->
+                      <!--병원후기작성으로 가기 혜림추가(병원코드 셋팅)-->
+                       <%= link_to '후기작성', new_review_path(hospital_id:@hospital.id),  class:"font-weight-bold text-success text-uppercase mb-1" %>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
@@ -129,7 +132,15 @@
             </div>  
           <hr>    
           
+          
+        <% @reviews.each do |review| %>
+        <tr>
+            <td><%= review.title %></td>
+        </tr>
+        <% end %>
+          
           <div class="row">
+          
 
             <div class="col-lg-12">
               <!-- Default Card Example -->
@@ -252,58 +263,12 @@
         </div>
         <!-- /.container-fluid -->
 
-      </div>
-      <!-- End of Main Content -->
-
-      <!-- Footer -->
-      <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Your Website 2019</span>
-          </div>
-        </div>
-      </footer>
-      <!-- End of Footer -->
-
-    </div>
-    <!-- End of Content Wrapper -->
-
-  </div>
-  <!-- End of Page Wrapper -->
 
   <!-- Scroll to Top Button-->
   <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
   </a>
 
-  <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Bootstrap core JavaScript-->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Core plugin JavaScript-->
-  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-  <!-- Custom scripts for all pages-->
-  <script src="js/sb-admin-2.min.js"></script>
 
 </body>
 

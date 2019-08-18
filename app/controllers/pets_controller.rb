@@ -1,10 +1,17 @@
 class PetsController < ApplicationController
   before_action :set_pet, only: [:show, :edit, :update, :destroy]
-
+  skip_before_action :verify_authenticity_token
   # GET /pets
   # GET /pets.json
   def index
     @pets = Pet.all
+    
+     # 코드조회
+       @pet_code = CommCode.find_by_sql("select * From comm_codes
+                                            where code_gubn='PET'
+                                            and DATE_FORMAT(now(), '%Y%m%d') between sta_date and end_date
+                                            and ifnull(del_yn, 'N') ='N'
+                                            order by code");
   end
 
   # GET /pets/1
@@ -69,6 +76,7 @@ class PetsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pet_params
-      params.require(:pet).permit(:user_id, :name, :kind, :breed, :gender, :birth_date, :age, :weight, :photo_file)
+     # params.require(:pet).permit(:user_id, :name, :kind, :breed, :gender, :birth_date, :weight, :photo_file)
+     params.permit(:user_id, :name, :kind, :breed, :gender, :birth_date, :weight, :photo_file)
     end
 end

@@ -1,7 +1,4 @@
-<%= @review.id %>
-<%= image_tag url_for(@review.file) %>
-    
-        <!-- Begin Page Content -->
+   <!-- Begin Page Content -->
         <div class="container-fluid">
 
           <!-- Page Heading -->
@@ -19,23 +16,41 @@
 
             <!-- Area Chart -->
             <div class="col-lg-6 mb-4">
-
               <!-- Illustrations -->
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
                   <h6 class="m-0 font-weight-bold text-primary">사진</h6>
                 </div>
                 <div class="card-body">
-                  <div class="text-center">
-                    <!--<img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="img/undraw_posting_photo.svg" alt="">-->
-                    <%= image_tag "dogs01.jpg", class:"img-fluid px-3 px-sm-4 mt-3 mb-4", style:"width:18rem;" %>
+                  <div class="text-center py-10">
+                       <% if @review.photo_file.attached? %>
+                          <%= image_tag url_for(@review.photo_file), class:"img-fluid px-3 px-sm-4 mt-3 mb-4", style:"" %>
+                       <% else %>
+                          <%= image_tag "no_image_m.png", class:"img-fluid px-3 px-sm-4 mt-3 mb-4", style:"" %>
+                          첨부된 사진이 없습니다.
+                       <% end %>
                   </div>
-                  <!--<p>Add some quality, svg illustrations to your project courtesy of <a target="_blank" rel="nofollow" href="https://undraw.co/">unDraw</a>, a constantly updated collection of beautiful svg images that you can use completely free and without attribution!</p>-->
-                  <!--<a target="_blank" rel="nofollow" href="https://undraw.co/">Browse Illustrations on unDraw &rarr;</a>-->
-                </div>
+               </div><!--card body-->
               </div>
             </div>
-
+            <div class="col-lg-6 mb-4">
+              <!-- Illustrations -->
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">영수증</h6>
+                </div>
+                <div class="card-body">
+                  <div class="text-center py-10">
+                       <% if @review.file.attached? %>
+                          <%= image_tag url_for(@review.file), class:"img-fluid px-3 px-sm-4 mt-3 mb-4", style:"" %>
+                       <% else %>
+                          <%= image_tag "no_image_w.png", class:"img-fluid px-3 px-sm-4 mt-3 mb-4", style:"" %>
+                          첨부된 사진이 없습니다.
+                       <% end %>
+                  </div>
+               </div><!--card body-->
+              </div>
+            </div>
             <!-- Pie Chart -->
             <div class="col-lg-6 mb-4">
 
@@ -47,35 +62,49 @@
                 <div class="card-body" style="padding-bottom:0px;" style="padding-top:0px;">
                   <div class="card" style="padding-bottom:0px;" style="padding-top:0px;">
                     <div class="card-body" style="padding-bottom:5px; padding-top:5px;">
-                      <i class="fas fa-circle text-primary"></i> 반료동물정보 :
+                      <i class="fas fa-circle text-primary"></i> 반려동물정보 :
+                      <!-- 반려동물 정보 -->
+                       <% @pet.each do |pet| %>
+                                 <%= pet.name %> (<%= pet.birth_date %>),  <%= pet.weight %> Kg
+                       <% end %>
                     </div>
                   </div>
                 </div>
                 <div class="card-body" style="padding-bottom:0px;" style="padding-top:0px;">
                   <div class="card" style="padding-bottom:0px;" style="padding-top:0px;">
                     <div class="card-body" style="padding-bottom:5px; padding-top:5px;">
-                      <i class="fas fa-circle text-success"></i> 받은치료 :
+                      <i class="fas fa-circle text-success"></i> 받은치료 :                           
+                           <select name="medc_code" id="medc_code" class="form-control" disabled="disabled"> 
+                                  <% @medc_code.each do |medic| %>
+                                      <option value="<%=medic.code%>" <% if @review.medic_code == medic.code %>selected = "selected"<%end%> ><%=medic.code_name%></option>
+                                  <% end %>
+                           </select> 
+                           <select name="medic_detail" id="medic_detail" class="form-control"  disabled="disabled">
+                                  <% @medic_detail.each do |medic_deta| %>
+                                      <option value="<%=medic_deta.code%>" <% if @review.medic_detail == medic_deta.code %>selected = "selected"<%end%> ><%=medic_deta.code_name%></option>
+                                  <% end %>
+                           </select> 
                     </div>
                   </div>
                 </div>
                 <div class="card-body" style="padding-bottom:0px;" style="padding-top:0px;">
                   <div class="card" style="padding-bottom:0px;" style="padding-top:0px;">
                     <div class="card-body" style="padding-bottom:5px; padding-top:5px;">
-                      <i class="fas fa-circle text-info"></i> 총 치료비 :
+                      <i class="fas fa-circle text-info"></i> 총 치료비 : <%= @review.tot_cost %>
                     </div>
                   </div>
                 </div>
                 <div class="card-body" style="padding-bottom:0px;" style="padding-top:0px;">
                   <div class="card" style="padding-bottom:0px;" style="padding-top:0px;">
                     <div class="card-body" style="padding-bottom:5px; padding-top:5px;">
-                      <i class="fas fa-circle text-warning"></i> 치료기간 :
+                      <i class="fas fa-circle text-warning"></i> 치료기간 : <%= @review.period %>
                     </div>
                   </div>
                 </div>
                 <div class="card-body">
                   <div class="card" style="padding-bottom:0px;" style="padding-top:0px;">
                     <div class="card-body" style="padding-bottom:5px; padding-top:5px;">
-                      <i class="fas fa-circle text-danger"></i> 완치여부 :
+                      <i class="fas fa-circle text-danger"></i> 완치여부 : <%= @review.heal_yn %>
                     </div>
                   </div>
                 </div>
@@ -118,24 +147,53 @@
               <!-- Project Card Example -->
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">만족도</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">만족도 평균: <%= @review.avg_satis %></h6>
                 </div>
                 <div class="card-body">
-                  <h4 class="small font-weight-bold">친절도 <span class="float-right">1 / 5</span></h4>
-                  <div class="progress mb-4">
-                    <div class="progress-bar bg-danger" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                  <h4 class="small font-weight-bold">친절도 <span class="float-right"><%= @review.satis1 %> / 5</span></h4>
+                  <div class=" mb-4">
+                    <!--<div class="progress-bar bg-danger" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                    -->
+                       <div class="starRev" >
+                        <input type="radio" name="satis1" value="1"><span class="starR <%if @review.satis1 >= 1 %> on <%end%>">1</span>
+                        <input type="radio" name="satis1" value="2"><span class="starR <%if @review.satis1 >= 2 %> on <%end%>">2</span>
+                        <input type="radio" name="satis1" value="3"><span class="starR <%if @review.satis1 >= 3 %> on <%end%>">3</span>
+                        <input type="radio" name="satis1" value="4"><span class="starR <%if @review.satis1 >= 4 %> on <%end%>">4</span>
+                        <input type="radio" name="satis1" value="5"><span class="starR <%if @review.satis1 >= 5 %> on <%end%>">5</span>
+                       </div>
+                    </div>
+                  <h4 class="small font-weight-bold">진료만족도 <span class="float-right"><%= @review.satis2 %> / 5</span></h4>
+                  <div class="mb-4">
+                    <!--<div class="progress-bar bg-warning" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>-->
+                       <div class="starRev" >
+                        <input type="radio" name="satis2" value="1"><span class="starR <%if @review.satis2 >= 1 %> on <%end%>">1</span>
+                        <input type="radio" name="satis2" value="2"><span class="starR <%if @review.satis2 >= 2 %> on <%end%>">2</span>
+                        <input type="radio" name="satis2" value="3"><span class="starR <%if @review.satis2 >= 3 %> on <%end%>">3</span>
+                        <input type="radio" name="satis2" value="4"><span class="starR <%if @review.satis2 >= 4 %> on <%end%>">4</span>
+                        <input type="radio" name="satis2" value="5"><span class="starR <%if @review.satis2 >= 5 %> on <%end%>">5</span>
+                       </div>
                   </div>
-                  <h4 class="small font-weight-bold">진료만족도 <span class="float-right">2 / 5</span></h4>
-                  <div class="progress mb-4">
-                    <div class="progress-bar bg-warning" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                  <h4 class="small font-weight-bold">가격 <span class="float-right"><%= @review.satis3 %> / 5</span></h4>
+                  <div class="mb-4">
+                    <!--<div class="progress-bar" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>-->
+                      <div class="starRev" >
+                        <input type="radio" name="satis3" value="1"><span class="starR <%if @review.satis3 >= 1 %> on <%end%>">1</span>
+                        <input type="radio" name="satis3" value="2"><span class="starR <%if @review.satis3 >= 2 %> on <%end%>">2</span>
+                        <input type="radio" name="satis3" value="3"><span class="starR <%if @review.satis3 >= 3 %> on <%end%>">3</span>
+                        <input type="radio" name="satis3" value="4"><span class="starR <%if @review.satis3 >= 4 %> on <%end%>">4</span>
+                        <input type="radio" name="satis3" value="5"><span class="starR <%if @review.satis3 >= 5 %> on <%end%>">5</span>
+                      </div>
                   </div>
-                  <h4 class="small font-weight-bold">가격 <span class="float-right">3 / 5</span></h4>
-                  <div class="progress mb-4">
-                    <div class="progress-bar" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <h4 class="small font-weight-bold">시설<span class="float-right">4 / 5</span></h4>
-                  <div class="progress mb-4">
-                    <div class="progress-bar bg-info" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                  <h4 class="small font-weight-bold">시설<span class="float-right"><%= @review.satis4 %> / 5</span></h4>
+                  <div class="mb-4">
+                    <!--<div class="progress-bar bg-info" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>-->
+                      <div class="starRev" >
+                        <input type="radio" name="satis4" value="1"><span class="starR <%if @review.satis4 >= 1 %> on <%end%>">1</span>
+                        <input type="radio" name="satis4" value="2"><span class="starR <%if @review.satis4 >= 2 %> on <%end%>">2</span>
+                        <input type="radio" name="satis4" value="3"><span class="starR <%if @review.satis4 >= 3 %> on <%end%>">3</span>
+                        <input type="radio" name="satis4" value="4"><span class="starR <%if @review.satis4 >= 4 %> on <%end%>">4</span>
+                        <input type="radio" name="satis4" value="5"><span class="starR <%if @review.satis4 >= 5 %> on <%end%>">5</span>
+                      </div>
                   </div>
                   <!--<h4 class="small font-weight-bold">Account Setup <span class="float-right">Complete!</span></h4>-->
                   <!--<div class="progress">-->
@@ -149,76 +207,22 @@
               <!-- Project Card Example -->
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">병원정보</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">병원정보(종호님이 내용 꾸미기)</h6>
                 </div>
                 <div class="card-body">
                   <div>
+                    <% @hospital.each do |hospital| %>
+                          
+                                병원명: <%= hospital.name %><br/>
+                                전화번호: <%= hospital.tel_no %><br/>
+                                영업시간: <%= hospital.open_time %>~<%= hospital.close_time %>
+                                <%= link_to '병원 상세보기', hospitals_view_path(hospital.id) %>
                     
-                  </div>
-                <div class="chart-area"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                    <canvas id="myAreaChart" style="display: block; height: 320px; width: 495px;" width="990" height="640" class="chartjs-render-monitor"></canvas>
+                    <% end %>
                   </div>
               </div>
             </div>
             </div>
-               
-              
-              
-
-              <!-- Color System -->
-            <!--  <div class="row">-->
-            <!--    <div class="col-lg-6 mb-4">-->
-            <!--      <div class="card bg-primary text-white shadow">-->
-            <!--        <div class="card-body">-->
-            <!--          Primary-->
-            <!--          <div class="text-white-50 small">#4e73df</div>-->
-            <!--        </div>-->
-            <!--      </div>-->
-            <!--    </div>-->
-            <!--    <div class="col-lg-6 mb-4">-->
-            <!--      <div class="card bg-success text-white shadow">-->
-            <!--        <div class="card-body">-->
-            <!--          Success-->
-            <!--          <div class="text-white-50 small">#1cc88a</div>-->
-            <!--        </div>-->
-            <!--      </div>-->
-            <!--    </div>-->
-            <!--    <div class="col-lg-6 mb-4">-->
-            <!--      <div class="card bg-info text-white shadow">-->
-            <!--        <div class="card-body">-->
-            <!--          Info-->
-            <!--          <div class="text-white-50 small">#36b9cc</div>-->
-            <!--        </div>-->
-            <!--      </div>-->
-            <!--    </div>-->
-            <!--    <div class="col-lg-6 mb-4">-->
-            <!--      <div class="card bg-warning text-white shadow">-->
-            <!--        <div class="card-body">-->
-            <!--          Warning-->
-            <!--          <div class="text-white-50 small">#f6c23e</div>-->
-            <!--        </div>-->
-            <!--      </div>-->
-            <!--    </div>-->
-            <!--    <div class="col-lg-6 mb-4">-->
-            <!--      <div class="card bg-danger text-white shadow">-->
-            <!--        <div class="card-body">-->
-            <!--          Danger-->
-            <!--          <div class="text-white-50 small">#e74a3b</div>-->
-            <!--        </div>-->
-            <!--      </div>-->
-            <!--    </div>-->
-            <!--    <div class="col-lg-6 mb-4">-->
-            <!--      <div class="card bg-secondary text-white shadow">-->
-            <!--        <div class="card-body">-->
-            <!--          Secondary-->
-            <!--          <div class="text-white-50 small">#858796</div>-->
-            <!--        </div>-->
-            <!--      </div>-->
-            <!--    </div>-->
-            <!--  </div>-->
-
-            <!--</div>-->
-
             <div class="col-lg-6 mb-4">
               <!-- Approach -->
               <div class="card shadow mb-4">
@@ -226,8 +230,7 @@
                   <h6 class="m-0 font-weight-bold text-primary">치료후기</h6>
                 </div>
                 <div class="card-body">
-                  <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce CSS bloat and poor page performance. Custom CSS classes are used to create custom components and custom utility classes.</p>
-                  <p class="mb-0">Before working with this theme, you should become familiar with the Bootstrap framework, especially the utility classes.</p>
+                  <%= @review.heal_review %>
                 </div>
               </div>
             </div>
@@ -239,9 +242,8 @@
                   <h6 class="m-0 font-weight-bold text-primary">병원후기</h6>
                 </div>
                 <div class="card-body">
-                  <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce CSS bloat and poor page performance. Custom CSS classes are used to create custom components and custom utility classes.</p>
-                  <p class="mb-0">Before working with this theme, you should become familiar with the Bootstrap framework, especially the utility classes.</p>
-                </div>
+                 <%= @review.hospital_review %>
+                 </div>
               </div>
             </div>
           <!--</div>-->

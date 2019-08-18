@@ -81,57 +81,52 @@ Copy this code in your html file.
                         </nav>
                         </div>
                         <div class="card-body">
-                            <form name="my-form" onsubmit="return validform()" action="success.php" method="">
+                            <form name="my-form" action="/pets" onsubmit="return validform()" method="post" enctype="multipart/form-data">
+                              <%= hidden_field_tag :authenticity_token, form_authenticity_token %><!--form for(view_helper) 안쓸경우 데이터 암호화-->
+                              <input type="hidden" name="user_id" value="<%= current_user.id %>">
                               <p class="h3 text-center">반려동물 정보</p>
                                 <form action="" method="post">
                                     <div class="preview text-center">
                                         <img class="preview-img" src="https://c-lj.gnst.jp/public/img/common/noimage.jpg?20190112050042" alt="Preview Image" width="200" height="200"/>
                                         <div class="browse-button">
                                             <i class="fa fa-pencil-alt"></i>
-                                            <input class="browse-input" type="file" required name="UploadedFile" id="UploadedFile"/>
+                                             <input class="browse-input" type="file" required name="UploadedFile" id="UploadedFile"/>
+                                             <input type="hidden" name="photo_file" value=""/>
                                         </div>
                                         <span class="Error"></span> <br>
                                 <div class="form-group row">
                                     <label for="full_name" class="col-md-4 col-form-label text-md-right">이름</label>
                                     <div class="col-md-6">
-                                        <input type="text" id="full_name" class="form-control" name="full-name">
+                                        <input type="text" id="name" name="name" class="form-control" name="full-name">
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
                                     <label for="email_address" class="col-md-4 col-form-label text-md-right">생년월일</label>
                                     <div class="col-md-6">
-                                        
-                                        <input type="text" id="email_address" class="form-control" name="email-address">
+                                        <input type="text" id="birth_date" name="birth_date" class="form-control" name="email-address">
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
                                     <label for="user_name" class="col-md-4 col-form-label text-md-right">성별</label>
                                     <div class="col-md-6">
-                                        <input type="text" id="user_name" class="form-control" name="username">
+                                        <select id="gender" name="gender" class="form-control selectPets">
+                                                    <option value="M">남</option>
+                                                    <option value="F">여</option>
+                                        </select>
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
                                     <label for="kind" class="col-md-4 col-form-label text-md-right">종류</label>
                                     <div class="col-md-6">
-                                        
-                                        <tr>
-                                            <td>
-                                                <select class="selectPets" name="kind" onchange="setSelectItem()">
-                                                    <option value="dog">강아지</option>
-                                                    <option value="teacher">고양이</option>
-                                                    <option value="developer">햄스터</option>
-                                                    <option value="publisher">거북이</option>
-                                                    <option value="driver">토끼</option>
-                                                    <option value="architecture">뱀</option>
-                                                    <option value="actor">돼지</option>
-                                                    <option value="actor">소</option>
-                                                    <option value="actor">기타</option>
-                                                </select>
-                                            </td>
-                                        </tr>
+                                      <select id="kind" name="kind" class="form-control selectPets">
+                                            <option value="">선택</option> <!--초기는 선택표시-->
+                                        <% @pet_code.each do |pet| %>
+                                            <option value="<%=pet.code%>"><%=pet.code_name%></option>
+                                        <% end %>
+                                       </select>
                                     </div>
                                 </div>
 
@@ -139,12 +134,14 @@ Copy this code in your html file.
                                     <label for="breed" class="col-md-4 col-form-label text-md-right">품종</label>
                                     <div class="col-md-6">
                                          <tr>
-                                             <td>
-                                                 <select class="petlist" name="breed" onchange="setSelectItem()">
+                                             <td> <select id="breed" name="breed" class="form-control petlist">
+                                                  </select>
+                                                  
+                                               <!--  <select class="petlist" name="breed" onchange="setSelectItem()">
                                                     <option value="student">강아지</option>
                                                     <option value="teacher">고양이</option>
                                                     <option value="developer">햄스터</option>
-                                                </select>
+                                                </select>-->
                                                          
                                              </td>
                                          </tr>
@@ -152,9 +149,9 @@ Copy this code in your html file.
                                 </div>
 
                                 <div class="form-group row">
-                                    <label for="permanent_address" class="col-md-4 col-form-label text-md-right">몸무게</label>
+                                    <label for="weight" class="col-md-4 col-form-label text-md-right">몸무게</label>
                                     <div class="col-md-6">
-                                        <input type="text" id="permanent_address" class="form-control" name="permanent-address">
+                                        <input type="text" id="weight" class="form-control" name="weight">
                                     </div>
                                 </div>
 
@@ -176,10 +173,41 @@ Copy this code in your html file.
 
 </main>
 
-
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script> 공통쪽에 선언되어있음 주석처리-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+     
+     // 동물종류선택
+     $("#kind").change(function() {
+        var select_id = $('#kind').val(); //선택한 동물코드값 가져오기 
+        $.ajax({
+            type: "GET",     
+            url: '/get_code',           // 공통코드 request url --> application_cotroller에 정의
+            data: {                     // 보낼 파라미터
+                code_gubn : select_id,  // 코드구분 
+                redirect_path : "pets_path"
+            },
+            dataType: "json", 
+            success: function(data) { //데이터 받아옴 
+
+                   $('#breed').empty(); //품종 선택 초기화
+                  // $("#breed").find("option").remove().end().append("<option value=''>전체</option>");
+    
+                  //받아온 데이터만큼 품종 select option 동적 추가 
+                  $.each(data, function(i){
+                    $("#breed").append("<option value='"+data[i].code+"'>"+data[i].code_name+"</option>");
+                  });    
+
+            },
+            error: function(data) {}
+        });//ajax
+
+
+    });
+});//jquey
+</script>
 </body>
 </html>
 
@@ -276,5 +304,3 @@ Copy this code in your html file.
 <!--    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>-->
 <!--</body>-->
 <!--</html>-->
-
-

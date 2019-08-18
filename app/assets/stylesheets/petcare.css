@@ -9,7 +9,7 @@
 /* Styling h1 and links
 ––––––––––––––––––––––––––––––––– */
 h1[alt="Simple"] {color: white;}
-a[href], a[href]:hover {color: grey; font-size: 0.5em; text-decoration: none}
+a[href], a[href]:hover {color: grey; font-size: 1em; text-decoration: none}
 
 
 body
@@ -37,3 +37,24 @@ body
 
 .starrating > input:hover ~ label
 { color: #ffca08 ;  } /* Set yellow color when star hover */
+
+
+.starR{
+  background: url('/images/star1.png') no-repeat right 0;
+  background-size: auto 100%;
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  text-indent: -9999px;
+  cursor: pointer;
+  vertical-align: middle;
+}
+.starR.on{background-position:0 0;}
+
+/* default */
+
+input[type=radio]{width:0;height:0;padding:0;margin:0;visibility:hidden;}
+input[type=radio] ~ .lb-box label{display:inline-block;width:60px;border:1px solid #dadbdb;padding:10px 0;background:#fff;color:#898989;font-size:14px;line-height:16px;text-align:center;}
+input[type=radio] ~ .lb-box label + label{border-left:0;}
+input[type=radio][value=yes]:checked ~ .lb-box [data-radio=yes],
+input[type=radio][value=no]:checked ~ .lb-box [data-radio=no]{background-color:#17c2ff;color:#fff;font-weight:bold;}

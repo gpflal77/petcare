@@ -139,7 +139,7 @@ ActiveRecord::Schema.define(version: 2019_08_16_052557) do
     t.string "medic_detail", limit: 20, comment: "질병코드상세"
     t.integer "period", comment: "치료기간"
     t.string "heal_yn", limit: 2, comment: "완치여부(Y/N)"
-    t.integer "cost_id", comment: "비용ID"
+    t.string "cost_id", limit: 20, comment: "비용ID"
     t.integer "tot_cost", comment: "전체비용"
     t.integer "satis1", comment: "만족도(친절도)"
     t.integer "satis2", comment: "만족도(진료만족도)"
@@ -148,8 +148,6 @@ ActiveRecord::Schema.define(version: 2019_08_16_052557) do
     t.string "avg_satis", limit: 45, comment: "평균만족도"
     t.text "hospital_review", comment: "병원후기"
     t.text "heal_review", comment: "치료후기"
-    t.string "file", limit: 30, comment: "영수증파일ID"
-    t.string "photo_file", limit: 30, comment: "사진파일ID"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

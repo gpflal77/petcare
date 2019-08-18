@@ -16,6 +16,9 @@ class HospitalsController < ApplicationController
     
     
     def view
+       # @hospital = Hospital.find_by(hospital_id: params[:hospital_id]) 
+       @hospital = Hospital.find(params[:hospital_id]) 
+       @reviews = Review.where(hospital_id: params[:hospital_id]) 
     end
     
     def like
