@@ -1,7 +1,12 @@
 <p id="notice"><%= notice %></p>
 <p>
   <strong>Photo_file:</strong>
-  <%= @pet.photo_file %>
+  <% if @pet.photo_file.attached? %>
+      <%= image_tag url_for(@pet.photo_file), class:"img-fluid px-3 px-sm-4 mt-3 mb-4", style:"" %>
+  <% else %>
+      <%= image_tag "no_image_m.png", class:"img-fluid px-3 px-sm-4 mt-3 mb-4", style:"" %>
+      첨부된 사진이 없습니다.
+  <% end %>
 </p>
 
 <p>

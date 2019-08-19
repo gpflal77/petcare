@@ -22,5 +22,8 @@ Rails.application.routes.draw do
   get 'get_code' => 'application#get_code',  defaults: { format: 'json' }
   
   get 'hospitals/get_nearby_hospital' => 'hospitals#get_nearby_hospital',  defaults: { format: 'json' }
+  
+
+  post 'pets/update/:id' => 'pets#update'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

@@ -1,6 +1,529 @@
-<h1>Editing Review</h1>
+     <!-- Begin Page Content -->
+<!--     <head>-->
+  
+ 
 
-<%= render 'form', review: @review %>
+<!--</head>-->
+<div class="container-fluid">
+      <!-- Page Heading -->
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">후기수정</h1>
+          </div>
+     <form action="/reviews/<%=@review.id%>" method="PATCH" id ="review_form" name="review_form" enctype="multipart/form-data">
+      <%=hidden_field_tag :authenticity_token, form_authenticity_token %><!--form for(view_helper) 안쓸경우 데이터 암호화처리 해줘야함-->
+        <input type="hidden" name="hospital_id" value="<%= @review.hospital_id %>" ><!--병원페이지에서 ID 받아오기-->
 
-<%= link_to 'Show', @review %> |
-<%= link_to 'Back', reviews_path %>
+          <div class="row">
+            <div class="col-xl-4 col-md-4 mb-4">
+              <div class="card bg-primary text-white h-100 py-2">
+                    <div class="card-body">
+                      <span class="text-lg">받은 치료</span>
+                    </div>
+              </div>
+            </div>
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-4 col-md-4 mb-4">
+              <div class="card border-bottom-primary shadow h-100 py-2">
+                <div class="card-body">
+                  
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">진료항목</div>
+                      
+                    <nav class="navbar navbar-expand navbar-light bg-light mb-4">
+                    <!--<a class="navbar-brand" href="#">Navbar</a>-->
+                      <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown">
+                          <a class="review nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            진료항목
+                          </a>
+                          <select name="medic_code" id="medic_code" class="form-control form-control">
+                                  <option value="">선택</option>
+                                 <% @medc_code.each do |medic| %>
+                                      <option value="<%=medic.code%>" <% if @review.medic_code == medic.code %>selected = "selected"<%end%> ><%=medic.code_name%></option>
+                                 <% end %>
+                          </select>
+                          
+                            <!--<a class="dropdown-item" href="#">1</a>-->
+                            <!--<a class="dropdown-item" href="#">2</a>-->
+                            <!--<a class="dropdown-item" href="#">3</a>-->
+                          <!--<div class="dropdown-divider"></div>-->
+                          <!--<a class="dropdown-item" href="#">Something else here</a>-->
+                          </div>
+                        </li>
+                      </ul>
+                    </nav>
+                      
+                      
+                      <!--<div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>-->
+                    </div>
+                    <div class="col-auto">
+                     
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <div class="col-xl-4 col-md-4 mb-4">
+              <div class="card border-bottom-primary shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">세부진료항목</div>
+                      <nav class="navbar navbar-expand navbar-light bg-light mb-4">
+                    <!--<a class="navbar-brand" href="#">Navbar</a>-->
+                      <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown">
+                          <a class="review nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            세부진료항목
+                          </a>
+                          <select name="medic_detail" id="medic_detail" class="form-control form-control">
+                              <% @medic_detail.each do |medic_deta| %>
+                                      <option value="<%=medic_deta.code%>" <% if @review.medic_detail == medic_deta.code %>selected = "selected"<%end%> ><%=medic_deta.code_name%></option>
+                              <% end %>
+                          </select>
+                          <!--<div class="dropdown-menu dropdown-menu-right animated--grow-in" aria-labelledby="navbarDropdown">-->
+                          <!--  <a class="dropdown-item" href="#">1</a>-->
+                          <!--  <a class="dropdown-item" href="#">2</a>-->
+                          <!--  <a class="dropdown-item" href="#">3</a>-->
+                          <!--<div class="dropdown-divider"></div>-->
+                          <!--<a class="dropdown-item" href="#">Something else here</a>-->
+                          <!--</div>-->
+                        </li>
+                      </ul>
+                    </nav>
+                    </div>
+                    <div class="col-auto">
+                    
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div><!--row-->
+        <hr>
+        <div class="row">
+            <div class="col-xl-4 col-md-4 mb-4">
+              <div class="card bg-success text-white h-100 py-2">
+                    <div class="card-body">
+                      <span class="text-lg">치료기간</span>
+                    </div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-md-4 mb-4">
+              <div class="card border-bottom-success shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">치료기간</div>
+                      <div class="form-group">
+                      <input type="number" name="period" class="form-control form-control-user" min="1" placeholder="일수를 입력하세요" value="<%= @review.tot_cost %>">
+                       
+                    </div>
+                    </div>
+                    <div class="col-auto">
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-xl-4 col-md-4 mb-4">
+              <div class="card border-bottom-success shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">완치여부</div>
+                       <nav class="navbar navbar-expand navbar-light bg-light mb-4">
+                    <!--<a class="navbar-brand" href="#">Navbar</a>-->
+                      <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown">
+                          <a class="review nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            완치여부
+                          </a>
+                          <!--<div class="dropdown-menu dropdown-menu-right animated--grow-in" aria-labelledby="navbarDropdown">-->
+                            <select id="heal_yn" name="heal_yn" value="<%= @review.heal_yn%>">
+                              <option value="<%= @review.heal_yn %>">Y</option>
+                              <option value="<%= @review.heal_yn %>">N</option>
+                            </select>
+                            <!--<a class="dropdown-item" href="#">3</a>-->
+                          <!--<div class="dropdown-divider"></div>-->
+                          <!--<a class="dropdown-item" href="#">Something else here</a>-->
+                          </div>
+                        </li>
+                      </ul>
+                    </nav>
+                    </div>
+                    <div class="col-auto">
+                    
+                    </div>
+                  </div>
+                </div>
+              </div>
+           </div><!--row-->
+         <hr>
+         <div class="row">
+           <div class="col-xl-4 col-md-4 mb-4">
+              <div class="card bg-warning text-white h-100 py-2">
+                    <div class="card-body">
+                      <div class="text-lg">치료비</div>
+                      <br>
+                      <br>
+                      <div>
+                      <!--<a href="#" class="btn btn-light btn-icon-split btn-sm"  style="position:absolute; right:15px; bottom:20px;">-->
+                      <!--<span class="icon text-white-50">-->
+                      <!--<i class="fas fa-check"></i>-->
+                      
+                
+                      <!--<span class="text">치료비 항목 추가</span>-->
+                
+                      <!--</a>  -->
+                      </div>
+                    </div>
+              </div>
+           </div>
+            <div class="col-xl-4 col-md-4 mb-4">
+              <div class="card border-bottom-warning shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">병원비항목</div>
+                      <nav class="navbar navbar-expand navbar-light bg-light mb-4">
+                    <!--<a class="navbar-brand" href="#">Navbar</a>-->
+                      <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown">
+                          <a class="review nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            병원비항목
+                            
+                          </a>
+            
+                          <select name="cost_id" id="cost_id" class="form-control form-control">
+                                <% @cost_code.each do |cost| %>
+                                      <option value="<%=cost.code%>" <% if @review.cost_id == cost.code %>selected = "selected"<%end%> ><%=cost.code_name%></option>
+                                <% end %>
+                          </select>
+                          <!--<div class="dropdown-menu dropdown-menu-right animated--grow-in" aria-labelledby="navbarDropdown">-->
+                          <!--  <a class="dropdown-item" href="#">1</a>-->
+                          <!--  <a class="dropdown-item" href="#">2</a>-->
+                          <!--  <a class="dropdown-item" href="#">3</a>-->
+                          <!--<div class="dropdown-divider"></div>-->
+                          <!--<a class="dropdown-item" href="#">Something else here</a>-->
+                          <!--</div>-->
+                        </li>
+                      </ul>
+                    </nav>
+                    </div>
+                    <div class="col-auto">
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-xl-4 col-md-4 mb-4">
+              <div class="card border-bottom-warning shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">금액입력</div>
+                      <input type="number" name="tot_cost" class="form-control form-control-user" min="1" placeholder="비용" value="<%= @review.tot_cost %>">
+                      
+                    </div>
+                    <div class="col-auto">
+                    
+                    </div>
+                    
+                  </div>
+                </div>
+                
+              </div>
+              
+             </div>
+            </div><!--row-->
+
+            <!-- Earnings (Monthly) Card Example -->
+          <!--  <div class="col-xl-3 col-md-6 mb-4">-->
+          <!--    <div class="card border-left-success shadow h-100 py-2">-->
+          <!--      <div class="card-body">-->
+          <!--        <div class="row no-gutters align-items-center">-->
+          <!--          <div class="col mr-2">-->
+          <!--            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Earnings (Annual)</div>-->
+          <!--            <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>-->
+          <!--          </div>-->
+          <!--          <div class="col-auto">-->
+          <!--            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>-->
+          <!--          </div>-->
+          <!--        </div>-->
+          <!--      </div>-->
+          <!--    </div>-->
+          <!--  </div>-->
+
+            <!-- Earnings (Monthly) Card Example -->
+          <!--  <div class="col-xl-3 col-md-6 mb-4">-->
+          <!--    <div class="card border-left-info shadow h-100 py-2">-->
+          <!--      <div class="card-body">-->
+          <!--        <div class="row no-gutters align-items-center">-->
+          <!--          <div class="col mr-2">-->
+          <!--            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks</div>-->
+          <!--            <div class="row no-gutters align-items-center">-->
+          <!--              <div class="col-auto">-->
+          <!--                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>-->
+          <!--              </div>-->
+          <!--              <div class="col">-->
+          <!--                <div class="progress progress-sm mr-2">-->
+          <!--                  <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>-->
+          <!--                </div>-->
+          <!--              </div>-->
+          <!--            </div>-->
+          <!--          </div>-->
+          <!--          <div class="col-auto">-->
+          <!--            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>-->
+          <!--          </div>-->
+          <!--        </div>-->
+          <!--      </div>-->
+          <!--    </div>-->
+          <!--  </div>-->
+
+            <!-- Pending Requests Card Example -->
+          <!--  <div class="col-xl-3 col-md-6 mb-4">-->
+          <!--    <div class="card border-left-warning shadow h-100 py-2">-->
+          <!--      <div class="card-body">-->
+          <!--        <div class="row no-gutters align-items-center">-->
+          <!--          <div class="col mr-2">-->
+          <!--            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Pending Requests</div>-->
+          <!--            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>-->
+          <!--          </div>-->
+          <!--          <div class="col-auto">-->
+          <!--            <i class="fas fa-comments fa-2x text-gray-300"></i>-->
+          <!--          </div>-->
+          <!--        </div>-->
+          <!--      </div>-->
+          <!--    </div>-->
+          <!--  </div>-->
+          <!--</div>-->
+
+          <!--<div class="row">-->
+          <div class="row">
+            <div class="col-lg-6">
+
+              <!-- Dropdown Card Example -->
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">만족도</h6>
+                </div>
+                <div class="card-body">
+                    <div class="starRev" >
+                      <span class=" font-weight-bold mb-2">친절도</span>
+                      <% @s1 = @review.satis1 %>
+                      <% for k in 1..@s1 %>
+                      <input type="radio" name="satis1" value="<%=k%>" id="statis1_<%=k%>"><span class="starR on" name="statis1_<%=k%>"><%=k%></span>
+                      <% end %>
+                      <% for k in 1..(5-@s1) %>
+                      <% @a1 = k+@s1 %>
+                      <input type="radio" name="satis1" value="<%=@a1%>" id="statis1_<%=@a1%>"><span class="starR" name="statis1_<%=@a1%>"><%=@a1%></span>
+                      <% end %>
+                      
+                      <!--<input type="radio" name="satis1" value="1" id="statis1_1"><span class="starR" name="statis1_1">1</span>-->
+                      
+                      <!--<input type="radio" name="satis1" value="1" id="statis1_1"><span class="starR" name="statis1_1">1</span>-->
+                      <!--<input type="radio" name="satis1" value="2" id="statis1_2"><span class="starR" name="statis1_2">2</span>-->
+                      <!--<input type="radio" name="satis1" value="3" id="statis1_3"><span class="starR" name="statis1_3">3</span>-->
+                      <!--<input type="radio" name="satis1" value="4" id="statis1_4"><span class="starR" name="statis1_4">4</span>-->
+                      <!--<input type="radio" name="satis1" value="5" id="statis1_5"><span class="starR" name="statis1_5">5</span>-->
+                    </div>
+                    
+                    
+                     <div class="starRev" >
+                      <span class="font-weight-bold mb-2">진료만족도</span>
+                      <% @s2 = @review.satis2 %>
+                      <% for k in 1..@s2 %>
+                      <input type="radio" name="satis2" value="<%=k%>" id="statis2_<%=k%>"><span class="starR on" name="statis2_<%=k%>"><%=k%></span>
+                      <% end %>
+                      <% for k in 1..(5-@s2) %>
+                      <% @a2 = k+@s2 %>
+                      <input type="radio" name="satis2" value="<%=@a2%>" id="statis2_<%=@a2%>"><span class="starR" name="statis2_<%=@a2%>"><%=@a2%></span>
+                      <% end %>
+                      
+                    </div>
+                    
+                    
+                     <div class="starRev" >
+                      <span class="font-weight-bold mb-2">가격</span>
+                      <% @s3 = @review.satis3 %>
+                      <% for k in 1..@s3 %>
+                      <input type="radio" name="satis3" value="<%=k%>" id="statis3_<%=k%>"><span class="starR on" name="statis3_<%=k%>"><%=k%></span>
+                      <% end %>
+                      <% for k in 1..(5-@s3) %>
+                      <% @a3 = k+@s3 %>
+                      <input type="radio" name="satis2" value="<%=@a3%>" id="statis2_<%=@a3%>"><span class="starR" name="statis2_<%=@a3%>"><%=@a3%></span>
+                      <% end %>
+                    </div>
+                    
+                    
+                     <div class="starRev" >
+                       <span class="font-weight-bold mb-2">시설</span>
+                      <% @s4 = @review.satis4 %>
+                      <% for k in 1..@s4 %>
+                      <input type="radio" name="satis4" value="<%=k%>" id="statis4_<%=k%>"><span class="starR on" name="statis4_<%=k%>"><%=k%></span>
+                      <% end %>
+                      <% for k in 1..(5-@s4) %>
+                      <% @a4 = k+@s4 %>
+                      <input type="radio" name="satis2" value="<%=@a4%>" id="statis2_<%=@a4%>"><span class="starR" name="statis2_<%=@a4%>"><%=@a4%></span>
+                      <% end %>
+                    </div>
+                    
+                </div>
+              </div>
+             </div>
+             <div class="col-lg-6">
+                <div class="card shadow mb-4">
+                  <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">반려동물</h6>
+                  </div>
+                  <div class="card-body">
+                      <select name="pet_id" id="pet_id" class="form-control form-control">
+                         <% @pet.each do |pet| %>
+                              <option value="<%=pet.id%>"><%=pet.name%></option>
+                         <% end %>
+                      </select>
+                  </div>
+                </div>
+             </div>
+          </div>
+        
+          <div class="row">
+            
+            <div class="col-lg-12">
+
+              <!-- Default Card Example -->
+              <!--<div class="card mb-4">-->
+              <!--  <div class="card-header">-->
+              <!--    Default Card Example-->
+              <!--  </div>-->
+              <!--  <div class="card-body">-->
+              <!--    This card uses Bootstrap's default styling with no utility classes added. Global styles are the only things modifying the look and feel of this default card example.-->
+              <!--  </div>-->
+              <!--</div>-->
+
+              <!-- Basic Card Example -->
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">병원 후기</h6>
+                </div>
+                <div class="card-body">
+                  <input type="text" name="hospital_review" class="form-control bg-light border-0 small" placeholder="병원 후기를 등록해주세요" style="height:50px;" value="<%= @review.hospital_review %>">
+                  </div>
+              </div>
+            
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+
+              <!-- Dropdown Card Example -->
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">치료 후기</h6>
+                </div>
+                <div class="card-body">
+            
+                 <input type="text" name="heal_review" class="form-control bg-light border-0 small" placeholder="치료 후기를 등록해주세요" style="height:100px;" value="<%= @review.heal_review %>">
+                </div>
+              </div>
+             </div>
+          </div>
+          <!--<div class="col-xl-4 col-md-4 mb-4">-->
+          <!--    <div class="card bg-info text-white h-100 py-2">-->
+          <!--          <div class="card-body">-->
+          <!--            <span class="text-lg">인증</span>-->
+          <!--          </div>-->
+          <!--    </div>-->
+          <!--  </div>-->
+           <div class="col-lg-6">
+           <input type="file" name="file">영수증 등록
+           <% if @review.file.attached? %>
+              (기존에 첨부된 영수증이 있습니다)
+           <% else %>
+              (첨부된 영수증이 없습니다. 영수증을 올려주세요)
+           <% end %>
+           </div>
+           <div class="col-lg-6">
+           <input type="file" name="photo_file" value="<%= @review.photo_file %>">사진 등록
+           <% if @review.photo_file.attached? %>
+              (기존에 첨부된 사진이 있습니다)
+           <% else %>
+              (첨부된 사진이 없습니다. 사진을 올려주세요)
+           <% end %>
+           </div>
+           <!--<div class="col-lg-6">-->
+           <!--<div class="d-sm-flex align-items-center justify-content-between mb-6">-->
+           <!--<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" >-->
+           <!--<i class="fas fa-upload fa-sm text-white-50">-->
+           <!--</i>영수증 등록</a> -->
+           <!--</div>-->
+           <!--</div>-->
+           
+           <!--<div class="col-lg-6">-->
+           <!--<div class="d-sm-flex align-items-center justify-content-between mb-6">-->
+           <!--<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" >-->
+           <!--<i class="fas fa-upload fa-sm text-white-50">-->
+           <!--</i>사진 등록</a> -->
+           
+           <!--</div>-->
+           <!--</div>-->
+ <!-- /.container-fluid -->
+<!--<h1>New Review</h1>-->
+<input type="submit" name="제출하기">
+</form>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+
+  $("#medic_code").change(function() {
+        var select_id = $('#medic_code').val(); //코드구분
+        $.ajax({
+            type: "GET",     
+            url: '/get_code',           // 공통코드 request url --> application_cotroller에 정의
+            data: {                     // 보낼 파라미터
+                code_gubn : select_id,  // 코드구분 
+                redirect_path : "reviews_new_path"
+            },
+            dataType: "json", 
+            success: function(data) { //데이터 받아옴 
+              
+              $('#medic_detail').empty(); //초기화
+            //  $("#medc_detail").find("option").remove().end().append("<option value=''>전체</option>");
+
+              $.each(data, function(i){
+                $("#medic_detail").append("<option value='"+data[i].code+"'>"+data[i].code_name+"</option>")
+              });    
+
+            },
+            error: function(data) {}
+        });
+
+     });
+     
+  //별표 버튼
+  $('.starRev span').click(function(){
+      $(this).parent().children('span').removeClass('on');
+      $(this).addClass('on').prevAll('span').addClass('on');
+      var radio_id = $(this).attr('name');
+       $("#"+radio_id).prop('checked', true);// 라디오버튼 선택해준다.
+
+      return false;
+  });
+  
+  
+    $("#review_form").submit(function(){
+     //시간나면 저장시체크할부분 작성
+     // alert($("input:radio[name=satis1]:checked").val());
+     // return false;
+    });
+});
+
+
+</script>

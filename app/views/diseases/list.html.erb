@@ -13,9 +13,11 @@
                     <div id="medc_code_group"  class="btn-group btn-group-toggle col-lg-12" data-toggle="buttons">
                         <% @pet.each do |pet| %>
                            <label class="btn btn-primary">
-                               <input type="radio" name="pet_id" id="pet_id_<%=pet.id%>" autocomplete="on" value="<%=pet.id%>"> <%=pet.name%>
+                               <input type="radio"  name="pet_id" id="pet_id_<%=pet.id%>" autocomplete="on" value="<%=pet.id%>"> <%=pet.name%>
                            </label>
                         <% end %>
+                         <input type="hidden" name="kind"   id="kind"   value=""> 
+                         <input type="hidden" name="breed"  id="breed"  value="">
                     </div>
                 </div>
                 <div class="card-body">
@@ -166,33 +168,57 @@ $(document).ready(function() {
       
     });
     
+      
+    $('input[name="breed"]').change(function() {
+     
+      //값세팅
+    });
+      
+    $('input[name="kind"]').change(function() {
+     
+      //값세팅
+    });
+    
   //조회버튼
   $("#search_btn").click(function(){
+      var medic_code   = $('#medc_code').val();   //코드구분
+      var medic_detail = $('#medc_detail').val(); //코드구분
+      var kind  = $('#kind').val(); //코드구분
+      var breed = $('#breed').val(); //코드구분
       
-           //현재위치 좌표변환 WGS84 -> TM좌표로 변환 (DB정보가 TM좌표임)
-           var url = 'https://dapi.kakao.com/v2/local/geo/transcoord.json?x='+lon+'&y='+lat+'&input_coord=WGS84&output_coord=TM';
-
-            $.ajax({
+          $.ajax({
                 type: "GET",     
-                url: url,
-                Host: 'dapi.kakao.com',
-                headers: {
-                   Authorization: 'KakaoAK 2988bcc8484d610ceaf98200b212e651'
+                url: 'get_search_cost',      
+                data: {                     // 보낼 파라미터
+                    medic_code: medic_code,  // x좌표(TM중부원점) 
+                    medic_detail: medic_detail,  // x좌표(TM중부원점) 
+                    search_txt: "",  
+                    redirect_path : "diseases_list_path"
                 },
                 dataType: "json", 
                 success: function(data) { //데이터 받아옴 
-                        console.log(data.meta.total_count);
-                        console.log(data.documents[0]);
-                        var x = data.documents[0].x;
-                        var y = data.documents[0].y;
+                    $('#hospital_list').find('tbody').empty();
+                    $.each(data, function(i){
+                       // var myRow = "<tr><td><a href='/hospitals/view/"+data[i].id+"'>" + data[i].name + "</a></td><td>" + data[i].tel_no + "</td><td>" + data[i].open_time + "~"+  data[i].close_time
+                       //           +"</td><td>" + data[i].addr + "</td></tr>";
+                       // $('#hospital_list').find('tbody').append(myRow);
                         
-                        fn_getLocationSearch(x, y); //DB에서 가까운 거리 병원 찾아오기 
-                        //후기 찾아보기 
                         
-                         
+                        // 좌표변환 후 지도에 그려주기 
+                       // fn_setHospitalLoction(data[i].loca_x, data[i].loca_y, data[i].name, data[i].addr, data[i].tel_no, data[i].id);
+                        alert(data.length);
+                    });
+                    
+                    if(data.length > 0){
+                       $('#list_div').show();
+                        
+                    }
+                
+                    //좌표범위 재설정 및 커스텀 오버레이 설정
+                   // fn_reload_map_view();
+    
                 },
-                error: function(data) {
-                }
+                error: function(data) {}
             });
             
 

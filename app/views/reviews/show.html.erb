@@ -155,44 +155,44 @@
                     <!--<div class="progress-bar bg-danger" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                     -->
                        <div class="starRev" >
-                        <input type="radio" name="satis1" value="1"><span class="starR <%if @review.satis1 >= 1 %> on <%end%>">1</span>
-                        <input type="radio" name="satis1" value="2"><span class="starR <%if @review.satis1 >= 2 %> on <%end%>">2</span>
-                        <input type="radio" name="satis1" value="3"><span class="starR <%if @review.satis1 >= 3 %> on <%end%>">3</span>
-                        <input type="radio" name="satis1" value="4"><span class="starR <%if @review.satis1 >= 4 %> on <%end%>">4</span>
-                        <input type="radio" name="satis1" value="5"><span class="starR <%if @review.satis1 >= 5 %> on <%end%>">5</span>
+                        <input type="radio" name="satis1" value="1"><span class="starR <%if !@review.satis1.nil? && @review.satis1 >= 1 %> on <%end%>">1</span>
+                        <input type="radio" name="satis1" value="2"><span class="starR <%if !@review.satis1.nil? && @review.satis1 >= 2 %> on <%end%>">2</span>
+                        <input type="radio" name="satis1" value="3"><span class="starR <%if !@review.satis1.nil? && @review.satis1 >= 3 %> on <%end%>">3</span>
+                        <input type="radio" name="satis1" value="4"><span class="starR <%if !@review.satis1.nil? && @review.satis1 >= 4 %> on <%end%>">4</span>
+                        <input type="radio" name="satis1" value="5"><span class="starR <%if !@review.satis1.nil? && @review.satis1 >= 5 %> on <%end%>">5</span>
                        </div>
                     </div>
                   <h4 class="small font-weight-bold">진료만족도 <span class="float-right"><%= @review.satis2 %> / 5</span></h4>
                   <div class="mb-4">
                     <!--<div class="progress-bar bg-warning" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>-->
                        <div class="starRev" >
-                        <input type="radio" name="satis2" value="1"><span class="starR <%if @review.satis2 >= 1 %> on <%end%>">1</span>
-                        <input type="radio" name="satis2" value="2"><span class="starR <%if @review.satis2 >= 2 %> on <%end%>">2</span>
-                        <input type="radio" name="satis2" value="3"><span class="starR <%if @review.satis2 >= 3 %> on <%end%>">3</span>
-                        <input type="radio" name="satis2" value="4"><span class="starR <%if @review.satis2 >= 4 %> on <%end%>">4</span>
-                        <input type="radio" name="satis2" value="5"><span class="starR <%if @review.satis2 >= 5 %> on <%end%>">5</span>
+                        <input type="radio" name="satis2" value="1"><span class="starR <%if !@review.satis2.nil? && @review.satis2 >= 1 %> on <%end%>">1</span>
+                        <input type="radio" name="satis2" value="2"><span class="starR <%if !@review.satis2.nil? && @review.satis2 >= 2 %> on <%end%>">2</span>
+                        <input type="radio" name="satis2" value="3"><span class="starR <%if !@review.satis2.nil? && @review.satis2 >= 3 %> on <%end%>">3</span>
+                        <input type="radio" name="satis2" value="4"><span class="starR <%if !@review.satis2.nil? && @review.satis2 >= 4 %> on <%end%>">4</span>
+                        <input type="radio" name="satis2" value="5"><span class="starR <%if !@review.satis2.nil? && @review.satis2 >= 5 %> on <%end%>">5</span>
                        </div>
                   </div>
                   <h4 class="small font-weight-bold">가격 <span class="float-right"><%= @review.satis3 %> / 5</span></h4>
                   <div class="mb-4">
                     <!--<div class="progress-bar" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>-->
                       <div class="starRev" >
-                        <input type="radio" name="satis3" value="1"><span class="starR <%if @review.satis3 >= 1 %> on <%end%>">1</span>
-                        <input type="radio" name="satis3" value="2"><span class="starR <%if @review.satis3 >= 2 %> on <%end%>">2</span>
-                        <input type="radio" name="satis3" value="3"><span class="starR <%if @review.satis3 >= 3 %> on <%end%>">3</span>
-                        <input type="radio" name="satis3" value="4"><span class="starR <%if @review.satis3 >= 4 %> on <%end%>">4</span>
-                        <input type="radio" name="satis3" value="5"><span class="starR <%if @review.satis3 >= 5 %> on <%end%>">5</span>
+                        <input type="radio" name="satis3" value="1"><span class="starR <%if !@review.satis3.nil? && @review.satis3 >= 1 %> on <%end%>">1</span>
+                        <input type="radio" name="satis3" value="2"><span class="starR <%if !@review.satis3.nil? &&@review.satis3 >= 2 %> on <%end%>">2</span>
+                        <input type="radio" name="satis3" value="3"><span class="starR <%if !@review.satis3.nil? &&@review.satis3 >= 3 %> on <%end%>">3</span>
+                        <input type="radio" name="satis3" value="4"><span class="starR <%if !@review.satis3.nil? &&@review.satis3 >= 4 %> on <%end%>">4</span>
+                        <input type="radio" name="satis3" value="5"><span class="starR <%if !@review.satis3.nil? &&@review.satis3 >= 5 %> on <%end%>">5</span>
                       </div>
                   </div>
                   <h4 class="small font-weight-bold">시설<span class="float-right"><%= @review.satis4 %> / 5</span></h4>
                   <div class="mb-4">
                     <!--<div class="progress-bar bg-info" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>-->
                       <div class="starRev" >
-                        <input type="radio" name="satis4" value="1"><span class="starR <%if @review.satis4 >= 1 %> on <%end%>">1</span>
-                        <input type="radio" name="satis4" value="2"><span class="starR <%if @review.satis4 >= 2 %> on <%end%>">2</span>
-                        <input type="radio" name="satis4" value="3"><span class="starR <%if @review.satis4 >= 3 %> on <%end%>">3</span>
-                        <input type="radio" name="satis4" value="4"><span class="starR <%if @review.satis4 >= 4 %> on <%end%>">4</span>
-                        <input type="radio" name="satis4" value="5"><span class="starR <%if @review.satis4 >= 5 %> on <%end%>">5</span>
+                        <input type="radio" name="satis4" value="1"><span class="starR <%if !@review.satis4.nil? && @review.satis4 >= 1 %> on <%end%>">1</span>
+                        <input type="radio" name="satis4" value="2"><span class="starR <%if !@review.satis4.nil? && @review.satis4 >= 2 %> on <%end%>">2</span>
+                        <input type="radio" name="satis4" value="3"><span class="starR <%if !@review.satis4.nil? && @review.satis4 >= 3 %> on <%end%>">3</span>
+                        <input type="radio" name="satis4" value="4"><span class="starR <%if !@review.satis4.nil? && @review.satis4 >= 4 %> on <%end%>">4</span>
+                        <input type="radio" name="satis4" value="5"><span class="starR <%if !@review.satis4.nil? && @review.satis4 >= 5 %> on <%end%>">5</span>
                       </div>
                   </div>
                   <!--<h4 class="small font-weight-bold">Account Setup <span class="float-right">Complete!</span></h4>-->

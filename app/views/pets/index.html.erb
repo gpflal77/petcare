@@ -1,306 +1,38 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Pets</h1>
-
-<!--만약 등록된 정보가 없으면 추가하기 페이지를 만들고, 등록된 정보가 있으면 기존 등록된 정보를 불러온다-->
-
-<!--다른 폼태그 예제1-->
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
-
-<!--
-
-Copy this code in your html file.
-
--->
 
 
-
-<!--폼태그 해보자-->
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
-
-<!doctype html>
-<html lang="en">
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
-
-
-
-    <link rel="icon" href="Favicon.png">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-
-    <title>반려동물 등록하기</title>
-</head>
-<body>
-
-<nav class="navbar navbar-expand-lg navbar-light navbar-laravel">
-
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="#">Login</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Register</a>
-            </li>
-        </ul>
-
-    </div>
-    </div>
-</nav>
-
-<main class="my-form">
-    <div class="cotainer">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-header">
-                        <!--/여기수정함-->
-                        <!--Q.강아지 사진 넣으면 강아지 이미지로 수정하고 싶음-->
-                        <nav class="navbar navbar-expand-lg navbar-light navbar-laravel">
-                          <div class="container">
-                          <p class="h2 text-center">반려동물 등록하기</p>
-                          <!--<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">-->
-                          <!--    <span class="navbar-toggler-icon"></span>-->
-                          <!--</button>-->
-                        </nav>
-                        </div>
-                        <div class="card-body">
-                            <form name="my-form" action="/pets" onsubmit="return validform()" method="post" enctype="multipart/form-data">
-                              <%= hidden_field_tag :authenticity_token, form_authenticity_token %><!--form for(view_helper) 안쓸경우 데이터 암호화-->
-                              <input type="hidden" name="user_id" value="<%= current_user.id %>">
-                              <p class="h3 text-center">반려동물 정보</p>
-                                <form action="" method="post">
-                                    <div class="preview text-center">
-                                        <img class="preview-img" src="https://c-lj.gnst.jp/public/img/common/noimage.jpg?20190112050042" alt="Preview Image" width="200" height="200"/>
-                                        <div class="browse-button">
-                                            <i class="fa fa-pencil-alt"></i>
-                                             <input class="browse-input" type="file" required name="UploadedFile" id="UploadedFile"/>
-                                             <input type="hidden" name="photo_file" value=""/>
-                                        </div>
-                                        <span class="Error"></span> <br>
-                                <div class="form-group row">
-                                    <label for="full_name" class="col-md-4 col-form-label text-md-right">이름</label>
-                                    <div class="col-md-6">
-                                        <input type="text" id="name" name="name" class="form-control" name="full-name">
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label for="email_address" class="col-md-4 col-form-label text-md-right">생년월일</label>
-                                    <div class="col-md-6">
-                                        <input type="text" id="birth_date" name="birth_date" class="form-control" name="email-address">
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label for="user_name" class="col-md-4 col-form-label text-md-right">성별</label>
-                                    <div class="col-md-6">
-                                        <select id="gender" name="gender" class="form-control selectPets">
-                                                    <option value="M">남</option>
-                                                    <option value="F">여</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label for="kind" class="col-md-4 col-form-label text-md-right">종류</label>
-                                    <div class="col-md-6">
-                                      <select id="kind" name="kind" class="form-control selectPets">
-                                            <option value="">선택</option> <!--초기는 선택표시-->
-                                        <% @pet_code.each do |pet| %>
-                                            <option value="<%=pet.code%>"><%=pet.code_name%></option>
-                                        <% end %>
-                                       </select>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label for="breed" class="col-md-4 col-form-label text-md-right">품종</label>
-                                    <div class="col-md-6">
-                                         <tr>
-                                             <td> <select id="breed" name="breed" class="form-control petlist">
-                                                  </select>
-                                                  
-                                               <!--  <select class="petlist" name="breed" onchange="setSelectItem()">
-                                                    <option value="student">강아지</option>
-                                                    <option value="teacher">고양이</option>
-                                                    <option value="developer">햄스터</option>
-                                                </select>-->
-                                                         
-                                             </td>
-                                         </tr>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label for="weight" class="col-md-4 col-form-label text-md-right">몸무게</label>
-                                    <div class="col-md-6">
-                                        <input type="text" id="weight" class="form-control" name="weight">
-                                    </div>
-                                </div>
-
-                                    <div class="col-md-6 offset-md-4">
-                                        <!--Q. 등록하기 버튼을 누르면 다시 화면으로 오고 싶은데요?-->
-                                        <!--Q. 수정하기 버튼도 만들고 싶은데용?-->
-                                        <button type="submit" class="btn btn-primary">
-                                        등록하기
-                                        
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+<!--나리님이 하던거 new.html.erb, edit.html.erb로 옮겼어요!!!! 밑에 반려동물 추가하기, 수정하기 누르면 나리님 작성화면으로 가는거에요 
+   틀만 잡아놨으니깐 버튼이랑 화면꾸미는거랑 테스트해보고 세부적인 부분 수정해주세요~~ -->
+<div class="container-fluid">
+        <h1>Pets list</h1>
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">반려동물 리스트</h6>
             </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <tbody>
+                    <% @pets.each do |pet| %>
+                      <tr>
+                        <td>
+                              <% if pet.photo_file.attached? %>
+                              <%= image_tag url_for(pet.photo_file), class:"img-fluid px-3 px-sm-4 mt-3 mb-4", style:"" %>
+                              <% else %>
+                                  첨부된 사진이 없습니다
+                              <% end %>
+                        </td>
+                        <td><%= pet.name %></td>
+                        <td><%= link_to '보기', pet %>
+                          | <%= link_to '수정', edit_pet_path(pet) %>
+                          | <%= link_to '삭제', pet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+                 </div>
+              </div>
+          </div>
         </div>
-    </div>
 
-</main>
-
-<!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script> 공통쪽에 선언되어있음 주석처리-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function() {
-     
-     // 동물종류선택
-     $("#kind").change(function() {
-        var select_id = $('#kind').val(); //선택한 동물코드값 가져오기 
-        $.ajax({
-            type: "GET",     
-            url: '/get_code',           // 공통코드 request url --> application_cotroller에 정의
-            data: {                     // 보낼 파라미터
-                code_gubn : select_id,  // 코드구분 
-                redirect_path : "pets_path"
-            },
-            dataType: "json", 
-            success: function(data) { //데이터 받아옴 
-
-                   $('#breed').empty(); //품종 선택 초기화
-                  // $("#breed").find("option").remove().end().append("<option value=''>전체</option>");
-    
-                  //받아온 데이터만큼 품종 select option 동적 추가 
-                  $.each(data, function(i){
-                    $("#breed").append("<option value='"+data[i].code+"'>"+data[i].code_name+"</option>");
-                  });    
-
-            },
-            error: function(data) {}
-        });//ajax
-
-
-    });
-});//jquey
-</script>
-</body>
-</html>
-
-
-<!--  <tbody>-->
-<!--    <% @pets.each do |pet| %>-->
-<!--      <tr>-->
-<!--        <td><%= pet.photo_file %></td>-->
-<!--        <td><%= pet.user_id %></td>-->
-<!--        <td><%= pet.name %></td>-->
-<!--        <td><%= pet.kind %></td>-->
-<!--        <td><%= pet.breed %></td>-->
-<!--        <td><%= pet.gender %></td>-->
-<!--        <td><%= pet.birth_date %></td>-->
-<!--        <td><%= pet.age %></td>-->
-<!--        <td><%= pet.weight %></td>-->
-<!--        <td><%= link_to 'Show', pet %></td>-->
-<!--        <td><%= link_to image_tag('pets01.jpg'), edit_pet_path(pet) %></td>-->
-<!--        <td><%= link_to 'Destroy', pet, method: :delete, data: { confirm: 'Are you sure?' } %></td>-->
-<!--      </tr>-->
-<!--    <% end %>-->
-<!--  </tbody>-->
-<!--</table>-->
-
-<!--<br>-->
-
-<%= link_to 'New Pet', new_pet_path %>
-
-
-<!--회원가입 정보 수정할 떄 사용하면 좋을 템플릿-->
-<!--<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">-->
-<!--<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>-->
-<!--<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
-<!------ Include the above in your HEAD tag ---------->
-
-<!--
-
-<!--Copy this code in your html file.-->
-
-<!---->-->
-
-<!--<!DOCTYPE html>-->
-<!--<html lang="en">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title>PHP Form</title>-->
-<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>-->
-<!--    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"/>-->
-<!--</head>-->
-<!--<body>-->
-<!--    <div class="container">-->
-<!--       <div class="Back">-->
-<!--            <i class="fa fa-arrow-left" onclick="Back()"></i>-->
-<!--        </div>-->
-<!--        <p class="h2 text-center">Form</p>-->
-<!--        <form action="" method="post">-->
-<!--            <div class="preview text-center">-->
-<!--                <img class="preview-img" src="http://simpleicon.com/wp-content/uploads/account.png" alt="Preview Image" width="200" height="200"/>-->
-<!--                <div class="browse-button">-->
-<!--                    <i class="fa fa-pencil-alt"></i>-->
-<!--                    <input class="browse-input" type="file" required name="UploadedFile" id="UploadedFile"/>-->
-<!--                </div>-->
-<!--                <span class="Error"></span>-->
-<!--            </div>-->
-<!--            <div class="form-group">-->
-<!--                <label>Full Name:</label>-->
-<!--                <input class="form-control" type="text" name="fullname" required placeholder="Enter Your Full Name"/>-->
-<!--                <span class="Error"></span>-->
-<!--            </div>-->
-<!--            <div class="form-group">-->
-<!--                <label>Email:</label>-->
-<!--                <input class="form-control" type="email" name="email" required placeholder="Enter Your Email"/>-->
-<!--                <span class="Error"></span>-->
-<!--            </div>-->
-<!--            <div class="form-group">-->
-<!--                <label>Password:</label>-->
-<!--                <input class="form-control" type="password" name="password" required placeholder="Enter Password"/>-->
-<!--                <span class="Error"></span>-->
-<!--            </div>-->
-<!--            <div class="form-group">-->
-<!--                <label>Gender:</label><br/>-->
-<!--                <label><input type="radio" name="gender" required value="Male" checked /> Male</label>-->
-<!--                <label><input type="radio" name="gender" required value="Female" /> Female</label>-->
-<!--                <label><input type="radio" name="gender" required value="Other" /> Other</label>-->
-<!--                <span class="Error"></span>-->
-<!--            </div>-->
-<!--            <div class="form-group">-->
-<!--                <input class="btn btn-primary btn-block" type="submit" value="Submit"/>-->
-<!--            </div>-->
-<!--        </form>-->
-<!--    </div>-->
-<!--    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
-<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>-->
-<!--    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>-->
-<!--</body>-->
-<!--</html>-->
+<%= link_to '반려동물 추가하기', new_pet_path,  class:"btn btn-primary" %>

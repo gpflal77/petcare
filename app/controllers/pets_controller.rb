@@ -1,17 +1,10 @@
 class PetsController < ApplicationController
-  before_action :set_pet, only: [:show, :edit, :update, :destroy]
+  before_action :set_pet, only: [:show, :update, :destroy]
   skip_before_action :verify_authenticity_token
   # GET /pets
   # GET /pets.json
   def index
-    @pets = Pet.all
-    
-     # 코드조회
-       @pet_code = CommCode.find_by_sql("select * From comm_codes
-                                            where code_gubn='PET'
-                                            and DATE_FORMAT(now(), '%Y%m%d') between sta_date and end_date
-                                            and ifnull(del_yn, 'N') ='N'
-                                            order by code");
+    @pets = Pet.where(user_id: current_user.id)
   end
 
   # GET /pets/1
@@ -22,10 +15,32 @@ class PetsController < ApplicationController
   # GET /pets/new
   def new
     @pet = Pet.new
+    # 동물종류 코드조회
+    @pet_code = CommCode.find_by_sql("select * From comm_codes
+                                            where code_gubn='PET'
+                                            and DATE_FORMAT(now(), '%Y%m%d') between sta_date and end_date
+                                            and ifnull(del_yn, 'N') ='N'
+                                            order by code");
   end
 
   # GET /pets/1/edit
   def edit
+    
+    @pet = Pet.find(params[:id])
+    
+    # 동물종류 코드조회
+    @pet_code = CommCode.find_by_sql("select * From comm_codes
+                                            where code_gubn='PET'
+                                            and DATE_FORMAT(now(), '%Y%m%d') between sta_date and end_date
+                                            and ifnull(del_yn, 'N') ='N'
+                                            order by code");
+    #품종 세부항목 코드조회                             
+    @breed = CommCode.find_by_sql("select * From comm_codes
+                                            where code_gubn='#{@pet.kind}'
+                                            and DATE_FORMAT(now(), '%Y%m%d') between sta_date and end_date
+                                            and ifnull(del_yn, 'N') ='N'
+                                            order by code")
+                                            
   end
 
   # POST /pets

@@ -92,7 +92,25 @@ class ReviewsController < ApplicationController
   end
 
   # GET /reviews/1/edit
-  def edi
+  def edit
+    @review = Review.find(params[:id])
+    @hospital = Hospital.where("id = (select hospital_id from reviews where id ='#{params[:id]}')")
+    @pet      = Pet.where("id = (select pet_id from reviews where id ='#{params[:id]}')")
+    @medc_code = CommCode.find_by_sql("select * From comm_codes
+                                            where code_gubn='MEDIC'
+                                            and DATE_FORMAT(now(), '%Y%m%d') between sta_date and end_date
+                                            and ifnull(del_yn, 'N') ='N'
+                                            order by code")
+    @cost_code = CommCode.find_by_sql("select * From comm_codes
+                                            where code_gubn='COST'
+                                            and DATE_FORMAT(now(), '%Y%m%d') between sta_date and end_date
+                                            and ifnull(del_yn, 'N') ='N'
+                                            order by code")
+    @medic_detail = CommCode.find_by_sql("select * From comm_codes
+                                            where code_gubn='#{@review.medic_code}'
+                                            and DATE_FORMAT(now(), '%Y%m%d') between sta_date and end_date
+                                            and ifnull(del_yn, 'N') ='N'
+                                            order by code")
   end
 
   # POST /reviews

@@ -134,10 +134,7 @@
           
           
         <% @reviews.each do |review| %>
-        <tr>
-            <td><%= review.title %></td>
-        </tr>
-        <% end %>
+    
           
           <div class="row">
           
@@ -146,7 +143,14 @@
               <!-- Default Card Example -->
               <div class="card mb-4">
                 <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">ID:Abc**** (강아지, 6kg)
+                  <h6 class="m-0 font-weight-bold text-primary">
+                    
+                 
+                   <%= review.title %></br>
+                    ID:<%= review.user_id %>
+                    , 품종: <%=  @pets.find(review.pet_id).kind %>
+                    , 몸무게: <%=  @pets.find(review.pet_id).weight %>KG
+                    
                   <a href="#" class="btn btn-primary btn-circle small">
                     <i class="fas fa-thumbs-up"></i>
                   </a>
@@ -159,12 +163,13 @@
                 <div class="row">
                   <div class="col-lg-8">
                     <div class="card-body">
-                     
-                      받은치료 : 스켈링  (2019.06)</br>
-                      전체 비용: 약 6만원 / 치과 / 스켈링</br>
-                      
-                      깔끔하고 친철합니다~~</br>
-                      의사 분이 경험이 많습니다.</br>
+            
+
+                      받은치료: <%= @commcodes.find_by(code_gubn: "MEDIC", code: review.medic_code).code_name%> <br>
+                      전체비용: <%= review.tot_cost%> 원</br>
+                      </br>
+                       <%= review.hospital_review %></br>
+                       <%= review.heal_review %></br>
                       </div>
                    </div>
                     
@@ -184,54 +189,8 @@
                 </div>
               </div>
             </div>
-            
-            
-            <div class="row">
-
-            <div class="col-lg-12">
-              <!-- Default Card Example -->
-              <div class="card mb-4">
-                <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">ID:Abc**** (강아지, 6kg)
-                  <a href="#" class="btn btn-primary btn-circle">
-                    <i class="fas fa-thumbs-up"></i>
-                  </a>
-                  <a href="#" class="btn btn-success btn-circle">
-                    <i class="fas fa-check"></i>
-                  </a>
-                  </h6>
-                  
-                </div>
-                
-                <div class="row">
-                  <div class="col-lg-8">
-                    <div class="card-body">
-                     
-                      받은치료 : 스켈링  (2019.06)</br>
-                      전체 비용: 약 6만원 / 치과 / 스켈링</br>
-                      
-                      깔끔하고 친철합니다~~</br>
-                      의사 분이 경험이 많습니다.</br>
-                      </div>
-                   </div>
-                    
-                    
-                     <div class="col-lg-4">
-                       <div class="card-body">
-                        <div>평균 ★ <br></div>
-                        <div>친절도 ★ <br></div>
-                        <div>가격 ★ <br></div>
-                        <div>시설 ★ <br></div>
-                        <div>진료만족도 ★ <br></div>
-
-                      </div>
-                    </div>
-                </div>
-                 
-                </div>
-              </div>
-            </div> 
-            
+               
+        <% end %>
 
 
           </div>   
