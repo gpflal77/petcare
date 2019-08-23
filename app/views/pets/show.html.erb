@@ -1,53 +1,41 @@
-<p id="notice"><%= notice %></p>
-<p>
-  <strong>Photo_file:</strong>
-  <% if @pet.photo_file.attached? %>
-      <%= image_tag url_for(@pet.photo_file), class:"img-fluid px-3 px-sm-4 mt-3 mb-4", style:"" %>
-  <% else %>
-      <%= image_tag "no_image_m.png", class:"img-fluid px-3 px-sm-4 mt-3 mb-4", style:"" %>
-      첨부된 사진이 없습니다.
-  <% end %>
-</p>
+<div class="container-fluid">
+  <div class="row">
+    <p>
+      <strong>Photo_file:</strong>
+      <% if @pet.photo_file.attached? %>
+          <%= image_tag url_for(@pet.photo_file), class:"img-fluid px-3 px-sm-4 mt-3 mb-4", style:"" %>
+      <% else %>
+          <%= image_tag "no_image_m.png", class:"img-fluid px-3 px-sm-4 mt-3 mb-4", style:"" %>
+          첨부된 사진이 없습니다.
+      <% end %>
+    </p>
+  </div>
+  <div class="row">
+    <p><strong>User: </strong><%= @pet.user_id %></p>
+  </div>
+  <div class="row">
+    <p><strong>Name:</strong><%= @pet.name %></p>
+  </div>
+  <div class="row">
+    <p><strong>Kind:</strong><%= @pet.kind %></p>
+  </div>
+  <div class="row">
+    <p><strong>Breed:</strong><%= @pet.breed %></p>
+  </div>
+  <div class="row">
+    <p><strong>Gender:</strong><%= @pet.gender %></p>
+  </div>
+  <div class="row">
+    <p><strong>Birth date:</strong><%= @pet.birth_date %></p>
+  </div>
+  <div class="row">
+    <p><strong>Age:</strong><%= @pet.age %></p>
+  </div>
+  <div class="row">
+    <p><strong>Weight:</strong><%= @pet.weight %></p>
+  </div>
+</div>
 
-<p>
-  <strong>User:</strong>
-  <%= @pet.user_id %>
-</p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @pet.name %>
-</p>
-
-<p>
-  <strong>Kind:</strong>
-  <%= @pet.kind %>
-</p>
-
-<p>
-  <strong>Breed:</strong>
-  <%= @pet.breed %>
-</p>
-
-<p>
-  <strong>Gender:</strong>
-  <%= @pet.gender %>
-</p>
-
-<p>
-  <strong>Birth date:</strong>
-  <%= @pet.birth_date %>
-</p>
-
-<p>
-  <strong>Age:</strong>
-  <%= @pet.age %>
-</p>
-
-<p>
-  <strong>Weight:</strong>
-  <%= @pet.weight %>
-</p>
 
 <%= link_to 'Edit', edit_pet_path(@pet) %> |
 <%= link_to 'Back', pets_path %>

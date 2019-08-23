@@ -1,10 +1,12 @@
 class PetsController < ApplicationController
   before_action :set_pet, only: [:show, :update, :destroy]
   skip_before_action :verify_authenticity_token
+  include Pagy::Backend
+  #Pagy::VARS[:page_param] = :custom_param
   # GET /pets
   # GET /pets.json
   def index
-    @pets = Pet.where(user_id: current_user.id)
+    @pagy, @pets = pagy(Pet.where(user_id: current_user.id), items:5)
   end
 
   # GET /pets/1
@@ -25,6 +27,7 @@ class PetsController < ApplicationController
 
   # GET /pets/1/edit
   def edit
+
     
     @pet = Pet.find(params[:id])
     
@@ -92,6 +95,6 @@ class PetsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def pet_params
      # params.require(:pet).permit(:user_id, :name, :kind, :breed, :gender, :birth_date, :weight, :photo_file)
-     params.permit(:user_id, :name, :kind, :breed, :gender, :birth_date, :weight, :photo_file)
+     params.permit(:user_id, :name, :kind, :breed, :gender, :birth_date, :weight, :photo_file, :age)
     end
 end

@@ -9,11 +9,11 @@
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">후기수정</h1>
           </div>
-     <form action="/reviews/<%=@review.id%>" method="PATCH" id ="review_form" name="review_form" enctype="multipart/form-data">
+     <form action="/reviews/update/<%=@review.id%>"  id ="review_form" name="review_form"  method="post" enctype="multipart/form-data">
       <%=hidden_field_tag :authenticity_token, form_authenticity_token %><!--form for(view_helper) 안쓸경우 데이터 암호화처리 해줘야함-->
         <input type="hidden" name="hospital_id" value="<%= @review.hospital_id %>" ><!--병원페이지에서 ID 받아오기-->
 
-          <div class="row">
+        <div class="row">
             <div class="col-xl-4 col-md-4 mb-4">
               <div class="card bg-primary text-white h-100 py-2">
                     <div class="card-body">
@@ -21,49 +21,36 @@
                     </div>
               </div>
             </div>
-
-            <!-- Earnings (Monthly) Card Example -->
             <div class="col-xl-4 col-md-4 mb-4">
               <div class="card border-bottom-primary shadow h-100 py-2">
                 <div class="card-body">
-                  
                   <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">진료항목</div>
-                      
-                    <nav class="navbar navbar-expand navbar-light bg-light mb-4">
-                    <!--<a class="navbar-brand" href="#">Navbar</a>-->
-                      <ul class="navbar-nav ml-auto">
-                        <li class="nav-item dropdown">
-                          <a class="review nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            진료항목
-                          </a>
-                          <select name="medic_code" id="medic_code" class="form-control form-control">
-                                  <option value="">선택</option>
-                                 <% @medc_code.each do |medic| %>
-                                      <option value="<%=medic.code%>" <% if @review.medic_code == medic.code %>selected = "selected"<%end%> ><%=medic.code_name%></option>
-                                 <% end %>
-                          </select>
-                          
-                            <!--<a class="dropdown-item" href="#">1</a>-->
-                            <!--<a class="dropdown-item" href="#">2</a>-->
-                            <!--<a class="dropdown-item" href="#">3</a>-->
-                          <!--<div class="dropdown-divider"></div>-->
-                          <!--<a class="dropdown-item" href="#">Something else here</a>-->
-                          </div>
-                        </li>
-                      </ul>
-                    </nav>
-                      
-                      
-                      <!--<div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>-->
+                      <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">진료항목</div>
+                        
+                      <nav class="navbar navbar-expand navbar-light bg-light mb-4">
+                      <!--<a class="navbar-brand" href="#">Navbar</a>-->
+                        <ul class="navbar-nav ml-auto">
+                          <li class="nav-item dropdown">
+                            <a class="review nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              진료항목
+                            </a>
+                            <select name="medic_code" id="medic_code" class="form-control form-control">
+                                    <option value="">선택</option>
+                                   <% @medc_code.each do |medic| %>
+                                        <option value="<%=medic.code%>" <% if @review.medic_code == medic.code %>selected = "selected"<%end%> ><%=medic.code_name%></option>
+                                   <% end %>
+                            </select>
+                          </li>
+                        </ul>
+                      </nav>
+                      </div>
                     </div>
-                    <div class="col-auto">
-                     
-                    </div>
-                  </div>
-                </div>
+                <!--</div>-->
+                <div class="col-auto"></div>
               </div>
+            </div>
+        </div>
             <div class="col-xl-4 col-md-4 mb-4">
               <div class="card border-bottom-primary shadow h-100 py-2">
                 <div class="card-body">
@@ -82,13 +69,6 @@
                                       <option value="<%=medic_deta.code%>" <% if @review.medic_detail == medic_deta.code %>selected = "selected"<%end%> ><%=medic_deta.code_name%></option>
                               <% end %>
                           </select>
-                          <!--<div class="dropdown-menu dropdown-menu-right animated--grow-in" aria-labelledby="navbarDropdown">-->
-                          <!--  <a class="dropdown-item" href="#">1</a>-->
-                          <!--  <a class="dropdown-item" href="#">2</a>-->
-                          <!--  <a class="dropdown-item" href="#">3</a>-->
-                          <!--<div class="dropdown-divider"></div>-->
-                          <!--<a class="dropdown-item" href="#">Something else here</a>-->
-                          <!--</div>-->
                         </li>
                       </ul>
                     </nav>
@@ -100,7 +80,8 @@
                 </div>
               </div>
             </div>
-          </div><!--row-->
+        </div>
+        <!--row-->
         <hr>
         <div class="row">
             <div class="col-xl-4 col-md-4 mb-4">
@@ -128,7 +109,6 @@
                 </div>
               </div>
             </div>
-            
             <div class="col-xl-4 col-md-4 mb-4">
               <div class="card border-bottom-success shadow h-100 py-2">
                 <div class="card-body">
@@ -147,10 +127,6 @@
                               <option value="<%= @review.heal_yn %>">Y</option>
                               <option value="<%= @review.heal_yn %>">N</option>
                             </select>
-                            <!--<a class="dropdown-item" href="#">3</a>-->
-                          <!--<div class="dropdown-divider"></div>-->
-                          <!--<a class="dropdown-item" href="#">Something else here</a>-->
-                          </div>
                         </li>
                       </ul>
                     </nav>
@@ -161,7 +137,9 @@
                   </div>
                 </div>
               </div>
-           </div><!--row-->
+           </div>
+        </div><!--row-->
+        
          <hr>
          <div class="row">
            <div class="col-xl-4 col-md-4 mb-4">
@@ -171,14 +149,6 @@
                       <br>
                       <br>
                       <div>
-                      <!--<a href="#" class="btn btn-light btn-icon-split btn-sm"  style="position:absolute; right:15px; bottom:20px;">-->
-                      <!--<span class="icon text-white-50">-->
-                      <!--<i class="fas fa-check"></i>-->
-                      
-                
-                      <!--<span class="text">치료비 항목 추가</span>-->
-                
-                      <!--</a>  -->
                       </div>
                     </div>
               </div>
@@ -203,13 +173,6 @@
                                       <option value="<%=cost.code%>" <% if @review.cost_id == cost.code %>selected = "selected"<%end%> ><%=cost.code_name%></option>
                                 <% end %>
                           </select>
-                          <!--<div class="dropdown-menu dropdown-menu-right animated--grow-in" aria-labelledby="navbarDropdown">-->
-                          <!--  <a class="dropdown-item" href="#">1</a>-->
-                          <!--  <a class="dropdown-item" href="#">2</a>-->
-                          <!--  <a class="dropdown-item" href="#">3</a>-->
-                          <!--<div class="dropdown-divider"></div>-->
-                          <!--<a class="dropdown-item" href="#">Something else here</a>-->
-                          <!--</div>-->
                         </li>
                       </ul>
                     </nav>
@@ -241,70 +204,8 @@
               </div>
               
              </div>
-            </div><!--row-->
-
-            <!-- Earnings (Monthly) Card Example -->
-          <!--  <div class="col-xl-3 col-md-6 mb-4">-->
-          <!--    <div class="card border-left-success shadow h-100 py-2">-->
-          <!--      <div class="card-body">-->
-          <!--        <div class="row no-gutters align-items-center">-->
-          <!--          <div class="col mr-2">-->
-          <!--            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Earnings (Annual)</div>-->
-          <!--            <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>-->
-          <!--          </div>-->
-          <!--          <div class="col-auto">-->
-          <!--            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>-->
-          <!--          </div>-->
-          <!--        </div>-->
-          <!--      </div>-->
-          <!--    </div>-->
-          <!--  </div>-->
-
-            <!-- Earnings (Monthly) Card Example -->
-          <!--  <div class="col-xl-3 col-md-6 mb-4">-->
-          <!--    <div class="card border-left-info shadow h-100 py-2">-->
-          <!--      <div class="card-body">-->
-          <!--        <div class="row no-gutters align-items-center">-->
-          <!--          <div class="col mr-2">-->
-          <!--            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks</div>-->
-          <!--            <div class="row no-gutters align-items-center">-->
-          <!--              <div class="col-auto">-->
-          <!--                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>-->
-          <!--              </div>-->
-          <!--              <div class="col">-->
-          <!--                <div class="progress progress-sm mr-2">-->
-          <!--                  <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>-->
-          <!--                </div>-->
-          <!--              </div>-->
-          <!--            </div>-->
-          <!--          </div>-->
-          <!--          <div class="col-auto">-->
-          <!--            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>-->
-          <!--          </div>-->
-          <!--        </div>-->
-          <!--      </div>-->
-          <!--    </div>-->
-          <!--  </div>-->
-
-            <!-- Pending Requests Card Example -->
-          <!--  <div class="col-xl-3 col-md-6 mb-4">-->
-          <!--    <div class="card border-left-warning shadow h-100 py-2">-->
-          <!--      <div class="card-body">-->
-          <!--        <div class="row no-gutters align-items-center">-->
-          <!--          <div class="col mr-2">-->
-          <!--            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Pending Requests</div>-->
-          <!--            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>-->
-          <!--          </div>-->
-          <!--          <div class="col-auto">-->
-          <!--            <i class="fas fa-comments fa-2x text-gray-300"></i>-->
-          <!--          </div>-->
-          <!--        </div>-->
-          <!--      </div>-->
-          <!--    </div>-->
-          <!--  </div>-->
-          <!--</div>-->
-
-          <!--<div class="row">-->
+            </div>
+            <hr>
           <div class="row">
             <div class="col-lg-6">
 
@@ -325,13 +226,6 @@
                       <input type="radio" name="satis1" value="<%=@a1%>" id="statis1_<%=@a1%>"><span class="starR" name="statis1_<%=@a1%>"><%=@a1%></span>
                       <% end %>
                       
-                      <!--<input type="radio" name="satis1" value="1" id="statis1_1"><span class="starR" name="statis1_1">1</span>-->
-                      
-                      <!--<input type="radio" name="satis1" value="1" id="statis1_1"><span class="starR" name="statis1_1">1</span>-->
-                      <!--<input type="radio" name="satis1" value="2" id="statis1_2"><span class="starR" name="statis1_2">2</span>-->
-                      <!--<input type="radio" name="satis1" value="3" id="statis1_3"><span class="starR" name="statis1_3">3</span>-->
-                      <!--<input type="radio" name="satis1" value="4" id="statis1_4"><span class="starR" name="statis1_4">4</span>-->
-                      <!--<input type="radio" name="satis1" value="5" id="statis1_5"><span class="starR" name="statis1_5">5</span>-->
                     </div>
                     
                     
@@ -357,7 +251,7 @@
                       <% end %>
                       <% for k in 1..(5-@s3) %>
                       <% @a3 = k+@s3 %>
-                      <input type="radio" name="satis2" value="<%=@a3%>" id="statis2_<%=@a3%>"><span class="starR" name="statis2_<%=@a3%>"><%=@a3%></span>
+                      <input type="radio" name="satis3" value="<%=@a3%>" id="statis3_<%=@a3%>"><span class="starR" name="statis3_<%=@a3%>"><%=@a3%></span>
                       <% end %>
                     </div>
                     
@@ -370,7 +264,7 @@
                       <% end %>
                       <% for k in 1..(5-@s4) %>
                       <% @a4 = k+@s4 %>
-                      <input type="radio" name="satis2" value="<%=@a4%>" id="statis2_<%=@a4%>"><span class="starR" name="statis2_<%=@a4%>"><%=@a4%></span>
+                      <input type="radio" name="satis4" value="<%=@a4%>" id="statis4_<%=@a4%>"><span class="starR" name="statis4_<%=@a4%>"><%=@a4%></span>
                       <% end %>
                     </div>
                     
@@ -392,20 +286,10 @@
                 </div>
              </div>
           </div>
-        
+        <hr>
           <div class="row">
             
             <div class="col-lg-12">
-
-              <!-- Default Card Example -->
-              <!--<div class="card mb-4">-->
-              <!--  <div class="card-header">-->
-              <!--    Default Card Example-->
-              <!--  </div>-->
-              <!--  <div class="card-body">-->
-              <!--    This card uses Bootstrap's default styling with no utility classes added. Global styles are the only things modifying the look and feel of this default card example.-->
-              <!--  </div>-->
-              <!--</div>-->
 
               <!-- Basic Card Example -->
               <div class="card shadow mb-4">
@@ -419,6 +303,7 @@
             
             </div>
           </div>
+          <hr>
           <div class="row">
             <div class="col-lg-12">
 
@@ -434,22 +319,17 @@
               </div>
              </div>
           </div>
-          <!--<div class="col-xl-4 col-md-4 mb-4">-->
-          <!--    <div class="card bg-info text-white h-100 py-2">-->
-          <!--          <div class="card-body">-->
-          <!--            <span class="text-lg">인증</span>-->
-          <!--          </div>-->
-          <!--    </div>-->
-          <!--  </div>-->
-           <div class="col-lg-6">
+          <hr>
+           <div class="col-lg-12">
            <input type="file" name="file">영수증 등록
            <% if @review.file.attached? %>
+           <br>
               (기존에 첨부된 영수증이 있습니다)
            <% else %>
-              (첨부된 영수증이 없습니다. 영수증을 올려주세요)
+              (영수증이 없습니다. 영수증을 올려주세요)
            <% end %>
            </div>
-           <div class="col-lg-6">
+           <div class="col-lg-12">
            <input type="file" name="photo_file" value="<%= @review.photo_file %>">사진 등록
            <% if @review.photo_file.attached? %>
               (기존에 첨부된 사진이 있습니다)
@@ -457,26 +337,13 @@
               (첨부된 사진이 없습니다. 사진을 올려주세요)
            <% end %>
            </div>
-           <!--<div class="col-lg-6">-->
-           <!--<div class="d-sm-flex align-items-center justify-content-between mb-6">-->
-           <!--<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" >-->
-           <!--<i class="fas fa-upload fa-sm text-white-50">-->
-           <!--</i>영수증 등록</a> -->
-           <!--</div>-->
-           <!--</div>-->
-           
-           <!--<div class="col-lg-6">-->
-           <!--<div class="d-sm-flex align-items-center justify-content-between mb-6">-->
-           <!--<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" >-->
-           <!--<i class="fas fa-upload fa-sm text-white-50">-->
-           <!--</i>사진 등록</a> -->
-           
-           <!--</div>-->
-           <!--</div>-->
- <!-- /.container-fluid -->
-<!--<h1>New Review</h1>-->
-<input type="submit" name="제출하기">
-</form>
+         
+       <!-- /.container-fluid -->
+      <!--<h1>New Review</h1>-->
+      <br>
+      <input type="submit" name="제출하기"  class="btn btn-google btn-block" value="수정하기">
+      
+      </form>
 </div>
 
 <script type="text/javascript">
@@ -519,9 +386,11 @@ $(document).ready(function() {
   
   
     $("#review_form").submit(function(){
-     //시간나면 저장시체크할부분 작성
-     // alert($("input:radio[name=satis1]:checked").val());
-     // return false;
+    // //시간나면 저장시체크할부분 작성
+    // // alert($("input:radio[name=satis1]:checked").val());
+    // // return false;
+   // $(this).attr('method', 'PUT');
+    $(this).submit();
     });
 });
 

@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   root 'users#index'
   resources :pets
   resources :reviews
-  
+ # patch 'reviews/:id' => 'reviews#update'
+
+ # put 'reviews/:id' => 'reviews#update'
   get 'users/index'
   get 'users/sign_out'
   devise_for :users
@@ -23,7 +25,15 @@ Rails.application.routes.draw do
   
   get 'hospitals/get_nearby_hospital' => 'hospitals#get_nearby_hospital',  defaults: { format: 'json' }
   
+  get 'hospitals/get_nearby_hospital_reviews' => 'hospitals#get_nearby_hospital_reviews',  defaults: { format: 'json' }
+  
+  get 'hospitals/get_nearby_hospital_satis' => 'hospitals#get_nearby_hospital_satis',  defaults: { format: 'json' }
+
+  get 'diseases/get_search_cost' => 'diseases#get_search_cost',  defaults: { format: 'json' }
+  get 'diseases/get_medic_reviews' => 'diseases#get_medic_reviews',  defaults: { format: 'json' }
+
 
   post 'pets/update/:id' => 'pets#update'
+  post 'reviews/update/:id' => 'reviews#update'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

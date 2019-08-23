@@ -12,8 +12,9 @@ class ReviewsController < ApplicationController
   # GET /reviews/1
   # GET /reviews/1.json
   def show
+    
       @review = Review.find(params[:id])
-      
+    
      ##병원정보가져오기
       @hospital = Hospital.where("id = (select hospital_id from reviews where id ='#{params[:id]}')")
       
@@ -132,6 +133,7 @@ class ReviewsController < ApplicationController
   # PATCH/PUT /reviews/1
   # PATCH/PUT /reviews/1.json
   def update
+    
     respond_to do |format|
       if @review.update(review_params)
         format.html { redirect_to @review, notice: 'Review was successfully updated.' }

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_16_052557) do
+ActiveRecord::Schema.define(version: 2019_08_22_235724) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.string "name", null: false
@@ -50,6 +50,40 @@ ActiveRecord::Schema.define(version: 2019_08_16_052557) do
     t.integer "amt", comment: "금액"
   end
 
+  create_table "costs", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+    t.integer "avg"
+    t.integer "tot_cnt"
+    t.integer "c01"
+    t.integer "c01_cnt"
+    t.integer "max_c01"
+    t.integer "min_c01"
+    t.integer "c03"
+    t.integer "c03_cnt"
+    t.integer "max_c03"
+    t.integer "min_c03"
+    t.integer "c04"
+    t.integer "c04_cnt"
+    t.integer "max_c04"
+    t.integer "min_c04"
+    t.integer "c05"
+    t.integer "c05_cnt"
+    t.integer "max_c05"
+    t.integer "min_c05"
+    t.integer "c06"
+    t.integer "c06_cnt"
+    t.integer "max_c06"
+    t.integer "min_c06"
+    t.integer "c99"
+    t.integer "c99_cnt"
+    t.integer "max_c99"
+    t.integer "min_c99"
+    t.integer "heal_y"
+    t.integer "heal_n"
+    t.integer "heal_state"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "hospitals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", limit: 100, comment: "병원명"
     t.string "sigu_cd", limit: 10, comment: "시군구코드(병원DATA I/F)"
@@ -67,9 +101,13 @@ ActiveRecord::Schema.define(version: 2019_08_16_052557) do
     t.string "open_time", limit: 10, comment: "오픈시간"
     t.string "close_time", limit: 10, comment: "종료시간"
     t.string "bigo", limit: 45, comment: "비고"
+    t.string "allday_yn", limit: 2
+    t.string "parking_yn", limit: 2
+    t.string "emergency_yn", limit: 2
+    t.string "hair_yn", limit: 2
+    t.string "weekend_yn", limit: 2
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string "test", limit: 45
   end
 
   create_table "hospitals_raw", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

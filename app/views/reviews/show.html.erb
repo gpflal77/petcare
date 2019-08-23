@@ -4,7 +4,7 @@
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">후기 조회</h1>
-            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">추천수</a>
+            <a href="/reviews/<%= @review.id %>/edit" class="btn btn-success text-white">리뷰 수정</a>
           </div>
 
           <!-- Content Row -->
@@ -51,9 +51,10 @@
                </div><!--card body-->
               </div>
             </div>
+          
             <!-- Pie Chart -->
             <div class="col-lg-6 mb-4">
-
+          <hr>
               <!-- Project Card Example -->
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
@@ -137,7 +138,7 @@
                 <!--</div>-->
               </div>
             </div>
-
+          <hr>
           <!-- Content Row -->
           <div class="row">
 
@@ -147,7 +148,8 @@
               <!-- Project Card Example -->
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">만족도 평균: <%= @review.avg_satis %></h6>
+                  <% @avg_satis = (@review.satis1 + @review.satis2 + @review.satis3 + @review.satis4)/4 %>
+                  <h6 class="m-0 font-weight-bold text-primary">만족도 평균: <%= @avg_satis %> / 5</h6>
                 </div>
                 <div class="card-body">
                   <h4 class="small font-weight-bold">친절도 <span class="float-right"><%= @review.satis1 %> / 5</span></h4>
@@ -207,16 +209,20 @@
               <!-- Project Card Example -->
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">병원정보(종호님이 내용 꾸미기)</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">병원정보</h6>
                 </div>
                 <div class="card-body">
                   <div>
                     <% @hospital.each do |hospital| %>
                           
-                                병원명: <%= hospital.name %><br/>
-                                전화번호: <%= hospital.tel_no %><br/>
-                                영업시간: <%= hospital.open_time %>~<%= hospital.close_time %>
-                                <%= link_to '병원 상세보기', hospitals_view_path(hospital.id) %>
+                                병원명: <%= hospital.name %><hr>
+                                전화번호: <%= hospital.tel_no %><hr>
+                                영업유무: <%= hospital.status_cd_nm %><hr>
+                                영업시간: <%= hospital.open_time %>~<%= hospital.close_time %><hr>
+                                긴급치료 가능 여부 : <%= hospital.emergency_yn %><hr>
+                                
+                                
+                                <%= link_to '병원 상세보기', hospitals_view_path(hospital.id), class:"btn btn-success text-white" %>
                     
                     <% end %>
                   </div>
@@ -224,6 +230,7 @@
             </div>
             </div>
             <div class="col-lg-6 mb-4">
+              <hr>
               <!-- Approach -->
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
@@ -236,6 +243,7 @@
             </div>
 
             <div class="col-lg-6 mb-4">
+              <hr>
               <!-- Approach -->
               <div class="card shadow mb-4">
                 <div class="card-header py-3">

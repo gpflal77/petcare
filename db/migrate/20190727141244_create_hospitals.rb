@@ -19,6 +19,12 @@ class CreateHospitals < ActiveRecord::Migration[5.2]
       t.string :open_time
       t.string :close_time
       t.string :bigo
+      t.string :allday_yn
+      t.string :parking_yn
+      t.string :emergency_yn
+      t.string :hair_yn
+      t.string :weekend_yn
+      t.integer :satis
       t.timestamps
     end
   end

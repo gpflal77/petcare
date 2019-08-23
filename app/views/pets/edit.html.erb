@@ -1,111 +1,116 @@
-<main class="my-form">
+<div class="my-form">
     <div class="cotainer">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-header py-3">
-                              <h6 class="m-0 font-weight-bold text-primary">반려동물 수정하기</h6>
-                        </div>
-                        <div class="card-body">
-                            <form name="my-form" action="/pets/update/<%=@pet.id%>" onsubmit="return validform()" method="post" enctype="multipart/form-data">
-                              <%= hidden_field_tag :authenticity_token, form_authenticity_token %><!--form for(view_helper) 안쓸경우 데이터 암호화-->
-                              <input type="hidden" name="user_id" value="<%= current_user.id %>">
-                                <form action="" method="post">
-                                    <div class="preview text-center">
-                                          <% if @pet.photo_file.attached? %>
-                                              <%= image_tag url_for(@pet.photo_file), class:"preview-img img-fluid px-3 px-sm-4 mt-3 mb-4", style:"" %>
-                                          <% else %>
-                                               <img class="preview-img" src="https://c-lj.gnst.jp/public/img/common/noimage.jpg?20190112050042" alt="Preview Image" width="200" height="200"/>
-                                          <% end %>
-                                       
-                                        <div class="browse-button">
-                                            <i class="fa fa-pencil-alt"></i>
-                                             <!--<input class="browse-input" type="file" required name="UploadedFile" id="UploadedFile"/>-->
-                                             <!--여기 수정함 파일 업로드시에 onchange 이벤트를 타는데 perviewFile() 함수호출함 
-                                                 previewFile() 함수는 하단에 script에 있어요 -->
-                                             <input type="file" class="browse-input" name="photo_file"  value="<%= @pet.photo_file %>" onchange="previewFile()"/> 
-                                        </div>
-                                        <span class="Error"></span> <br>
-                                <div class="form-group row">
-                                    <label for="full_name" class="col-md-4 col-form-label text-md-right">이름</label>
-                                    <div class="col-md-6">
-                                        <input type="text" id="name" name="name" class="form-control" name="full-name" value="<%= @pet.name %>">
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label for="email_address" class="col-md-4 col-form-label text-md-right">생년월일</label>
-                                    <div class="col-md-6">
-                                        <input type="text" id="birth_date" name="birth_date" class="form-control" value="<%= @pet.birth_date %>">
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label for="user_name" class="col-md-4 col-form-label text-md-right">성별</label>
-                                    <div class="col-md-6">
-                                        <select id="gender" name="gender" class="form-control selectPets">
-                                                    <option value="M" <% if @pet.gender == "M" %>selected = "selected"<%end%>>남</option>
-                                                    <option value="F" <% if @pet.gender == "F" %>selected = "selected"<%end%>>여</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label for="kind" class="col-md-4 col-form-label text-md-right">종류</label>
-                                    <div class="col-md-6">
-                                      <select id="kind" name="kind" class="form-control selectPets">
-                                            <option value="">선택</option> <!--초기는 선택표시-->
-                                        <% @pet_code.each do |pet| %>
-                                            <option value="<%=pet.code%>"  <% if @pet.kind == pet.code %>selected = "selected"<%end%> ><%=pet.code_name%></option>
-                                        <% end %>
-                                       </select>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label for="breed" class="col-md-4 col-form-label text-md-right">품종</label>
-                                    <div class="col-md-6">
-                                         <tr>
-                                             <td> <select id="breed" name="breed" class="form-control petlist">
-                                                     <% @breed.each do |breed| %>
-                                                         <option value="<%=breed.code%>"  <% if @pet.breed == breed.code %>selected = "selected"<%end%> ><%=breed.code_name%></option>
-                                                     <% end %>
-                                                  </select>
-                                                  
-                                               <!--  <select class="petlist" name="breed" onchange="setSelectItem()">
-                                                    <option value="student">강아지</option>
-                                                    <option value="teacher">고양이</option>
-                                                    <option value="developer">햄스터</option>
-                                                </select>-->
-                                                         
-                                             </td>
-                                         </tr>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label for="weight" class="col-md-4 col-form-label text-md-right">몸무게</label>
-                                    <div class="col-md-6">
-                                        <input type="text" id="weight" class="form-control" name="weight" value="<%= @pet.weight %>">
-                                    </div>
-                                </div>
-
-                                    <div class="col-md-6 offset-md-4">
-                                        <!--Q. 등록하기 버튼을 누르면 다시 화면으로 오고 싶은데요?-->
-                                        <!--Q. 수정하기 버튼도 만들고 싶은데용?-->
-                                        <button type="submit" class="btn btn-primary">
-                                            수정하기
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col text-left">
+                                <h2 class="p-2 m-0">반려동물 수정하기</h2>    
+                            </div>
+                            <div class="col text-right">
+                                <%= link_to '리스트 가기', pets_path , class:"btn btn-lg btn-danger text-white ml-auto"%>
+                                <%= link_to '반려동물 추가하기', new_pet_path,  class:"btn btn-lg btn-warning text-white" %>    
+                            </div>
                         </div>
                     </div>
+                    <div class="card-body">
+                        <form name="my-form" action="/pets/update/<%=@pet.id%>" onsubmit="return validform()" method="post" enctype="multipart/form-data">
+                            <%= hidden_field_tag :authenticity_token, form_authenticity_token %><!--form for(view_helper) 안쓸경우 데이터 암호화-->
+                            <input type="hidden" name="user_id" value="<%= current_user.id %>">
+                            <div class="preview text-center">
+                                <% if @pet.photo_file.attached? %>
+                                    <%= image_tag url_for(@pet.photo_file), class:"preview-img img-fluid px-3 px-sm-4 mt-3 mb-4", style:"" %>
+                                <% else %>
+                                   <img class="preview-img" src="https://c-lj.gnst.jp/public/img/common/noimage.jpg?20190112050042" alt="Preview Image" width="200" height="200"/>
+                                <% end %>
+                               
+                                <div class="browse-button">
+                                    <i class="fa fa-pencil-alt"></i>
+                                     <!--<input class="browse-input" type="file" required name="UploadedFile" id="UploadedFile"/>-->
+                                     <!--여기 수정함 파일 업로드시에 onchange 이벤트를 타는데 perviewFile() 함수호출함 
+                                         previewFile() 함수는 하단에 script에 있어요 -->
+                                     <input type="file" class="browse-input" name="photo_file"  value="<%= @pet.photo_file %>" onchange="previewFile()"/> 
+                                </div>
+                            </div>
+                            <span class="Error"></span> <br>
+                            <div class="form-group row">
+                                <label for="full_name" class="col-md-4 col-form-label text-md-right">이름</label>
+                                <div class="col-md-6">
+                                    <input type="text" id="name" name="name" class="form-control" name="full-name" value="<%= @pet.name %>">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="email_address" class="col-md-4 col-form-label text-md-right">생년월일</label>
+                                <div class="col-md-6">
+                                    <input type="text" id="birth_date" name="birth_date" class="form-control" value="<%= @pet.birth_date %>">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="user_name" class="col-md-4 col-form-label text-md-right">성별</label>
+                                <div class="col-md-6">
+                                    <select id="gender" name="gender" class="form-control selectPets">
+                                                <option value="M" <% if @pet.gender == "M" %>selected = "selected"<%end%>>남</option>
+                                                <option value="F" <% if @pet.gender == "F" %>selected = "selected"<%end%>>여</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="kind" class="col-md-4 col-form-label text-md-right">종류</label>
+                                <div class="col-md-6">
+                                  <select id="kind" name="kind" class="form-control selectPets">
+                                        <option value="">선택</option> <!--초기는 선택표시-->
+                                    <% @pet_code.each do |pet| %>
+                                        <option value="<%=pet.code%>"  <% if @pet.kind == pet.code %>selected = "selected"<%end%> ><%=pet.code_name%></option>
+                                    <% end %>
+                                   </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="breed" class="col-md-4 col-form-label text-md-right">품종</label>
+                                <div class="col-md-6">
+                                     <tr>
+                                         <td> <select id="breed" name="breed" class="form-control petlist">
+                                                 <% @breed.each do |breed| %>
+                                                     <option value="<%=breed.code%>"  <% if @pet.breed == breed.code %>selected = "selected"<%end%> ><%=breed.code_name%></option>
+                                                 <% end %>
+                                              </select>
+                                              
+                                           <!--  <select class="petlist" name="breed" onchange="setSelectItem()">
+                                                <option value="student">강아지</option>
+                                                <option value="teacher">고양이</option>
+                                                <option value="developer">햄스터</option>
+                                            </select>-->
+                                                     
+                                         </td>
+                                     </tr>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="weight" class="col-md-4 col-form-label text-md-right">몸무게</label>
+                                <div class="col-md-6">
+                                    <input type="text" id="weight" class="form-control" name="weight" value="<%= @pet.weight %>">
+                                </div>
+                            </div>
+
+                            <div class="form-group row m-0">
+                            <!--Q. 등록하기 버튼을 누르면 다시 화면으로 오고 싶은데요?-->
+                            <!--Q. 수정하기 버튼도 만들고 싶은데용? edit.html.erb 화면에 있어요-->
+                            <input type="submit" class="form-control btn btn-primary" value="수정하기" style="width: 250px; margin: 0 auto;" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+</div>
 
-</main>
 <script type="text/javascript">
 $(document).ready(function() {
      
@@ -156,6 +161,3 @@ function previewFile() {
 </script>
 </body>
 </html>
-
-<%= link_to '리스트 가기', pets_path , class:"btn btn-primary"%>
-<%= link_to '반려동물 추가하기', new_pet_path,  class:"btn btn-primary" %>
