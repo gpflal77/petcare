@@ -585,27 +585,12 @@ function fn_getReviewSearch(x, y){
                 dataType: "json", 
                 success: function(data) { //데이터 받아옴 
                     $('#review_list').find('tbody').empty();
+                    
                     $.each(data, function(i){
                         var myRow = "<tr><td><a href='/reviews/"+data[i].id+"'>" + data[i].title + "</a></td><td>" +data[i].hospital_review
                                   //+"</td><td>" + data[i].satis1 + data[i].satis2 + data[i].satis3 + data[i].satis4 
-                                  +"<div class='starRev'>"
-                                  +"<input type='radio' name='satis1' value='1'><span class='starR"
-                                    if( data[i].satis1 >= 1){"on" }
-                                  +"'>1</span>"
-                                  +"<input type='radio' name='satis1' value='2'><span class='starR"
-                                    if( data[i].satis1 >= 2){"on" }
-                                  +"'>2</span>"
-                                  +"<input type='radio' name='satis1' value='3'><span class='starR"
-                                    if( data[i].satis1 >= 3){"on" } 
-                                  +"'>3</span>"
-                                  +"<input type='radio' name='satis1' value='4'><span class='starR"
-                                    if( data[i].satis1 >= 4){"on" } 
-                                  +"'>4</span>"
-                                  +"<input type='radio' name='satis1' value='5'><span class='starR"
-                                    if( data[i].satis1 >= 5){"on" } 
-                                  +"'>5</span>"
-                                  +"</div>"
-                                  +"</td></tr>";
+
+                
                         $('#review_list').find('tbody').append(myRow);
                         
                         

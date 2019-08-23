@@ -158,12 +158,9 @@
                    <%= review.title %></br>
                     ID:<%= review.user_id %>
                     , 품종: <%=  CommCode.find_by(code_gubn: Pet.find(review.pet_id).kind).parent_gubn %>
-                    , 몸무게: <%=  Pet.find(review.pet_id).weight %>KG
+                    , 몸무게: <%=  Pet.find(review.pet_id).weight %>KG  
                     
-                  <a href="#" class="btn btn-primary btn-circle small">
-                    <i class="fas fa-thumbs-up"></i>
-                  </a>
-                  <a href="#" class="btn btn-success btn-circle small">
+                  <a href="#" class="btn btn-success btn-circle small ">
                     <i class="fas fa-check"></i>
                   </a>
                   </h6>

@@ -32,55 +32,70 @@
                 
                 <div class="col-lg-12 mb-10">
                   <div class="card bg-primary text-white shadow mb-4">
-                    <div class="card-body">
-                      <div class="text-white-100 small">병원검색</div>
-                      <br>&nbsp;
-                      <br>&nbsp;
+                    <div class="card-body py-100", style="padding:50px;">
+                      <a href="/hospitals/list">
+                      <h6 class="m-0 font-weight-bold text-white-50 lg ">병원검색</h6>
+                      </a>
+                      <!--<br>&nbsp;-->
+                      <!--<br>&nbsp;-->
                       </div>
                     </div>
                   </div>
-                </div>
+                <!--</div>-->
                 
-                <div class="col-lg-6 mb-4">
-                  <div class="card bg-success text-white shadow">
-                    <div class="card-body">
-                      Success
-                      <div class="text-white-50 small">#질병검색</div>
+                <div class="col-lg-12 mb-10">
+                  <div class="card bg-success text-white shadow mb-4">
+                    <div class="card-body py-100", style="padding:50px;">
+                      <a href="/diseases/list">
+                      <h6 class="m-0 font-weight-bold text-white-50">질병검색</h6>
+                      </a>
+                      <!--<br>&nbsp;-->
+                      <!--<br>&nbsp;-->
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="col-lg-6 mb-4">
-                  <div class="card bg-info text-white shadow">
-                    <div class="card-body">
-                      <%= link_to "후기등록", new_review_path, target: "_blank"%> 
-                      <div class="text-white-50 small">#후기등록</div>
+                
+                <div class="col-lg-12 mb-10">
+                  <div class="card bg-info text-white shadow mb-4">
+                    <div class="card-body py-100", style="padding:50px;">
+                      <h6 class="m-0 font-weight-bold text-white-50">
+                        <%= link_to "반려동물관리", pets_path, class:"collapse-item" %>
+                      </h6>
+                      </a>
+                      <!--<br>&nbsp;-->
+                      <!--<br>&nbsp;-->
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="col-lg-6 mb-4">
-                  <div class="card bg-warning text-white shadow">
-                    <div class="card-body">
-                      Warning
-                      <div class="text-white-50 small">#f6c23e</div>
+                  
+                <div class="col-lg-12 mb-10">
+                  <div class="card bg-warning text-white shadow mb-4">
+                    <div class="card-body py-100", style="padding:50px;">
+                      <h6 class="m-0 font-weight-bold text-white-50">
+                         <%= link_to "즐겨찾는병원", like_hospitals_list_path, class:"collapse-item" %>
+                      </h6>
+                      </a>
+                      <!--<br>&nbsp;-->
+                      <!--<br>&nbsp;-->
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="col-lg-6 mb-4">
-                  <div class="card bg-danger text-white shadow">
-                    <div class="card-body">
-                      Danger
-                      <div class="text-white-50 small">#e74a3b</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-6 mb-4">
-                  <div class="card bg-secondary text-white shadow">
-                    <div class="card-body">
-                      <%= link_to "반려동물 관리", pets_path, target: "_blank"%>
-                      <div class="text-white-50 small">#반려동물 관리</div>
-                    </div>
-                  </div>
-                </div>
+                <!--<div class="col-lg-6 mb-4">-->
+                <!--  <div class="card bg-danger text-white shadow">-->
+                <!--    <div class="card-body">-->
+                <!--      Danger-->
+                <!--      <div class="text-white-50 small">#e74a3b</div>-->
+                <!--    </div>-->
+                <!--  </div>-->
+                <!--</div>-->
+                <!--<div class="col-lg-6 mb-4">-->
+                <!--  <div class="card bg-secondary text-white shadow">-->
+                <!--    <div class="card-body">-->
+                <!--      <%= link_to "반려동물 관리", pets_path, target: "_blank"%>-->
+                <!--      <div class="text-white-50 small">#반려동물 관리</div>-->
+                <!--    </div>-->
+                <!--  </div>-->
+                <!--</div>-->
               </div>
               
             </div>

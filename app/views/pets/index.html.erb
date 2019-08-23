@@ -17,13 +17,13 @@
               <tr>
                 <td width="50%">
                       <% if pet.photo_file.attached? %>
-                      <%= image_tag url_for(pet.photo_file), {:style=>'height:150px;', :class => "img-fluid px-3 px-sm-4 mt-3 mb-4"} %>
+                      <%= image_tag url_for(pet.photo_file), {:style=>'height:150px; display: block; margin-left: auto; margin-right: auto; ', :class => "img-fluid px-3 px-sm-4 mt-3 mb-4"} %>
                       <% else %>
                           첨부된 사진이 없습니다
                       <% end %>
                 </td>
-                <td width="30%"><%= pet.name %></td>
-                <td width="20%"><%= link_to '보기', pet %>
+                <td width="30%" style="text-align: center;vertical-align: middle;"><%= pet.name %></td>
+                <td width="20%" style="text-align: center;vertical-align: middle;"><%= link_to '보기', pet %>
                   | <%= link_to '수정', edit_pet_path(pet) %>
                   | <%= link_to '삭제', pet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
               </tr>
