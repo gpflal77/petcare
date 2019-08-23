@@ -589,6 +589,7 @@ function fn_getReviewSearch(x, y){
                     $.each(data, function(i){
                         var myRow = "<tr><td><a href='/reviews/"+data[i].id+"'>" + data[i].title + "</a></td><td>" +data[i].hospital_review
                                   //+"</td><td>" + data[i].satis1 + data[i].satis2 + data[i].satis3 + data[i].satis4 
+                                
 
                 
                         $('#review_list').find('tbody').append(myRow);
