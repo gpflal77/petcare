@@ -53,7 +53,7 @@
             </div>
           
             <!-- Pie Chart -->
-            <div class="col-lg-6 mb-4">
+            <div class="col-lg-12 mb-12">
           <hr>
               <!-- Project Card Example -->
               <div class="card shadow mb-4">
@@ -148,7 +148,9 @@
               <!-- Project Card Example -->
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
+                  <%if !@review.satis1.nil? && !@review.satis2.nil? && !@review.satis3.nil? && !@review.satis4.nil? %>
                   <% @avg_satis = (@review.satis1 + @review.satis2 + @review.satis3 + @review.satis4)/4 %>
+                  <% end %>
                   <h6 class="m-0 font-weight-bold text-primary">만족도 평균: <%= @avg_satis %> / 5</h6>
                 </div>
                 <div class="card-body">

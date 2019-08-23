@@ -1,0 +1,174 @@
+<div class="container-fluid">
+  <div class="row">
+    <p>
+      <strong>Photo_file:</strong>
+      <% if @pet.photo_file.attached? %>
+          <%= image_tag url_for(@pet.photo_file), class:"img-fluid px-3 px-sm-4 mt-3 mb-4", style:"" %>
+      <% else %>
+          <%= image_tag "no_image_m.png", class:"img-fluid px-3 px-sm-4 mt-3 mb-4", style:"" %>
+          첨부된 사진이 없습니다.
+      <% end %>
+    </p>
+  </div>
+  <div class="row">
+    <p><strong>User: </strong><%= @pet.user_id %></p>
+  </div>
+  <div class="row">
+    <p><strong>Name:</strong><%= @pet.name %></p>
+  </div>
+  <div class="row">
+    <p><strong>Kind:</strong><%= @pet.kind %></p>
+  </div>
+  <div class="row">
+    <p><strong>Breed:</strong><%= @pet.breed %></p>
+  </div>
+  <div class="row">
+    <p><strong>Gender:</strong><%= @pet.gender %></p>
+  </div>
+  <div class="row">
+    <p><strong>Birth date:</strong><%= @pet.birth_date %></p>
+  </div>
+  <div class="row">
+    <p><strong>Age:</strong><%= @pet.age %></p>
+  </div>
+  <div class="row">
+    <p><strong>Weight:</strong><%= @pet.weight %></p>
+  </div>
+</div>
+
+
+<%= link_to 'Edit', edit_pet_path(@pet) %> |
+<%= link_to 'Back', pets_path %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="my-form">
+    <div class="cotainer">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <!--/여기수정함-->
+                        <!--Q.강아지 사진 넣으면 강아지 이미지로 수정하고 싶음 ㅋㅋㅋㅋㅋ알겠어용-->
+                      <div class="row">
+                            <div class="col text-left">
+                                <h2 class="p-2 m-0">반려동물 등록하기</h2>
+                            </div>
+                            <div class="col text-right">
+                                <%= link_to '리스트 가기', pets_path , class:"btn btn-lg btn-danger text-white ml-auto"%>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form name="my-form" action="/pets" onsubmit="return validform()" method="post" enctype="multipart/form-data">
+                            <%= hidden_field_tag :authenticity_token, form_authenticity_token %><!--form for(view_helper) 안쓸경우 데이터 암호화-->
+                            <input type="hidden" name="user_id" value="<%= current_user.id %>">
+                    
+                            <div class="preview text-center">
+                                <% if @pet.photo_file.attached? %>
+                                    <%= image_tag url_for(@pet.photo_file), class:"img-fluid px-3 px-sm-4 mt-3 mb-4", style:"" %>
+                                <% else %>
+                                    <%= image_tag "no_image_m.png", class:"img-fluid px-3 px-sm-4 mt-3 mb-4", style:"" %>
+                                    첨부된 사진이 없습니다.
+                                <% end %>
+                                
+                            </div>
+                            <span class="Error"></span> <br>
+                            
+                            <div class="form-group row">
+                                <label for="full_name" class="col-md-4 col-form-label text-md-right">회원</label>
+                                <div class="col-md-6">
+                                    <%= @pet.user_id %>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group row">
+                                <label for="full_name" class="col-md-4 col-form-label text-md-right">이름</label>
+                                <div class="col-md-6">
+                                    <%= @pet.name %>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="email_address" class="col-md-4 col-form-label text-md-right">생년월일</label>
+                                <div class="col-md-6">
+                                    <%= @pet.birth_date %>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group row">
+                                <label for="age" class="col-md-4 col-form-label text-md-right">나이</label>
+                                <div class="col-md-6">
+                                    <%= @pet.age %>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="user_name" class="col-md-4 col-form-label text-md-right">성별</label>
+                                <div class="col-md-6">
+                                    <%= @pet.gender %>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="kind" class="col-md-4 col-form-label text-md-right">종류</label>
+                                <div class="col-md-6">
+                                  <%= @pet.kind %>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="breed" class="col-md-4 col-form-label text-md-right">품종</label>
+                                <div class="col-md-6">
+                                     <%= @pet.breed %>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="weight" class="col-md-4 col-form-label text-md-right">몸무게</label>
+                                <%= @pet.weight %>
+                            </div>
+
+                            <div class="form-group row m-0">
+                                <!--Q. 등록하기 버튼을 누르면 다시 화면으로 오고 싶은데요?-->
+                                <!--Q. 수정하기 버튼도 만들고 싶은데용? edit.html.erb 화면에 있어요-->
+                                <%= link_to '수정하기', edit_pet_path(@pet), class: "form-control btn btn-primary", style: "width: 250px; margin: 0 auto;" %>
+                                <%= link_to '뒤로가기', pets_path, class: "form-control btn btn-primary", style: "width: 250px; margin: 0 auto;" %>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

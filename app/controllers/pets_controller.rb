@@ -12,6 +12,10 @@ class PetsController < ApplicationController
   # GET /pets/1
   # GET /pets/1.json
   def show
+    # A01로 등록된 코드가 2개가 있네요, code_gubn으로 PET인 코드만 조회하면 제대로 출력됩니다 ~ 
+    @kind = CommCode.where(code: @pet.kind, code_gubn: "PET").as_json[0]["code_name"]
+    @code_name = CommCode.where(code_gubn: @pet.kind, code: @pet.breed).as_json[0]["code_name"]
+    
   end
 
   # GET /pets/new

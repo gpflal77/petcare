@@ -87,33 +87,7 @@ class DiseasesController < ApplicationController
          end
     end
     
-    #병원추천 (리뷰순)
-    def get_nearby_hospital_satis
-        String x           = params[:tm_x]             #x좌표(TM중부원점좌표)
-        String y           = params[:tm_y]             #y좌표(TM중부원점좌표)
-        String search_txt  = params[:search_txt]       #병원명 검색어
-        String medc_code      = params[:medc_code]
-        String medc_detail    = params[:medc_detail]
-    
-        
-        @hospital_location = Hospital.find_by_sql("select * from hospitals a join (select hospital_id, sum((ifnull(satis1,0)+ifnull(satis2,0)+ifnull(satis3,0)+ifnull(satis4,0))/4)/count(*) as satis From reviews
-                                                    					where medic_code like '#{params[:medc_code]}%'
-                                                    					and medic_detail like '#{params[:medc_detail]}%'
-                                                    					group by hospital_id) b
-                                                                   on a.id = b.hospital_id
-                                         where  status_cd ='01' 
-                                           and hair_yn like '#{params[:hair_yn]}%'
-                                           and allday_yn like '#{params[:allday_yn]}%'
-                                           and parking_yn like '#{params[:parking_yn]}%'
-                                           and emergency_yn like '#{params[:emergency_yn]}%'
-                                           and weekend_yn like '#{params[:weekend_yn]}%'
-                                           and name like '%#{params[:search_txt]}%'
-                                           order by  abs(#{params[:tm_x]} - loca_x) + abs(#{params[:tm_y]} - loca_y)
-                                           limit 0, 10;")
-         respond_to do |format|
-         format.json { render json: @hospital_location } #routes.rb 에도 json 설정 
-         end
-    end
+   
     
     #리뷰 검색(최신순)
     def get_medic_reviews
@@ -124,11 +98,10 @@ class DiseasesController < ApplicationController
         String medc_detail    = params[:medc_detail]
     
         printf(">>>"+ medc_code.to_s);
-        @reviews = Review.find_by_sql("select a.*  from reviews
-                                                   where status_cd ='01' 
-                                                   and medic_code  like '#{params[:medc_code]}%'
+        @reviews = Review.find_by_sql("select *  from reviews
+                                                   where medic_code  like '#{params[:medc_code]}%'
                                                    and medic_detail  like '#{params[:medc_detail]}%'
-                                                   limit 0, 10;")
+                                                   limit 0, 5;")
          respond_to do |format|
          format.json { render json: @reviews } #routes.rb 에도 json 설정 
          end

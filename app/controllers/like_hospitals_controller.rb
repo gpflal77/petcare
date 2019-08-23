@@ -1,11 +1,16 @@
 class LikeHospitalsController < ApplicationController
   include Pagy::Backend
   def list
-   @hospital = Hospital.find_by_sql("select a.* From hospitals a, like_hospitals b where a.id = b.hospital_id and b.user_id="+ current_user.id.to_s)
-    #@pagy, @hospital = pagy(, items:2)
-  end
-  
-  def pagy_get_items(array, pagy)
-    array[pagy.offset, pagy.items]
+    like = LikeHospital.select("hospital_id").where(user_id: current_user.id)
+    @pagy, @hospital = pagy(Hospital.where(id: like), items:2)
+    
+    # 전체 필드를 조회했을 때, hospital_id 추출
+    # likeIds = Array.new
+    # like.each do |x|
+    #   likeIds << x.hospital_id
+    # end
+    
+    # Hospital.find(ids) => Array
+    # Hospital.where(Key: value) => ActiveRecord
   end
 end

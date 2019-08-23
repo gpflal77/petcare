@@ -75,8 +75,9 @@ class ReviewsController < ApplicationController
   # GET /reviews/new
   def new
     @review = Review.new
-    @review.hospital_id = params[:hospital_id]; # 병원 뷰페이지에서 파라미터로 병원 아이디 받아옴
     
+    @review.hospital_id = params[:hospital_id]; # 병원 뷰페이지에서 파라미터로 병원 아이디 받아옴
+    @hospital = Hospital.find_by_sql("select * from hospitals where id='#{@review.hospital_id}'")
     
     @medc_code = CommCode.find_by_sql("select * From comm_codes
                                             where code_gubn='MEDIC'
@@ -117,8 +118,9 @@ class ReviewsController < ApplicationController
   # POST /reviews
   # POST /reviews.json
   def create
+    
     @review = Review.new(review_params)
-
+    
     respond_to do |format|
       if @review.save
         format.html { redirect_to @review, notice: 'Review was successfully created.' }

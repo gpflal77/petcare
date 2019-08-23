@@ -9,18 +9,21 @@
     <div class="card-body">
       <div class="table-responsive">
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <colgroup>
+            
+          </colgroup>
           <tbody>
             <% @pets.each do |pet| %>
               <tr>
-                <td>
+                <td width="50%">
                       <% if pet.photo_file.attached? %>
-                      <%= image_tag url_for(pet.photo_file), class:"img-fluid px-3 px-sm-4 mt-3 mb-4", style:"" %>
+                      <%= image_tag url_for(pet.photo_file), {:style=>'height:150px;', :class => "img-fluid px-3 px-sm-4 mt-3 mb-4"} %>
                       <% else %>
                           첨부된 사진이 없습니다
                       <% end %>
                 </td>
-                <td><%= pet.name %></td>
-                <td><%= link_to '보기', pet %>
+                <td width="30%"><%= pet.name %></td>
+                <td width="20%"><%= link_to '보기', pet %>
                   | <%= link_to '수정', edit_pet_path(pet) %>
                   | <%= link_to '삭제', pet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
               </tr>

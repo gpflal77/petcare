@@ -1,4 +1,6 @@
 class HospitalsController < ApplicationController
+   #include Pagy::Backend
+     
     def list
         #병원항목 코드조회
         @medc_code = CommCode.find_by_sql("select * From comm_codes
@@ -18,40 +20,53 @@ class HospitalsController < ApplicationController
     def view
 
        # @hospital = Hospital.find_by(hospital_id: params[:hospital_id]) 
-       @hospital = Hospital.find(params[:hospital_id]) 
-       @reviews = Review.where(hospital_id: params[:hospital_id]) 
-       @pets = Pet.all
-       @commcodes = CommCode.all
-       
-       
-        Selenium::WebDriver::Chrome.driver_path = `which chromedriver-helper`.chomp # Selenium이 크롬으로 동작하도록 선언
-        options = Selenium::WebDriver::Chrome::Options.new # Selenium 동작 시 필요한 설정을 위하여
-        options.add_argument('--disable-gpu') # 크롬 헤드리스 모드 사용 위해 disable-gpu setting
-        options.add_argument('--headless') # 크롬 헤드리스 모드 사용 위해 headless setting
-        browser = Selenium::WebDriver.for :chrome, options: options # 위 조건들을 만족하는 셀레니움 객체 생성
+        @hospital = Hospital.find(params[:hospital_id]) 
+        @reviews = Review.where(hospital_id: params[:hospital_id]) 
+        @commcodes = CommCode.all
+        @img_url = params[:hospital_id] + ".jpg"
+        @like = LikeHospital.where(user_id: current_user.id, hospital_id: params[:hospital_id])
+        if @like.empty?
+            @like = 200
+        else
+            @like = 25
+            
+        end
         
-        #browser.get 'http://m.cafe.daum.net/ASMONACOFC/gAWF?boardType=' # 목표 URL 로드
-        browser.get 'https://m.map.naver.com/search2/search.nhn?query=%EB%8F%99%EB%AC%BC%EB%B3%91%EC%9B%90'
-        #/html/body/div[4]/div[2]/ul/li[1]/div[1]/a[1]
-        #/html/body/div[4]/div[2]/ul/li[3]/div[1]/a[1]
-        @content = browser.find_elements(xpath: "/html/body/div[4]/div[2]/ul/li")
-        #@content = browser.find_elements(xpath: "/html/body/div[1]/div[1]/article/div[1]/div/ul/li") # 찾고자하는 대상 xpath방식으로 찾기
-      
-        @size = @content.size
-        
-       # @entry = Array.new # 데이터를 저장할 배열 선언
-        
-       
-        @content.each do |c| # 찾은 대상 순회 
-             name = c.find_element(class: "data-title")
-        
-            if @hospital.name = name
-              @img_url = c.find_element(tag_name: "img").attribute("src")
-            end
+        if Rails.application.assets.find_asset(@img_url) == nil
+            @img_url = "1.jpg"
+        end
     
-        end 
+        # Selenium::WebDriver::Chrome.driver_path = `which chromedriver-helper`.chomp # Selenium이 크롬으로 동작하도록 선언
+        # options = Selenium::WebDriver::Chrome::Options.new # Selenium 동작 시 필요한 설정을 위하여
+        # options.add_argument('--disable-gpu') # 크롬 헤드리스 모드 사용 위해 disable-gpu setting
+        # options.add_argument('--headless') # 크롬 헤드리스 모드 사용 위해 headless setting
+        # browser = Selenium::WebDriver.for :chrome, options: options # 위 조건들을 만족하는 셀레니움 객체 생성
         
-        browser.quit # Selenium 객체 종료
+        # #browser.get 'http://m.cafe.daum.net/ASMONACOFC/gAWF?boardType=' # 목표 URL 로드
+        #browser.get ''
+        # browser.get "https://map.naver.com/search2/local.nhn?query=%EC%9B%94%EB%93%9C%ED%8E%AB%EB%8F%99%EB%AC%BC%EB%B3%91%EC%9B%90"
+        # @test = browser.page_source
+        # browser.quit # Selenium 객체 종료
+        # #/html/body/div[4]/div[2]/ul/li[1]/div[1]/a[1]
+        # #/html/body/div[4]/div[2]/ul/li[3]/div[1]/a[1]
+        # @content = browser.find_element(xpath: "/html/body/div[4]/div[2]/ul/li[1]/div[2]/a[2]")
+        # #@content = browser.find_elements(xpath: "/html/body/div[1]/div[1]/article/div[1]/div/ul/li") # 찾고자하는 대상 xpath방식으로 찾기
+      
+    #     @size = @content
+        
+    #   # @entry = Array.new # 데이터를 저장할 배열 선언
+        
+       
+    #     @content.each do |c| # 찾은 대상 순회 
+    #         name = c.find_element(class: "data-title")
+        
+    #         if @hospital.name = name
+    #           @img_url = c.find_element(tag_name: "img").attribute("src")
+    #         end
+    
+    #     end 
+        
+    #     browser.quit # Selenium 객체 종료
 
     end
 
@@ -65,7 +80,7 @@ class HospitalsController < ApplicationController
     		like.destroy
     	else
     	#	Like_Hospital.create(hospital_id: params[:hospital_id], user_id: current_user.id)
-    	LikeHospital.create(hospital_id: params[:hospital_id], user_id: current_user.id)
+    	    LikeHospital.create(hospital_id: params[:hospital_id], user_id: current_user.id)
     	end
     	redirect_back(fallback_location: root_path)
 
@@ -81,8 +96,11 @@ class HospitalsController < ApplicationController
         String parking_yn   = params[:parking_yn]
         String emergency_yn = params[:emergency_yn]
         String weekend_yn   = params[:weekend_yn]
-    
         
+        
+    like = LikeHospital.select("hospital_id").where(user_id: current_user.id)
+    #@pagy, @hospital = pagy(Hospital.where(id: like), items:2)
+        # pagy(Hospital.where(id: like), items:2)
         @hospital_location = Hospital.find_by_sql("select *
                                                    from hospitals  
                                                    where status_cd ='01' 
@@ -119,7 +137,7 @@ class HospitalsController < ApplicationController
                                                    and weekend_yn like '#{params[:weekend_yn]}%'
                                                    and name like '%#{params[:search_txt]}%'
                                                    order by  abs(#{params[:tm_x]} - loca_x) + abs(#{params[:tm_y]} - loca_y) 
-                                                   limit 0, 10;")
+                                                   limit 0, 5;")
          respond_to do |format|
          format.json { render json: @reviews } #routes.rb 에도 json 설정 
          end
@@ -140,15 +158,15 @@ class HospitalsController < ApplicationController
                                                     					and medic_detail like '#{params[:medc_detail]}%'
                                                     					group by hospital_id) b
                                                                    on a.id = b.hospital_id
-                                         where  status_cd ='01' 
-                                           and hair_yn like '#{params[:hair_yn]}%'
-                                           and allday_yn like '#{params[:allday_yn]}%'
-                                           and parking_yn like '#{params[:parking_yn]}%'
-                                           and emergency_yn like '#{params[:emergency_yn]}%'
-                                           and weekend_yn like '#{params[:weekend_yn]}%'
-                                           and name like '%#{params[:search_txt]}%'
-                                           order by  abs(#{params[:tm_x]} - loca_x) + abs(#{params[:tm_y]} - loca_y)
-                                           limit 0, 10;")
+                                                     where  status_cd ='01' 
+                                                       and hair_yn like '#{params[:hair_yn]}%'
+                                                       and allday_yn like '#{params[:allday_yn]}%'
+                                                       and parking_yn like '#{params[:parking_yn]}%'
+                                                       and emergency_yn like '#{params[:emergency_yn]}%'
+                                                       and weekend_yn like '#{params[:weekend_yn]}%'
+                                                       and name like '%#{params[:search_txt]}%'
+                                                       order by  abs(#{params[:tm_x]} - loca_x) + abs(#{params[:tm_y]} - loca_y)
+                                                       limit 0, 5;")
          respond_to do |format|
          format.json { render json: @hospital_location } #routes.rb 에도 json 설정 
          end

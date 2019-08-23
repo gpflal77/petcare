@@ -1,4 +1,3 @@
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=40349a218f3e9e8476dc64d72271e392"></script>
   <!-- Custom styles for this template-->
   <link href="/css/petcare.css" rel="stylesheet">
     <h1 class="h4 mb-1 text-gray-800"></h1>
@@ -68,16 +67,6 @@
              <div class="col-lg-12" id ="search_div">
               <div class="card position-relative">
                 <div class="card-body">
-                    <div>
-                        <div class="btn-group btn-group-toggle"  style="padding:5px; float:right">
-                          <label class="btn btn-secondary active">
-                            <input type="radio" name="search_options" id="option1" value="1" autocomplete="off" checked> 위치순
-                          </label>
-                          <label class="btn btn-secondary">
-                            <input type="radio" name="search_options" id="option2" value="2"  autocomplete="off"> 추천순
-                          </label>
-                        </div>
-                    </div>
                     <h6 class="col-12 m-12 font-weight-bold text-primary">지도</h6> 
                     <div id="map_div"  class="col-lg-12" > 
                           <div id="map" style="width:100%;height:500px;"></div>
@@ -132,7 +121,7 @@
 var lat;//위도
 var lon;//경도
 var tm_x;//현재위치 TM좌표
-var im_y;//현재위치 TM좌표
+var tm_y;//현재위치 TM좌표
 var markersarr = []; // 지도에 표시된 마커 객체를 가지고 있을 배열입니다
 var locaarr = [];    // 변환된 좌표 배열
 var overlay;
@@ -242,27 +231,13 @@ $(document).ready(function() {
               
   
           var gubn = $("input[name='search_options']").val();
-
-           fn_getLocationSearch(tm_x, tm_y, gubn); //DB에서 가까운 거리 병원 찾아오기 
+           fn_getLocationSearch(tm_x, tm_y); //DB에서 가까운 거리 병원 찾아오기 
                         //후기 찾아보기 
            fn_getReviewSearch(tm_x, tm_y); //병원 후기 가져오기
 
-            
-
     }); 
 
-   // 위치순, 추천순 선택
-   $("input[name='search_options']").click(function() {    
-           $("input[name='search_options']").parent().removeClass('active');
-           $(this).parent().addClass('active');
-           
-           
-             var gubn = $(this).val();
-             fn_getLocationSearch(tm_x, tm_y, gubn); //DB에서 가까운 거리 병원 찾아오기 
-                        //후기 찾아보기 
-             fn_getReviewSearch(tm_x, tm_y); //병원 후기 가져오기
 
-    });
      
 });
  //현재 위치 정보 알아보는 메소드
@@ -331,7 +306,7 @@ $(document).ready(function() {
     
   //현재위치 좌표변환 WGS84 -> TM좌표로 변환 (DB정보가 TM좌표임)
        var url = 'https://dapi.kakao.com/v2/local/geo/transcoord.json?x='+lon+'&y='+lat+'&input_coord=WGS84&output_coord=TM';
-
+        
         $.ajax({
             type: "GET",     
             url: url,
@@ -345,6 +320,7 @@ $(document).ready(function() {
                     console.log(data.documents[0]);
                     tm_x = data.documents[0].x;
                     tm_y = data.documents[0].y;
+                     $("#search_btn").trigger("click"); 
                      
             },
             error: function(data) {
@@ -364,6 +340,8 @@ $(document).ready(function() {
 
  // 마커를 생성하고 지도위에 표시하는 함수입니다
  function addMarker(position, title, addr, tel_no, id) {
+     
+    // closeOverlay();
    // alert(title +  addr + tel_no + id);
     var imageSrc = '/images/loca2.png', // 마커이미지의 주소입니다    
         imageSize = new kakao.maps.Size(40, 40), // 마커이미지의 크기입니다
@@ -399,7 +377,7 @@ $(document).ready(function() {
              // var position = new kakao.maps.LatLng(lat, lon);  
                             
                         // 커스텀 오버레이를 생성합니다
-              var overlay = new kakao.maps.CustomOverlay({
+               overlay = new kakao.maps.CustomOverlay({
                                 map: map,
                                 position: position,
                                 content: content,
@@ -460,7 +438,7 @@ $(document).ready(function() {
 
 
 //현위치주변 병원 가져오기
-function fn_getLocationSearch(x, y, gubn) {
+function fn_getLocationSearch(x, y) {
     
          //체크박스 값 셋팅
           $("#hair_yn").val("");
@@ -480,13 +458,15 @@ function fn_getLocationSearch(x, y, gubn) {
            // markersarr = null; // 지도에 표시된 마커 객체를 가지고 있을 배열입니다
             // locaarr = null;    // 변환된 좌표 배열 
              setMarkers(null);
+             //overlay.clear();
+             
             // $('#hospital_list').find('tbody').remove();
             var  url  = "";
-           if(gubn == "1"){
-             url = 'get_nearby_hospital';
-           }else{
-             url = 'get_nearby_hospital_satis';  
-           }
+          //if(gubn == "1"){
+            url = 'get_nearby_hospital';
+          // }else{
+          //   url = 'get_nearby_hospital_satis';  
+          // }
             $.ajax({
                 type: "GET",     
                 url: url,      
@@ -500,14 +480,16 @@ function fn_getLocationSearch(x, y, gubn) {
                     allday_yn     : $("#allday_yn").val(),
                     parking_yn    : $("#parking_yn").val(),
                     emergency_yn  : $("#emergency_yn").val(),
-                    medc_code     : $('input[name="medc_code"]:checked').val(),
-                    medc_detail   : $('input[name="medc_detail"]:checked').val()
+                    medc_code     : $('input[name="medc_code"]').val(),
+                    medc_detail   : $('input[name="medc_detail"]').val(),
                 },
                 dataType: "json", 
                 async: false, //동기처리함
                 success: function(data) { //데이터 받아옴 
+
                     $('#hospital_list').find('tbody').empty();
                      removeMarker();
+                     
                     $.each(data, function(i){
                         var myRow = "<tr><td><a href='/hospitals/view/"+data[i].id+"'>" + data[i].name + "</a></td><td>" + data[i].tel_no + "</td><td>" + data[i].open_time + "~"+  data[i].close_time
                                   +"</td><td>" + data[i].addr +"</td><td>" + data[i].satis +"</td></tr>";
@@ -598,15 +580,32 @@ function fn_getReviewSearch(x, y){
                     parking_yn    : $("#parking_yn").val(),
                     emergency_yn  : $("#emergency_yn").val(),
                     medc_code     : $('input[name="medc_code"]:checked').val(),
-                    medc_detail   : $('input[name="medc_detail"]:checked').val()
+                    medc_detail   : $('input[name="medc_detail:checked"]').val()
                 },
                 dataType: "json", 
-                async: false, //동기처리함
                 success: function(data) { //데이터 받아옴 
                     $('#review_list').find('tbody').empty();
                     $.each(data, function(i){
-                        var myRow = "<tr><td><a href='/reviews/view/"+data[i].id+"'>" + data[i].title + "</a></td><td>" +data[i].hospital_review
-                                  +"</td><td>" + data[i].satis1 + data[i].satis2 + data[i].satis3 + data[i].satis4 +"</td></tr>";
+                        var myRow = "<tr><td><a href='/reviews/"+data[i].id+"'>" + data[i].title + "</a></td><td>" +data[i].hospital_review
+                                  //+"</td><td>" + data[i].satis1 + data[i].satis2 + data[i].satis3 + data[i].satis4 
+                                  +"<div class='starRev'>"
+                                  +"<input type='radio' name='satis1' value='1'><span class='starR"
+                                    if( data[i].satis1 >= 1){"on" }
+                                  +"'>1</span>"
+                                  +"<input type='radio' name='satis1' value='2'><span class='starR"
+                                    if( data[i].satis1 >= 2){"on" }
+                                  +"'>2</span>"
+                                  +"<input type='radio' name='satis1' value='3'><span class='starR"
+                                    if( data[i].satis1 >= 3){"on" } 
+                                  +"'>3</span>"
+                                  +"<input type='radio' name='satis1' value='4'><span class='starR"
+                                    if( data[i].satis1 >= 4){"on" } 
+                                  +"'>4</span>"
+                                  +"<input type='radio' name='satis1' value='5'><span class='starR"
+                                    if( data[i].satis1 >= 5){"on" } 
+                                  +"'>5</span>"
+                                  +"</div>"
+                                  +"</td></tr>";
                         $('#review_list').find('tbody').append(myRow);
                         
                         

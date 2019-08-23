@@ -6,6 +6,8 @@
       <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">후기등록</h1>
+        
+            
           </div>
      <form action="/reviews" method="post" id ="review_form" name="review_form" enctype="multipart/form-data">
       <%=hidden_field_tag :authenticity_token, form_authenticity_token %><!--form for(view_helper) 안쓸경우 데이터 암호화처리 해줘야함-->
@@ -348,7 +350,7 @@
                       <input type="radio" name="satis4" value="4" id="statis4_4"><span class="starR" name="statis4_4">4</span>
                       <input type="radio" name="satis4" value="5" id="statis4_5"><span class="starR" name="statis4_5">5</span>
                     </div>
-                    
+                     <!--<input type="hidden" id="avg_satis" name="avg_satis" value="">-->
                 </div>
               </div>
              </div>
@@ -486,6 +488,12 @@ $(document).ready(function() {
       return false;
   });
   
+  // var v1 = parseInt($('input[name=satis1]').val());
+  // var v2 = parseInt($('input[name=satis2]').val());
+  // var v3 = parseInt($('input[name=satis3]').val());
+  // var v4 = parseInt($('input[name=satis4]').val());
+  // var avg_satis = parseInt((v1 + v2 + v3 + v4) / 4);
+  // $(document).getElementById("avg_satis").value = avg_satis
   
     $("#review_form").submit(function(){
      //시간나면 저장시체크할부분 작성

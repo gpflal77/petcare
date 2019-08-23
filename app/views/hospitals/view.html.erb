@@ -1,3 +1,4 @@
+
 <body id="page-top">
 
   <!-- Page Wrapper -->
@@ -28,9 +29,8 @@
                   </div>
                   <div class="card-body">
                     <div class="text-left">
-
-                   <img src <%=@img_url%>, width="500" , height="400"> </img>
-                     
+               
+                  <%= image_tag @img_url, class:"img-fluid px-3 px-sm-4 mt-3 mb-4", style:"width: 25rem;" %>   
                  
                   </div>
                   <div class="text-center">
@@ -62,11 +62,13 @@
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">전화걸기</div>
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">  <a href='tel:<%= @hospital.tel_no %>'>전화걸기</div>
+                  
+                     
                  <!--     <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>-->
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-phone fa-2x text-gray-300"></i>
+                      <i class="fas fa-phone fa-2x text-gray-900"></i>
                     </div>  
                   </div>
                 </div>
@@ -83,7 +85,7 @@
                        <%= link_to '후기작성', new_review_path(hospital_id:@hospital.id),  class:"font-weight-bold text-success text-uppercase mb-1" %>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                      <i class="fas fa-clipboard-list fa-2x text-gray-900"></i>
                     </div>
                   </div>
                 </div>
@@ -97,15 +99,19 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-               
-                      <a href="/hospitals/view/1/like">즐겨찾기</a>
+                
+                      <a href="/hospitals/view/<%=@hospital.id%>/like">즐겨찾기</a>
+                      
                       </div>
                       <div class="row no-gutters align-items-center">
                     
                       </div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-star fa-2x text-gray-300"></i>
+                      <i class="fas fa-star fa-2x text-gray-<%= @like %>" ></i>
+                      
+
+                       
                     </div>
                   </div>
                 </div>
@@ -151,8 +157,8 @@
                  
                    <%= review.title %></br>
                     ID:<%= review.user_id %>
-                    , 품종: <%=  @pets.find(review.pet_id).kind %>
-                    , 몸무게: <%=  @pets.find(review.pet_id).weight %>KG
+                    , 품종: <%=  CommCode.find_by(code_gubn: Pet.find(review.pet_id).kind).parent_gubn %>
+                    , 몸무게: <%=  Pet.find(review.pet_id).weight %>KG
                     
                   <a href="#" class="btn btn-primary btn-circle small">
                     <i class="fas fa-thumbs-up"></i>
@@ -277,3 +283,5 @@
 <script type="text/javascript">
     
 </script>  
+
+<%# @test %>
